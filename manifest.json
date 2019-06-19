@@ -2,7 +2,7 @@
     "name": "Pietro extension",
     "version": "1.0",
     "description": "test",
-    "permissions": ["declarativeContent","storage"],
+    "permissions": ["declarativeContent","storage","activeTab","alarms"],
     "content_scripts" : [
       {
       "matches" : ["<all_urls>"],

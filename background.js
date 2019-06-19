@@ -18,3 +18,8 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+
+
+chrome.alarms.onAlarm.addListener(function( alarm ) {
+  window.alert("Got an alarm!", alarm);
+});
