@@ -1,18 +1,69 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-      }
-    </style>
-  </head>
-  <body>
-    <button id="changeColor"></button>
-    <button id="toggleAlarm">Activate alarm</button>
-    <script src="popup.js"></script>
-    <script src="alarm.js"></script>
-  </body>
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- css -->
+    <link rel="stylesheet" href="libs/css/fonts.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="libs/css/material.teal-red.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="popup.css">
+    <!-- js -->
+    <script type="text/javascript" src="libs/handlebars-v4.0.5.js"></script>
+    <script type="text/javascript" src="libs/jquery.js"></script>
+    <script type="text/javascript" src="js/home.js"></script>
+    <script type="text/javascript" src="libs/moment-with-locales.js"></script>
+    <script type="text/javascript" src="header.js"></script>
+    <script type="text/javascript" src="templating.js"></script>
+    <script type="text/javascript" src="popup.js"></script>
+    <script type="text/javascript" src="libs/material.min.js"></script>
+</head>
+
+<body>
+    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+        <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+            <div class="mdl-layout__header-row">
+              <img src="icons/tagsghost.png" height="40" width="40"><span class="mdl-layout-title">GhostForceNext</span>  
+              <div class="mdl-layout-spacer"></div>
+                <!-- 
+                todo: search bar for kb search
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
+                      <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" name="kb_search" id="waterfall-exp" placeholder="search kb">
+                    </div>
+                </div> -->
+            </div>
+            <div class="mdl-tabs mdl-js-tabs is-upgraded" data-upgraded=",MaterialTabs">
+                <div class="mdl-tabs__tab-bar">
+                    <div class="mdl-tabs__tab-bar">
+                        <a accesskey="h" class="mdl-tabs__tab is-active" template="templates/home.hbs">Home</a>
+                        <a class="mdl-tabs__tab" id="email-templates" accesskey="e">Email Templates</a>
+                        <a class="mdl-tabs__tab" href="http://kb.stsandbox.vddigi.com/" accesskey="o">Knowledge Base</a>
+                        <a class="mdl-tabs__tab" href="/optionspage/options.html">Settings</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+    <div class="demo-ribbon"></div>
+    <main class="demo-main mdl-layout__content" id='main'>
+        <div id="templateContent"></div>
+        <div id="notification" style="display: none;"></div>
+    </main>
+    <footer class="mdl-mini-footer" style="padding: 16px">
+        <div class="mdl-mini-footer--right-section">
+            <ul class="mdl-mini-footer--link-list">
+                <li>Developed by S&T EMEA Team</li>
+                <li class="version">V:3.1.74</li>
+                <li class="version"><a href="https://docs.google.com/spreadsheets/d/17-27uNTYk-dRZFymsUzJrcuIFdZfUAO7YoEn1Us19X0/edit#gid=162986645">Change log, Features requests and Bugs tracker</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
 </html>

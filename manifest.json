@@ -1,8 +1,12 @@
 {
     "name": "Pietro extension",
     "version": "1.0",
+    "key": "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDbRP5sqLJXj/VT1zvqkujEEu4asupQlh6D7OWOdFFk60avlwJGRqCW41AGvWYVzohBsq+SNwRnkvL8MlRJuzJmNi5gCeyIsaRKaoA/0fJWs6RHtz/YE01Bp6Yl7+WXpcQlsyGvaoxQgJWsh1pX6XGIMgAfBUbWHtIX4r/s+WJ3g6n4iYAp0Op5pi/8j+xCFLU12OBWQlGw/+Ddcmg4LxZUxwRIsHi7cdp3W8CgKmu/5epNpyJbj112moOiKes99D8FxaMV08hpUdwAoS4ZaXrYBeD/mK7NM5yJ3/tQfGlQin25qZUa3HNRl27P3kYs2uHkxnNtoXJuH0J8hpHWHDcpAgMBAAECggEAO0ExWk7aZyRNoVscY39Q7M/KzadFAAMZewBVZsJTTqjwILp30GL8udnzAedEA6edFdgCb0pz48OH65R0R7qRW6LPtH9qDuSmp7+RKe4EBd8lCYZhd/R7X788/KqQSoNu9tsqQrvR8F1XVVj8lp5M4ofUlY14/5sznmXWBOW98NrBPQhO6uU9ZRWTkLEhsLDnZ0maCJbwnI+VTAnyaa1qbDTJ/1TY/v21dEfzLn/ddQ8/HoVj/fNJKs9Hq8bGKsnpC4Y/EX1Q9MQGMu7KYFq2qj4Y/OtICntnWuGoKQQXpOFgKhTSyO3sAkgO4uNlE7MWB12NBuTT/PRLhKHOaJx2OwKBgQD1jiwGa5IXp2/1G0r1auyKSzIFqpJGqOZQUDFSeqmLKlzoLvKqprBjEp/jLsrHr6oOppNDaVlcoE1JtccH8eEuXw4k1gtBju5R/DZVfd4mHp8XmmNKrH7QV9OJajzGablwrN26W3PFzM8Fiphj75N6KNBZyZg1NBvubLa/Li23KwKBgQDkmJkLSrTqC4+wIBnkEtbJS0RVYY6e9C2wCiHR8isMavkt8XGnJHcMEUYWsQJ+0mwtcNJehLZqyehTU6MTJgdQ1pnaOm30UxfVSJQjhFmzUQF/0D3iQ03rLM8BLdxaFiI/5vnLIC/3NongtA6WeUN6Os6yvREGVK9gOB8Mawzg+wKBgQDvdJ4AAMRtZq1p4xyc6JEUZzG3jteoKiq2ZQ1D9jQBbuU80hN4UKavZkkevNGoGuiF8vCmi0RGbFgSKj6Vw80ocC+VwlklrCFBN+cwRVbt62yPEtICzuW3e/3gAgaUIiNg+mIayfXDDO9Q4w+qXMV/Ge/brxhLwa3/OmqXUovoEwKBgBEZMOldTybqcnb0D7u1hQdNb/EK+QX+saQnPdxcRsgJAFZlZuDfo1/tstZjqxIdXyYO+E1Fk/ds3snMybfW8lkjlCJ0mGDcDj5PzXTSo3r8JiaPRvGzoxJiKaGm8oJygWFSP4DoCW5uT+XU0fqDW367A1bvOWTF1NBXokrlfvMdAoGAQGiWLkD0nxIeuTntElDPQ1W13G049FZ6f/Qf+ND94yLnfDaHjHjsKpN/mbfP51R7leHzuyzec7wQP9jZEx54tk9VUcsqmWaOdZKhwvBY5o9DAIehPjiKc2s8mn4Tz79lObSWDkM3hu5S7x2vup6Ybs/7kjEsnCf/u7tGis7PJpY=",
     "description": "test",
-    "permissions": ["declarativeContent","storage","activeTab","alarms"],
+    "permissions": ["declarativeContent","storage","tabs","activeTab"],
+    "optional_permissions": [
+      "https://smbsalesimplementation.my.salesforce.com/console"
+    ],
     "content_scripts" : [
       {
       "matches" : ["<all_urls>"],
