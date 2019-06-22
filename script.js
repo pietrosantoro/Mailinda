@@ -3,23 +3,24 @@
 
 function test(){
   console.log("sono script.js");
-  window.alert("page load");
+ // window.alert("page load");
   var calendar = document.querySelector(".dhx_cal_data")
   //calendar.style.color = "red";
   var date = new Date();
   var day = date.getDay();
-  //window.alert(day);
+  //window.alert(day)
 
- /* setTimeout(function(){
-    var day_column = document.querySelector(".dhx_scale_holder_now");
-    if(day_column)
-      day_column.style.backgroundImage = "url('https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg')";
-  },3000)
-  */
+  //var iframe = document.querySelector("[src='/00OJ0000000uj6B?isdtp=vw&isWsVw=true&retURL=%2F00OJ0000000uj6B&cancelURL=%2F00OJ0000000uj6B&nonce=494ba041806bc5189ce35c8c2ffc40803fbe9a9eb698003002b215882c5b3f21&sfdcIFrameOrigin=https%3A%2F%2Fsmbsalesimplementation--uat.cs10.my.salesforce.com']")
 
-
-var iframe = document.querySelector("[src='/00OJ0000000uj6B?isdtp=vw&isWsVw=true&retURL=%2F00OJ0000000uj6B&cancelURL=%2F00OJ0000000uj6B&nonce=494ba041806bc5189ce35c8c2ffc40803fbe9a9eb698003002b215882c5b3f21&sfdcIFrameOrigin=https%3A%2F%2Fsmbsalesimplementation--uat.cs10.my.salesforce.com']")
-console.log(iframe.location.href)
+  var iframe = $('#iframe1');
+  if(iframe){
+    setInterval(function(){
+      var iframeHTML = iframe.contents().find("html").html();
+      console.log("mando il messaggio")
+      chrome.runtime.sendMessage(iframeHTML)
+      iframe.src = iframe.src;
+    },4000)
+  }
 
 }
 

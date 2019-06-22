@@ -19,8 +19,16 @@ chrome.runtime.onInstalled.addListener(function() {
   });
 });
 
+var new_email = 0;      //global variable
 
-/*chrome.alarms.onAlarm.addListener(function( alarm ) {
-  window.alert("Got an alarm!", alarm);
-});
-*/
+
+/* receive the entire html email page from script.js */
+
+function receiver(request, sender, sendResponse){
+  console.log(request)
+  var new_email_string = String(++new_email);
+  chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
+  chrome.browserAction.setBadgeText({text: new_email_string});
+}
+
+chrome.runtime.onMessage.addListener(receiver)
