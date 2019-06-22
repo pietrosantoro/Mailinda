@@ -14,7 +14,6 @@ chrome.storage.sync.get('color', function(data) {
 function test(){
   console.log("sono popup.js");
   chrome.browserAction.setBadgeText({text: ""});
-  //window.alert("alert popup");
 }
 
 
