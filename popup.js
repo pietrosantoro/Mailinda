@@ -14,7 +14,20 @@ let bgpage = chrome.extension.getBackgroundPage(); //background page
 let request_html = bgpage.request_html;
 let string_html = String(request_html)
 
+var my_obj = {
+  "obj":[
+    {
+      "title" : "titolo",
+      "body" : "body"
+    }
+  ]
+}
 
+var source = $("#renderHtml").html();
+console.log(source)
+var template = Handlebars.compile(source);
+$("#myHtml").html(template(my_obj.obj[0]))
+//console.log(template({my_obj}))
 //var allDiv = string_html.find("div");
 //console.log(allDiv)
 
