@@ -14,10 +14,50 @@ function test(){
   var iframeHTML;
   var iframe = $('#iframe1');
   console.log(iframe.length)
-  $.get("http://pietrosantoro.altervista.org/test.html", function(response) { 
-    console.log(response);
-    iframeHTML = response;
-  });
+
+
+  $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B", function(response) { 
+     // console.log(response);
+
+      var domTest = new DOMParser().parseFromString(response, "text/html");
+      console.log(domTest)
+
+      var titlesRow = domTest.querySelectorAll('#headerRow_0 th a')
+      console.log(titlesRow)
+      var iframeRowElements = domTest.querySelectorAll('.even')
+      var emailStatusIndex;
+      var newEmailCounter = 0;
+      
+      titlesRow.forEach((e, i) => {
+          if (e.getAttribute("title").includes("Email Status")){
+          emailStatusIndex = i    
+      }
+      })
+      
+      iframeRowElements.forEach(e => {
+      if( e.childNodes[emailStatusIndex].innerText === "Sent") {
+          newEmailCounter++;
+      }
+      })
+      console.log(newEmailCounter)
+
+
+      iframeHTML = response;
+      chrome.runtime.sendMessage(iframeHTML)
+    });
+
+
+
+/*
+  setInterval(function(){
+    $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B", function(response) { 
+      console.log(response);
+      iframeHTML = response;
+      chrome.runtime.sendMessage(iframeHTML)
+    });
+  },2000)
+
+*/
   if(iframe.length){
     setInterval(function(){
       //var iframeHTML = iframe.contents().find("body").html();
