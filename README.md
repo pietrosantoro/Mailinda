@@ -1,1 +1,1 @@
-# myextension
+# Mailinda extension
