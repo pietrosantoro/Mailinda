@@ -5,7 +5,10 @@
 'use strict';
 
 var newEmailCounter = 0;      //global variable
+chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 var request_html = "";
+console.log("nacksaddsa")
+
 
 // open the report when click on icon extension
 chrome.browserAction.onClicked.addListener(function(tab) {
@@ -20,8 +23,17 @@ function receiver(request, sender, sendResponse){
   var domTest = new DOMParser().parseFromString(request, "text/html");
      // console.log(domTest)
 
+
+  var table = domTest.querySelector(".reportTable").outerHTML
+  var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+  //console.log(tableJSON);
+  console.log(JSON.stringify(tableJSON))
+
+
+
+ // console.log(table)
       var titlesRow = domTest.querySelectorAll('#headerRow_0 th a')
-      console.log(titlesRow)
+      //console.log(titlesRow)
       var iframeRowElements = domTest.querySelectorAll('.odd')
       var emailStatusIndex;
       
@@ -39,7 +51,7 @@ function receiver(request, sender, sendResponse){
       console.log(newEmailCounter)
 
   request_html = request;
-  console.log(request)
+  //console.log(request)
   var new_email_string = String(newEmailCounter);
   chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
   chrome.browserAction.setBadgeText({text: new_email_string});

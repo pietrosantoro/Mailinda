@@ -13,7 +13,7 @@ function test(){
       iframeHTML = response;
       chrome.runtime.sendMessage(iframeHTML)
     });
-  },5000)
+  },10000)
 
 }
   test()
