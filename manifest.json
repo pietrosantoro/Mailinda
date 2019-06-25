@@ -8,7 +8,7 @@
     "optional_permissions": ["contentSettings"],
     "content_scripts" : [
       {
-      "matches" : ["https://*.salesforce.com/*", "https://*.force.com/*"],
+      "matches" : ["https://smbsalesimplementation--uat.cs10.my.salesforce.com/*"],
       "js" : ["lib/jquery-3.4.1.min.js","script.js"]
       }
     ],

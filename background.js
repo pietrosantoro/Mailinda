@@ -7,7 +7,7 @@
 var newEmailCounter = 0;      //global variable
 var request_html = "";
 
-// 
+// open the report when click on icon extension
 chrome.browserAction.onClicked.addListener(function(tab) {
   window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
   newEmailCounter = 0;
@@ -18,16 +18,16 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 function receiver(request, sender, sendResponse){
   newEmailCounter = 0;
   var domTest = new DOMParser().parseFromString(request, "text/html");
-      console.log(domTest)
+     // console.log(domTest)
 
       var titlesRow = domTest.querySelectorAll('#headerRow_0 th a')
       console.log(titlesRow)
-      var iframeRowElements = domTest.querySelectorAll('.even')
+      var iframeRowElements = domTest.querySelectorAll('.odd')
       var emailStatusIndex;
       
       titlesRow.forEach((e, i) => {
           if (e.getAttribute("title").includes("Email Status")){
-          emailStatusIndex = i    
+          emailStatusIndex = i  
       }
       })
       
