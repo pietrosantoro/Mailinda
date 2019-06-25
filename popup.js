@@ -14,19 +14,33 @@ let bgpage = chrome.extension.getBackgroundPage(); //background page
 let request_html = bgpage.request_html;
 let string_html = String(request_html)
 
-var my_obj = {
-  "obj":[
-    {
-      "title" : "titolo",
-      "body" : "body"
-    }
-  ]
-}
+new Vue({
+  el: '#app',
+  data: {
+    todos: [
+      {
+        caseid: 1,
+        title: 'Do the dishes',
+        status: 'in queue'
 
-var source = $("#renderHtml").html();
-console.log(source)
-var template = Handlebars.compile(source);
-$("#myHtml").html(template(my_obj.obj[0]))
+      },
+      {
+        caseid: 2,
+        title: 'Take out the trash',
+        status: 'in queue'
+      },
+      {
+        caseid: 3,
+        title: 'Mow the lawn',
+        status: 'in queue'
+      }
+    ],
+  },
+})
+
+//var source = $("#renderHtml").html();
+//console.log(source)
+//$("#myHtml").html(template(my_obj.obj[0]))
 //console.log(template({my_obj}))
 //var allDiv = string_html.find("div");
 //console.log(allDiv)

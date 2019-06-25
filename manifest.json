@@ -3,12 +3,16 @@
     "version": "1.0",
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl7f0GEpBBHyknq2+yalp7biGOp/xNS/MGSEbPrka6AgpXfjApw8wrLnVvrRsCD+DxFXGSA/1AqMwj3UZ5480Rv9QPgDJ7r0PZFYtPB26FI31z0HlETmx3OIh7QQTkgQd+btPDMqQXoqH7MJktZOaxvjGDWB4cq242wKcdXl/OJMsN9QC4sHDEVJXKyWBlPGbdBCEnPJy8SD7AHdIquTcQwZErcJhuxK9axBSd278AKapIJvIRTcqIyIjdBWWY4LSs+WhAZulFHu7GujCDY0G7IHRU9ICnFRVEYyZFPXgqvMTsNtDahGB/06VgYHtYXIlbawrYSLqvpfeBBcfEH2VQwIDAQAB",
     "description": "test",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "permissions": ["declarativeContent","storage","tabs","https://*.force.com/*", "https://*.salesforce.com/*"],
+    "content_security_policy": "script-src 'self' https://unpkg.com 'unsafe-eval'; object-src 'self'",
+    "permissions": ["declarativeContent",
+      "storage",
+      "tabs",
+      "https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"],
     "optional_permissions": ["contentSettings"],
     "content_scripts" : [
       {
-      "matches" : ["https://smbsalesimplementation--uat.cs10.my.salesforce.com/*"],
+      "matches" : ["http://pietrosantoro.altervista.org/"],
       "js" : ["lib/jquery-3.4.1.min.js","script.js"]
       }
     ],
@@ -17,7 +21,7 @@
         "persistent": false
       },
     "browser_action": {
-
+        "default_popup": "popup.html",
         "default_icon": {
             "16": "images/mail_icon.png",
             "32": "images/mail_icon.png",

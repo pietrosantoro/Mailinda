@@ -8,11 +8,11 @@ var newEmailCounter = 0;      //global variable
 var request_html = "";
 
 // open the report when click on icon extension
-chrome.browserAction.onClicked.addListener(function(tab) {
+/*chrome.browserAction.onClicked.addListener(function(tab) {
   window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
   newEmailCounter = 0;
   chrome.browserAction.setBadgeText({text: ""});
-  });
+  });*/
 /* receive the entire html email page from script.js */
 
 function receiver(request, sender, sendResponse){
