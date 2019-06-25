@@ -36,11 +36,11 @@ function test(){
 
 
   console.log(string_html)
-  $(string_html).appendTo('body')
+  //$(string_html).appendTo('body')
   //console.log(request_html)
 
   // every time click in popup, new email goes to 0 and remove badge icon
-  bgpage.new_email = 0;
+  bgpage.newEmailCounter = 0;
   chrome.browserAction.setBadgeText({text: ""});
 }
 
