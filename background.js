@@ -18,7 +18,7 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrom
 function getJSON(domHTML){
   var table = domHTML.querySelector(".reportTable").outerHTML
   var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
-  return JSON.stringify(tableJSON)
+  return tableJSON
 }
 
 
@@ -40,6 +40,12 @@ function receiver(request, sender, sendResponse){
 
   var EmailJSON = getJSON(domHTML);
   console.log(EmailJSON)
+
+for (var i=0; i<EmailJSON.length;i++){
+
+    console.log('case owner is '+EmailJSON [i]['Case Owner'])
+
+}
 
   // console.log(table)
   var titlesRow = domHTML.querySelectorAll('#headerRow_0 th a')
@@ -86,3 +92,5 @@ function receiver(request, sender, sendResponse){
 
 //this is executed when script.js send a message
 chrome.runtime.onMessage.addListener(receiver)
+
+
