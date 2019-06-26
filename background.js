@@ -4,50 +4,76 @@
 
 'use strict';
 
-var newEmailCounter = 0;      //global variable
+var newEmailCounter = 0;      //new email after request
+var oldEmailCounter = 0;      //new email before request
 chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 var request_html = "";
-console.log("nacksaddsa")
+var getNotification = true;
+
+/* get HTML table and return a JSON */
+
+function getJSON(domHTML){
+  var table = domHTML.querySelector(".reportTable").outerHTML
+  var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+  return JSON.stringify(tableJSON)
+}
 
 
-// open the report when click on icon extension
+/* open the report when click on icon extension */
+
 chrome.browserAction.onClicked.addListener(function(tab) {
   window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
   newEmailCounter = 0;
   chrome.browserAction.setBadgeText({text: ""});
   });
-/* receive the entire html email page from script.js */
+
+  /* receive the entire html email page from script.js */
 
 function receiver(request, sender, sendResponse){
+  oldEmailCounter = newEmailCounter
   newEmailCounter = 0;
-  var domTest = new DOMParser().parseFromString(request, "text/html");
-     // console.log(domTest)
+  var domHTML = new DOMParser().parseFromString(request, "text/html");    //parse string request into HTML
+  // console.log(domHTML)
 
+  var EmailJSON = getJSON(domHTML);
+  console.log(EmailJSON)
 
-  var table = domTest.querySelector(".reportTable").outerHTML
-  var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
-  //console.log(tableJSON);
-  console.log(JSON.stringify(tableJSON))
+  // console.log(table)
+  var titlesRow = domHTML.querySelectorAll('#headerRow_0 th a')
+  //console.log(titlesRow)
+  var iframeRowElements = domHTML.querySelectorAll('.odd')
+  var emailStatusIndex;
+  
+  titlesRow.forEach((e, i) => {
+      if (e.getAttribute("title").includes("Email Status")){
+      emailStatusIndex = i  
+  }
+  })
+  
+  iframeRowElements.forEach(e => {
+  if( e.childNodes[emailStatusIndex].innerText === "Sent") {
+      newEmailCounter++;
+  }
+  })
+  if(newEmailCounter > oldEmailCounter)
+    getNotification = true
 
-
-
- // console.log(table)
-      var titlesRow = domTest.querySelectorAll('#headerRow_0 th a')
-      //console.log(titlesRow)
-      var iframeRowElements = domTest.querySelectorAll('.odd')
-      var emailStatusIndex;
+  if(getNotification){
+    getNotification = false
+    chrome.notifications.create(
+      'name-for-notification',{   
+      type: 'basic', 
+      iconUrl: 'images/mail_icon.png', 
+      title: "You have new Email", 
+      message: String(newEmailCounter) + " new Email" 
+      },
       
-      titlesRow.forEach((e, i) => {
-          if (e.getAttribute("title").includes("Email Status")){
-          emailStatusIndex = i  
+      function() {
+       // window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
+      } 
+          
+      );
       }
-      })
-      
-      iframeRowElements.forEach(e => {
-      if( e.childNodes[emailStatusIndex].innerText === "Sent") {
-          newEmailCounter++;
-      }
-      })
       console.log(newEmailCounter)
 
   request_html = request;

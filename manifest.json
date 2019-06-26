@@ -4,7 +4,7 @@
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl7f0GEpBBHyknq2+yalp7biGOp/xNS/MGSEbPrka6AgpXfjApw8wrLnVvrRsCD+DxFXGSA/1AqMwj3UZ5480Rv9QPgDJ7r0PZFYtPB26FI31z0HlETmx3OIh7QQTkgQd+btPDMqQXoqH7MJktZOaxvjGDWB4cq242wKcdXl/OJMsN9QC4sHDEVJXKyWBlPGbdBCEnPJy8SD7AHdIquTcQwZErcJhuxK9axBSd278AKapIJvIRTcqIyIjdBWWY4LSs+WhAZulFHu7GujCDY0G7IHRU9ICnFRVEYyZFPXgqvMTsNtDahGB/06VgYHtYXIlbawrYSLqvpfeBBcfEH2VQwIDAQAB",
     "description": "test",
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "permissions": ["declarativeContent","storage","tabs","https://*.force.com/*", "https://*.salesforce.com/*"],
+    "permissions": ["notifications","declarativeContent","storage","tabs","https://*.force.com/*", "https://*.salesforce.com/*"],
     "optional_permissions": ["contentSettings"],
     "content_scripts" : [
       {
