@@ -10,6 +10,8 @@ var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
 var request_html = "";
 var getNotification = true;
+var EmailJSON;
+var obj;
 
 chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 
@@ -18,7 +20,7 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrom
 function getJSON(domHTML){
   var table = domHTML.querySelector(".reportTable").outerHTML
   var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
-  return JSON.stringify(tableJSON)
+  return tableJSON
 }
 
 
@@ -38,8 +40,9 @@ function receiver(request, sender, sendResponse){
   var domHTML = new DOMParser().parseFromString(request, "text/html");    //parse string request into HTML
   // console.log(domHTML)
 
-  var EmailJSON = getJSON(domHTML);
-  console.log(EmailJSON)
+  obj = getJSON(domHTML);
+  console.log(obj)
+
 
   // console.log(table)
   var titlesRow = domHTML.querySelectorAll('#headerRow_0 th a')
