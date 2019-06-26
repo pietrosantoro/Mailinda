@@ -4,11 +4,14 @@
 
 'use strict';
 
+/* global variable */
+
 var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
-chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 var request_html = "";
 var getNotification = true;
+
+chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 
 /* get HTML table and return a JSON */
 
@@ -67,14 +70,11 @@ function receiver(request, sender, sendResponse){
       title: "You have new Email", 
       message: String(newEmailCounter) + " new Email" 
       },
-      
       function() {
-       // window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
       } 
-          
-      );
-      }
-      console.log(newEmailCounter)
+    );
+  }
+  console.log(newEmailCounter)
 
   request_html = request;
   //console.log(request)
