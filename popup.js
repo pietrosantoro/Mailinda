@@ -13,23 +13,19 @@ chrome.storage.sync.get('color', function(data) {
 let bgpage = chrome.extension.getBackgroundPage(); //background page
 let request_html = bgpage.request_html;
 let string_html = String(request_html)
-let EmailJSON = bgpage.EmailJSON;
-let obj = bgpage.obj
+let allEmail = bgpage.allEmail
+let newEmail = bgpage.newEmail
 
 new Vue({
   el: '#app',
   data: {
-    obj
+    newEmail
   }
 })
 
 function test(){
-  console.log(obj)
-
-  //$(string_html).appendTo('body')
-  //console.log(request_html)
-
-  // every time click in popup, new email goes to 0 and remove badge icon
+  console.log(newEmail)
+  // every time click in popup remove badge icon
   chrome.browserAction.setBadgeText({text: ""});
 }
 

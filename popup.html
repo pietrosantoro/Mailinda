@@ -15,9 +15,10 @@
 </head>
 <body>
     <div id="myHtml">
-        <ul id="app">
-            <li v-for="value in obj" v-if="value['Email Status']=='Read'">casid: {{ value["Case Number"] }} </li>
-        </ul>
+        <div id="app">
+            <div v-for="(item,index) in newEmail">{{ index }} {{item}}</div>
+        </div>
+        
         
     </div>
 <script type="text/javascript" src="popup.js"></script>

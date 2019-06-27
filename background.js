@@ -10,8 +10,8 @@ var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
 var request_html = "";
 var getNotification = true;
-var EmailJSON;
-var obj;
+var allEmail;
+var newEmail;
 
 chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 
@@ -19,20 +19,11 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrom
 
 function getJSON(domHTML){
   var table = domHTML.querySelector(".reportTable").outerHTML
-  var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
-  return tableJSON
+  return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
 }
 
 
-/* open the report when click on icon extension */
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-  window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
-  newEmailCounter = 0;
-  chrome.browserAction.setBadgeText({text: ""});
-  });
-
-  /* receive the entire html email page from script.js */
+/* receive the entire html email page from script.js */
 
 function receiver(request, sender, sendResponse){
   oldEmailCounter = newEmailCounter
@@ -40,27 +31,20 @@ function receiver(request, sender, sendResponse){
   var domHTML = new DOMParser().parseFromString(request, "text/html");    //parse string request into HTML
   // console.log(domHTML)
 
-  obj = getJSON(domHTML);
-  console.log(obj)
+  allEmail = getJSON(domHTML);
+  console.log(allEmail)
 
 
-  // console.log(table)
-  var titlesRow = domHTML.querySelectorAll('#headerRow_0 th a')
-  //console.log(titlesRow)
-  var iframeRowElements = domHTML.querySelectorAll('.odd')
-  var emailStatusIndex;
+  newEmail = allEmail.reduce(function(obj, v) {
+   if(v["Email Status"]=="Sent")
+      obj[v["Case Number"]] = (obj[v["Case Number"]] || 0) + 1;
+    return obj;
+  }, {})
+
+  console.log(newEmail)
+
+  newEmailCounter = Object.values(newEmail).reduce((a, b) => a + b);
   
-  titlesRow.forEach((e, i) => {
-      if (e.getAttribute("title").includes("Email Status")){
-      emailStatusIndex = i  
-  }
-  })
-  
-  iframeRowElements.forEach(e => {
-  if( e.childNodes[emailStatusIndex].innerText === "Sent") {
-      newEmailCounter++;
-  }
-  })
   if(newEmailCounter > oldEmailCounter)
     getNotification = true
 
@@ -80,10 +64,9 @@ function receiver(request, sender, sendResponse){
   console.log(newEmailCounter)
 
   request_html = request;
-  //console.log(request)
-  var new_email_string = String(newEmailCounter);
+
   chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
-  chrome.browserAction.setBadgeText({text: new_email_string});
+  chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
 }
 
 
