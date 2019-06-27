@@ -24,10 +24,8 @@ new Vue({
 })
 
 function test(){
-  console.log("sono popup.js");
-
-
   console.log(obj)
+
   //$(string_html).appendTo('body')
   //console.log(request_html)
 

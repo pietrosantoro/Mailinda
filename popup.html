@@ -16,7 +16,7 @@
 <body>
     <div id="myHtml">
         <ul id="app">
-            <li v-for="value in obj[0]['Case Owner']">casid: {{ value }} </li>
+            <li v-for="value in obj" v-if="value['Email Status']=='Read'">casid: {{ value["Case Number"] }} </li>
         </ul>
         
     </div>
