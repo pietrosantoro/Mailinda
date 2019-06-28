@@ -6,31 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- css -->
-    <link rel="stylesheet" href="libs/css/fonts.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="libs/css/material.teal-red.min.css">
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" type="text/css" href="popup.css">
     <!-- js -->
-    <script type="text/javascript" src="lib/handlebars-v4.1.2.js"></script>
     <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="libs/moment-with-locales.js"></script>
-    <script type="text/javascript" src="header.js"></script>
-    <script type="text/javascript" src="templating.js"></script>
     <script type="text/javascript" src="libs/material.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
 </head>
 <body>
     <div id="myHtml">
+        <div id="app">
+            <div v-for="(item,index) in newEmail">{{ index }} {{item}}</div>
+        </div>
+        
         
     </div>
-        <script id="renderHtml" type="text/x-handlebars-template">
-            <div class="entry">
-              <h1>{{title}}</h1>
-              <div class="body">
-                {{body}}
-              </div>
-            </div>
-        </script>
 <script type="text/javascript" src="popup.js"></script>
 </body>
 </html>
