@@ -12,6 +12,12 @@ var request_html = "";
 var getNotification = true;
 var allEmail;
 var newEmail;
+var myNewEmail = [];
+var newEmailObj = [];
+var baseURL = "https://smbsalesimplementation--uat.cs10.my.salesforce.com/"
+
+
+var collapsedCases = [];
 
 chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 
@@ -32,18 +38,66 @@ function receiver(request, sender, sendResponse){
   // console.log(domHTML)
 
   allEmail = getJSON(domHTML);
-  console.log(allEmail)
+  allEmail.splice(allEmail.length-2, 2) //clean allEmail object, delete last 2 elements
+/*
+  myNewEmail = [];
 
-
-  newEmail = allEmail.reduce(function(obj, v) {
-   if(v["Email Status"]=="Sent")
-      obj[v["Case Number"]] = (obj[v["Case Number"]] || 0) + 1;
+  newEmail = allEmail.reduce(function(obj, email) {
+   if(email["Email Status"]=="Sent"){
+      myNewEmail.push(email)
+       
+      obj[email["Case Number"]] = (obj[email["Case Number"]] || 0) + 1;
+   }
     return obj;
   }, {})
 
-  console.log(newEmail)
+*/
+var currentCase
+var casesIndexes = {}
+collapsedCases = []
+console.log(currentCase)
+allEmail.forEach((e, i) => {
+  if (!(e["Case Number"] in casesIndexes)) {
+    casesIndexes[e["Case Number"]] = i
+    currentCase = allEmail[casesIndexes[e["Case Number"]]]
+    currentCase["Emails Indexes"] = []
+    currentCase["Total Emails"] = 0
+    currentCase["New Emails"] = 0
+    currentCase["Read Emails"] = 0
+    currentCase["Sent Emails"] = 0
+    currentCase["Replied Emails"] = 0
+    console.log(currentCase)
+    } 
+  if (e["Case Number"] in casesIndexes) {
+    let currentCase = allEmail[casesIndexes[e["Case Number"]]]
+    currentCase["Total Emails"] ++;
+    currentCase["Emails Indexes"].push(i)
+    switch(e["Email Status"]) {
+      case "New": currentCase["New Emails"] ++; break;
+      case "Read": currentCase["Read Emails"] ++; break;
+      case "Sent": currentCase["Sent Emails"] ++; break;
+      case "Replied": currentCase["New Emails"] ++; break;
+    }
+  }
+})
 
-  newEmailCounter = Object.values(newEmail).reduce((a, b) => a + b);
+Object.values(casesIndexes).forEach(e => {
+  //console.log(allEmail)
+collapsedCases.push(allEmail[e])
+})
+
+console.log(collapsedCases)
+
+
+
+
+
+
+
+  // console.log(myNewEmail)
+  // console.log(newEmail)
+
+  //newEmailCounter = Object.values(newEmail).reduce((a, b) => a + b);
   
   if(newEmailCounter > oldEmailCounter)
     getNotification = true
