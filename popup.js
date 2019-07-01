@@ -17,17 +17,18 @@ let allEmail = bgpage.allEmail
 let newEmail = bgpage.newEmail
 let collapsedCases = bgpage.collapsedCases
 let baseURL = bgpage.baseURL
+let newEmailCounter = bgpage.newEmailCounter 
 
 new Vue({
   el: '#app',
   data: {
-    collapsedCases
+    collapsedCases,
+    newEmailCounter
   },
   methods:{
     clickCase(caseUrl){
       var completeUrl = baseURL + caseUrl;
       window.open(completeUrl, '_blank');
-
     }
   }
 })

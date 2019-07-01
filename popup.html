@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="popup.css">
+    <link rel="stylesheet" type="text/css" href="/lib/fontawesome-free-5.9.0-web/css/all.css">
+    
     <!-- js -->
     <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="libs/material.min.js"></script>
@@ -16,9 +18,9 @@
 </head>
 <body>
         <div id="app">
-          <div v-if="collapsedCases.length" class="container-fluid">
+          <div v-if="newEmailCounter" class="container-fluid">
               <div class="table-responsive">
-                <table class="table table-striped table-dark">
+                <table class="table table-hover table-dark">
                   <thead>
                       <tr>
           
@@ -28,26 +30,30 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item,index) in collapsedCases">
-                    
+                    <tr v-for="(item,index) in collapsedCases" v-if="item['New Emails']">
                       <td>
-                         <a href="#" @click='clickCase( item["Case ID"] )'> {{item["Case Number"]}}</a>
+                         <button @click='clickCase( item["Case ID"] )' type="button" class="btn btn-secondary btn-sm">{{item["Case Number"]}}</button>
                       </td>
                       <td>
                           {{ item["Status"]}}
                       </td>
                       <td>
-                          <span class="badge badge-danger badge-pill"> {{ item["Sent Emails"]}} </span>
-                          
-                      </td>
+                          <span class="badge badge-danger badge-pill"> {{ item["New Emails"]}} </span>
+                        </td>
                     </tr>
                 </tbody>
                 </table>
               </div>
             </div>
-            <h1 v-else>No New Email</h1>
+            <div v-else class="text-center align-middle">
+                
+                <i class="far fa-check-circle fa-5x"></i>
+                
+            </div>
         </div>
-        
+        <footer class="page-footer fixed-bottom font-small pt-4">
+          <div class="footer-copyright text-center text-white py-3">© 2019 Copyright: S&T Team </div> 
+        </footer>
 <script type="text/javascript" src="popup.js"></script>
 </body>
 </html>

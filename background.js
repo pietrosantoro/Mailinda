@@ -11,7 +11,7 @@ var oldEmailCounter = 0;      //new email before request
 var request_html = "";
 var getNotification = true;
 var allEmail;
-var newEmail;
+var newEmail = {};
 var myNewEmail = [];
 var newEmailObj = [];
 var baseURL = "https://smbsalesimplementation--uat.cs10.my.salesforce.com/"
@@ -28,6 +28,16 @@ function getJSON(domHTML){
   return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
 }
 
+/* check if an object is empty */
+
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
+}
+
 
 /* receive the entire html email page from script.js */
 
@@ -39,19 +49,20 @@ function receiver(request, sender, sendResponse){
 
   allEmail = getJSON(domHTML);
   allEmail.splice(allEmail.length-2, 2) //clean allEmail object, delete last 2 elements
-/*
+
   myNewEmail = [];
+  if(!isEmpty(allEmail)){
+    newEmail = allEmail.reduce(function(obj, email) {
+    if(email["Email Status"]=="New"){
+        myNewEmail.push(email)
+        
+        obj[email["Case Number"]] = (obj[email["Case Number"]] || 0) + 1;
+    }
+      return obj;
+    }, {})
+}
 
-  newEmail = allEmail.reduce(function(obj, email) {
-   if(email["Email Status"]=="Sent"){
-      myNewEmail.push(email)
-       
-      obj[email["Case Number"]] = (obj[email["Case Number"]] || 0) + 1;
-   }
-    return obj;
-  }, {})
 
-*/
 var currentCase
 var casesIndexes = {}
 collapsedCases = []
@@ -76,7 +87,7 @@ allEmail.forEach((e, i) => {
       case "New": currentCase["New Emails"] ++; break;
       case "Read": currentCase["Read Emails"] ++; break;
       case "Sent": currentCase["Sent Emails"] ++; break;
-      case "Replied": currentCase["New Emails"] ++; break;
+      case "Replied": currentCase["Replied Emails"] ++; break;
     }
   }
 })
@@ -96,8 +107,11 @@ console.log(collapsedCases)
 
   // console.log(myNewEmail)
   // console.log(newEmail)
-
-  //newEmailCounter = Object.values(newEmail).reduce((a, b) => a + b);
+  if(!isEmpty(newEmail)){
+    newEmailCounter = Object.values(newEmail).reduce((a, b) => a + b);
+  }
+  else
+    newEmailCounter=0;
   
   if(newEmailCounter > oldEmailCounter)
     getNotification = true
@@ -119,8 +133,13 @@ console.log(collapsedCases)
 
   request_html = request;
 
-  chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
-  chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+  if(newEmailCounter==0){
+    chrome.browserAction.setBadgeText({text: ""});
+  }
+  else{
+    chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
+    chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+  }
 }
 
 

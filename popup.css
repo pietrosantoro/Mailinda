@@ -3,9 +3,27 @@ body {
     height: 600px;
     width: 600px;
     background-color:#263238;
+    overflow-x: hidden;
 }
 
+.table{
+    margin-top: 4%;
+}
 .container {
     margin-right: auto;
     margin-left: auto;
+}
+
+.far {
+	color: white;
+}
+
+#app{
+    height: 100%;
+    width: 100%;
+}
+
+.align-middle{
+    position: relative;
+    top: 40%;
 }
