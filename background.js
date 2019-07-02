@@ -10,8 +10,14 @@ var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
 var request_html = "";
 var getNotification = true;
-var EmailJSON;
-var obj;
+var allEmail;
+var newEmail = {};
+var myNewEmail = [];
+var newEmailObj = [];
+var baseURL = "https://smbsalesimplementation--uat.cs10.my.salesforce.com/"
+
+
+var collapsedCases = [];
 
 chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrome is started
 
@@ -19,20 +25,21 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icone  when chrom
 
 function getJSON(domHTML){
   var table = domHTML.querySelector(".reportTable").outerHTML
-  var tableJSON = $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
-  return tableJSON
+  return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+}
+
+/* check if an object is empty */
+
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
 }
 
 
-/* open the report when click on icon extension */
-
-chrome.browserAction.onClicked.addListener(function(tab) {
-  window.open('https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000uj6B', '_blank');
-  newEmailCounter = 0;
-  chrome.browserAction.setBadgeText({text: ""});
-  });
-
-  /* receive the entire html email page from script.js */
+/* receive the entire html email page from script.js */
 
 function receiver(request, sender, sendResponse){
   oldEmailCounter = newEmailCounter
@@ -40,33 +47,72 @@ function receiver(request, sender, sendResponse){
   var domHTML = new DOMParser().parseFromString(request, "text/html");    //parse string request into HTML
   // console.log(domHTML)
 
-  obj = getJSON(domHTML);
-  console.log(obj)
+  allEmail = getJSON(domHTML);
+  allEmail.splice(allEmail.length-2, 2) //clean allEmail object, delete last 2 elements
 
-
-for (var i=0; i<EmailJSON.length;i++){
-
-    console.log('case owner is '+EmailJSON [i]['Case Owner'])
-
+  myNewEmail = [];
+  if(!isEmpty(allEmail)){
+    newEmail = allEmail.reduce(function(obj, email) {
+    if(email["Email Status"]=="New"){
+        myNewEmail.push(email)
+        
+        obj[email["Case Number"]] = (obj[email["Case Number"]] || 0) + 1;
+    }
+      return obj;
+    }, {})
 }
 
-  // console.log(table)
-  var titlesRow = domHTML.querySelectorAll('#headerRow_0 th a')
-  //console.log(titlesRow)
-  var iframeRowElements = domHTML.querySelectorAll('.odd')
-  var emailStatusIndex;
-  
-  titlesRow.forEach((e, i) => {
-      if (e.getAttribute("title").includes("Email Status")){
-      emailStatusIndex = i  
+
+var currentCase
+var casesIndexes = {}
+collapsedCases = []
+console.log(currentCase)
+allEmail.forEach((e, i) => {
+  if (!(e["Case Number"] in casesIndexes)) {
+    casesIndexes[e["Case Number"]] = i
+    currentCase = allEmail[casesIndexes[e["Case Number"]]]
+    currentCase["Emails Indexes"] = []
+    currentCase["Total Emails"] = 0
+    currentCase["New Emails"] = 0
+    currentCase["Read Emails"] = 0
+    currentCase["Sent Emails"] = 0
+    currentCase["Replied Emails"] = 0
+    console.log(currentCase)
+    } 
+  if (e["Case Number"] in casesIndexes) {
+    let currentCase = allEmail[casesIndexes[e["Case Number"]]]
+    currentCase["Total Emails"] ++;
+    currentCase["Emails Indexes"].push(i)
+    switch(e["Email Status"]) {
+      case "New": currentCase["New Emails"] ++; break;
+      case "Read": currentCase["Read Emails"] ++; break;
+      case "Sent": currentCase["Sent Emails"] ++; break;
+      case "Replied": currentCase["Replied Emails"] ++; break;
+    }
   }
-  })
-  
-  iframeRowElements.forEach(e => {
-  if( e.childNodes[emailStatusIndex].innerText === "Sent") {
-      newEmailCounter++;
+})
+
+Object.values(casesIndexes).forEach(e => {
+  //console.log(allEmail)
+collapsedCases.push(allEmail[e])
+})
+
+console.log(collapsedCases)
+
+
+
+
+
+
+
+  // console.log(myNewEmail)
+  // console.log(newEmail)
+  if(!isEmpty(newEmail)){
+    newEmailCounter = Object.values(newEmail).reduce((a, b) => a + b);
   }
-  })
+  else
+    newEmailCounter=0;
+  
   if(newEmailCounter > oldEmailCounter)
     getNotification = true
 
@@ -86,10 +132,14 @@ for (var i=0; i<EmailJSON.length;i++){
   console.log(newEmailCounter)
 
   request_html = request;
-  //console.log(request)
-  var new_email_string = String(newEmailCounter);
-  chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
-  chrome.browserAction.setBadgeText({text: new_email_string});
+
+  if(newEmailCounter==0){
+    chrome.browserAction.setBadgeText({text: ""});
+  }
+  else{
+    chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] });
+    chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+  }
 }
 
 

@@ -1,237 +1,29 @@
 body {
   
-    height: 400px;
-    width: 400px;
+    height: 600px;
+    width: 600px;
+    background-color:#263238;
+    overflow-x: hidden;
 }
 
+.table{
+    margin-top: 4%;
+}
 .container {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.far {
+	color: white;
+}
+
+#app{
+    height: 100%;
+    width: 100%;
+}
+
+.align-middle{
     position: relative;
-    margin-left: 2.5%;
-    margin-right: 2.5%;
-    width: 95%;
-    /*white-space: nowrap;*/
-}
-
-a {
-    color: blue;
-    cursor: pointer;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.header ul li {
-    display: inline-block;
-    margin: 2px;
-    font-size: 15px;
-}
-
-.header ul li a {
-    display: inline-block;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-}
-
-.header ul li a:hover {
-    background-color: #111;
-}
-
-.header ul li a.active {
-    background-color: #aaa;
-}
-
-.header {
-    position: relative;
-    display: inline-block;
-    top: 8px;
-}
-
-#templateContent {
-    position: relative;
-    display: block;
-    min-height: 335px;
-}
-
-img {
-    max-height: 50px;
-}
-
-.ghostLinks {
-    padding: 8px;
-    display: block;
-    color: #16325c;
-    font-size: 20px;
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 420px;
-}
-
-
-/*
-.ghostLinks:after {
-  content: "";
-  display: table;
-  clear: both;
-}*/
-
-.ghostLinks:hover {
-    background-color: rgba(235, 241, 243, 0.5);
-}
-
-.selectOnClick:hover {
-    /* background-color: rgb(245, 245, 245); */
-    color: #424242;
-}
-
-.phone {
-    position: relative;
-    text-align: center;
-    font-size: 24px;
-}
-
-.contactName {
-    position: relative;
-    display: block;
-    float: left;
-}
-
-.contactPhone {
-    position: relative;
-    display: block;
-    float: right;
-}
-
-.contact {
-    /*border: 2px solid red;*/
-    overflow: auto;
-    font-size: 21px;
-}
-
-.salesrep {
-    color: blue;
-    font-size: 19px;
-}
-
-
-/* .programScaled {
-    background-color: white;
-}
-
-.programHightouch {
-    background-color: #C5B358;
-}
-
-.programUnknown {
-    background-color: pink;
-} */
-
-.createNew {
-    background-color: #ddffdd;
-    opacity: 0.5;
-}
-
-.tag {
-    position: relative;
-    font-size: 15px;
-    margin-top: 5px;
-}
-
-.tagName {
-    font-weight: bold;
-}
-
-.specialInstructions {
-    position: relative;
-    margin-left: 30px;
-}
-
-pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-
-.comment {
-    white-space: pre-wrap;
-    font-size: 13px;
-    margin-top: 3px;
-}
-
-.team {
-    position: fixed;
-    top: -10px;
-    right: 10px;
-    font-size: 20vw;
-    opacity: 0.2;
-    color: grey;
-    z-index: -1;
-    /*width: 500px;*/
-}
-
-.timeDistance {
-    /*position: absolute;
-    top: -110px;
-	right: 10px;*/
-    padding: 10px 0;
-    white-space: nowrap;
-}
-
-.Advertiser {
-    color: black;
-}
-
-.Webmaster {
-    color: purple;
-}
-
-.hover {
-    display: none;
-}
-
-div:hover+.hover,
-.hover:hover {
-    display: block;
-    z-index: 1;
-    position: fixed;
-    margin-top: -6px;
-    border: 1px solid black;
-    background-color: lightgrey;
-    padding: 4px;
-    font-size: 20px;
-}
-
-.tagName+.hover,
-.tagName:hover+.hover {
-    display: block;
-    position: relative;
-    /*right: 0;*/
-    /*z-index: 0;*/
-    margin-top: -0px;
-    border: none;
-    background-color: white;
-    padding: 0px;
-    font-size: 12px;
-}
-
-.inactiveLink {
-    pointer-events: none;
-    cursor: default;
-}
-
-#notification {
-    position: absolute;
-    margin: 0 auto;
-    top: 77px;
-    left: 120px;
-    width: 60%;
-    z-index: 105;
-    font-family: Courier New;
-    text-align: center;
-    font-weight: bold;
-    color: rgb(0, 150, 136);
-    background-color: rgb(245, 245, 245);
-    padding: 5px;
+    top: 40%;
 }
