@@ -44,6 +44,12 @@ function receiver(request, sender, sendResponse){
   console.log(obj)
 
 
+for (var i=0; i<EmailJSON.length;i++){
+
+    console.log('case owner is '+EmailJSON [i]['Case Owner'])
+
+}
+
   // console.log(table)
   var titlesRow = domHTML.querySelectorAll('#headerRow_0 th a')
   //console.log(titlesRow)
@@ -89,3 +95,5 @@ function receiver(request, sender, sendResponse){
 
 //this is executed when script.js send a message
 chrome.runtime.onMessage.addListener(receiver)
+
+
