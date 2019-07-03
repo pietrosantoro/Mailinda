@@ -14,7 +14,7 @@
     <!-- js -->
     <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="libs/material.min.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script type="text/javascript" src="/lib/vue.js"></script>
 </head>
 <body>
         <div id="app">
@@ -30,7 +30,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item,index) in collapsedCases" v-if="item['New Emails']">
+                    <tr v-for="(item,index) in collapsedCases" v-if="item['New Emails']" data-toggle="collapse" data-target="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                       <td>
                          <button @click='clickCase( item["Case ID"] )' type="button" class="btn btn-secondary btn-sm">{{item["Case Number"]}}</button>
                       </td>
@@ -38,8 +38,8 @@
                           {{ item["Status"]}}
                       </td>
                       <td>
-                          <span class="badge badge-danger badge-pill"> {{ item["New Emails"]}} </span>
-                        </td>
+                        <span class="badge badge-danger badge-pill"> {{ item["New Emails"]}} </span>
+                      </td>
                     </tr>
                 </tbody>
                 </table>
@@ -47,7 +47,9 @@
             </div>
             <div v-else class="text-center align-middle">
                 
-                <i class="far fa-check-circle fa-5x"></i>
+               <i class="far fa-check-circle fa-5x"></i>
+             
+               
                 
             </div>
         </div>
