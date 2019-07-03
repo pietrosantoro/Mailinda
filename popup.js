@@ -17,7 +17,8 @@ let allEmail = bgpage.allEmail
 let newEmail = bgpage.newEmail
 let collapsedCases = bgpage.collapsedCases
 let baseURL = bgpage.baseURL
-let newEmailCounter = bgpage.newEmailCounter 
+let newEmailCounter = bgpage.newEmailCounter
+
 
 new Vue({
   el: '#app',
