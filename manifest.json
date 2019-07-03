@@ -11,7 +11,9 @@
       "storage",
       "tabs",
       "https://*.force.com/*",
-      "https://*.salesforce.com/*"],
+      "https://*.salesforce.com/*",
+      "https://smbsalesimplementation--uat.cs10.my.salesforce.com/*"
+    ],
     "optional_permissions": ["contentSettings"],
     "content_scripts" : [
       {
