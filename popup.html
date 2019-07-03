@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- css -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="popup.css">
     <link rel="stylesheet" type="text/css" href="/lib/fontawesome-free-5.9.0-web/css/all.css">
     
     <!-- js -->
     <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="libs/material.min.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/lib/vue.js"></script>
 </head>
 <body>
@@ -30,7 +30,7 @@
                       </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(item,index) in collapsedCases" v-if="item['New Emails']">
+                    <tr v-for="(item,index) in collapsedCases" v-if="item['New Emails']" data-toggle="collapse" data-target="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                       <td>
                          <button @click='clickCase( item["Case ID"] )' type="button" class="btn btn-secondary btn-sm">{{item["Case Number"]}}</button>
                       </td>
@@ -38,18 +38,18 @@
                           {{ item["Status"]}}
                       </td>
                       <td>
-                          <span class="badge badge-danger badge-pill"> {{ item["New Emails"]}} </span>
-                        </td>
+                        <span class="badge badge-danger badge-pill"> {{ item["New Emails"]}} </span>
+                      </td>
                     </tr>
                 </tbody>
                 </table>
               </div>
             </div>
             <div v-else class="text-center align-middle">
-                
-                <i class="far fa-check-circle fa-5x"></i>
-                
-            </div>
+                <p class="no-email top">No new emails</p>  
+                <img class="horizontal-line" src="images/no-email-check.svg">
+                <p class="no-email bottom">You're all caught up!</p> 
+              </div>
         </div>
         <footer class="page-footer fixed-bottom font-small pt-4">
           <div class="footer-copyright text-center text-white py-3">© 2019 Copyright: S&T Team </div> 
