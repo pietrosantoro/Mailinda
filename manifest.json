@@ -12,7 +12,12 @@
       "tabs",
       "https://*.force.com/*",
       "https://*.salesforce.com/*",
-      "https://smbsalesimplementation--uat.cs10.my.salesforce.com/*"
+      "https://smbsalesimplementation--uat.cs10.my.salesforce.com/*",
+      "unlimited_storage",
+      "management",
+      "webNavigation",
+      "webRequest", "webRequestBlocking",
+      "<all_urls>"
     ],
     "optional_permissions": ["contentSettings"],
     "content_scripts" : [
