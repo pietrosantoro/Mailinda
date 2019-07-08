@@ -23,8 +23,13 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icon  when chrome
 /* get HTML table and return a JSON */
 
 function getJSON(domHTML){
-  var table = domHTML.querySelector(".reportTable").outerHTML
-  return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+  var table = domHTML.querySelector(".reportTable")
+  if(table){
+    table = table.outerHTML
+    return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+  }
+  else
+    return 0;
 }
 
 /* check if an object is empty */
@@ -38,71 +43,80 @@ function isEmpty(obj) {
 }
 
 setInterval(function(){
-  $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000sw5U", function(response) { 
+    $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000sw5U", function(response) { 
     oldEmailCounter = newEmailCounter
     newEmailCounter = 0;
     var domHTML = new DOMParser().parseFromString(response, "text/html");    //parse string response into HTML
   
     allEmail = getJSON(domHTML);
-    allEmail.splice(allEmail.length-2, 2) //clean allEmail object, delete last 2 elements
-  
-    var currentCase;
-    var casesNumbers = [];
-    collapsedCases = [];
-    console.log(currentCase)
-    allEmail.forEach((e, i) => {
-      if (!(casesNumbers.includes(e["Case Number"]))) {
-        casesNumbers.push(e["Case Number"])
-        e["Emails Indexes"] = []
-        e["Total Emails"] = 0
-        e["New Emails"] = 0
-        e["Read Emails"] = 0
-        e["Sent Emails"] = 0
-        e["Replied Emails"] = 0
-        collapsedCases.push(e)
-      } 
-      if (casesNumbers.includes(e["Case Number"])) {
-        currentCase = collapsedCases[casesNumbers.indexOf(e["Case Number"])]
-        currentCase["Total Emails"] ++;
-        currentCase["Emails Indexes"].push(i)
-        switch(e["Email Status"]) {
-          case "New": currentCase["New Emails"] ++; newEmailCounter++; break;
-          case "Read": currentCase["Read Emails"] ++; break;
-          case "Sent": currentCase["Sent Emails"] ++; break;
-          case "Replied": currentCase["Replied Emails"] ++; break;
-        }
-      }
-    })
-    console.log(collapsedCases)
-  
-    if(newEmailCounter > oldEmailCounter)
-      getNotification = true
-  
-    if(getNotification){
-      getNotification = false
-      chrome.notifications.create(
-        'name-for-notification',{   
-        type: 'basic', 
-        iconUrl: 'images/mail_icon.png', 
-        title: "You have new Email", 
-        message: String(newEmailCounter) + " new Email" 
-        },
-        function() {
-        } 
-      );
-    }
-    console.log("newEmail: ", newEmailCounter)
-  
-    request_html = response;
-  
-    if(newEmailCounter==0){
-      chrome.browserAction.setBadgeText({text: ""});
-    }
-    else{
-      chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] }); //red color badge
-      chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
-    }
 
+    /* request ok and table found */
+    if(allEmail){
+      allEmail.splice(allEmail.length-2, 2) //clean allEmail object, delete last 2 elements
+    
+      var currentCase;
+      var casesNumbers = [];
+      collapsedCases = [];
+      console.log(currentCase)
+      allEmail.forEach((e, i) => {
+        if (!(casesNumbers.includes(e["Case Number"]))) {
+          casesNumbers.push(e["Case Number"])
+          e["Emails Indexes"] = []
+          e["Total Emails"] = 0
+          e["New Emails"] = 0
+          e["Read Emails"] = 0
+          e["Sent Emails"] = 0
+          e["Replied Emails"] = 0
+          collapsedCases.push(e)
+        } 
+        if (casesNumbers.includes(e["Case Number"])) {
+          currentCase = collapsedCases[casesNumbers.indexOf(e["Case Number"])]
+          currentCase["Total Emails"] ++;
+          currentCase["Emails Indexes"].push(i)
+          switch(e["Email Status"]) {
+            case "New": currentCase["New Emails"] ++; newEmailCounter++; break;
+            case "Read": currentCase["Read Emails"] ++; break;
+            case "Sent": currentCase["Sent Emails"] ++; break;
+            case "Replied": currentCase["Replied Emails"] ++; break;
+          }
+        }
+      })
+      console.log(collapsedCases)
+    
+      if(newEmailCounter > oldEmailCounter)
+        getNotification = true
+    
+      if(getNotification){
+        getNotification = false
+        chrome.notifications.create(
+          'name-for-notification',{   
+          type: 'basic', 
+          iconUrl: 'images/mail_icon.png', 
+          title: "You have new Email", 
+          message: String(newEmailCounter) + " new Email" 
+          },
+          function() {
+          } 
+        );
+      }
+      console.log("newEmail: ", newEmailCounter)
+    
+      request_html = response;
+    
+      if(newEmailCounter==0){
+        chrome.browserAction.setBadgeText({text: ""});
+      }
+      else{
+        chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] }); //red color badge
+        chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+      }
+    }
+    /* request ok but table not found */
+    else{
+      console.log("table not found")
+    }
+    }).fail(function() {
+      console.log("request error");
     });
   },3000)
 
