@@ -118,5 +118,5 @@ setInterval(function(){
     }).fail(function() {
       console.log("request error");
     });
-  },3000)
+  },60000)
 
