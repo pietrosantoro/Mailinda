@@ -47,11 +47,12 @@ test();
 
 /*
 function emailRequest(){
-  $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/500J000000KP2i2", function(response) { 
+  $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) { 
       //changing the variable
       var caseHtml = response;
       //trasforming the response in html
       var caseDom = new DOMParser().parseFromString(caseHtml, "text/html");
+    console.log(caseDom)
       //selecting all emails elements from the dom
       var mailElements =  caseDom.querySelectorAll('.caseEventBody .feeditemtext');
       var mailObjects = [];
@@ -63,4 +64,6 @@ function emailRequest(){
       console.log(mailObjects);
       });
 }
+emailRequest();
+
 */

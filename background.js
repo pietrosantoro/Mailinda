@@ -13,7 +13,8 @@ var allEmail;
 var newEmail = {};
 var myNewEmail = [];
 var newEmailObj = [];
-var baseURL = "https://smbsalesimplementation--uat.cs10.my.salesforce.com/"
+var baseURL = "https://smbsalesimplementation--uat.cs10.my.salesforce.com/";
+var reportURL = "00OJ0000000swwd";
 
 
 var collapsedCases = [];
@@ -23,9 +24,9 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icon  when chrome
 /* get HTML table and return a JSON */
 
 function getJSON(domHTML){
-  var table = domHTML.querySelector(".reportTable")
+  var table = domHTML.querySelector(".reportTable");
   if(table){
-    table = table.outerHTML
+    table = table.outerHTML;
     return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
   }
   else
@@ -42,13 +43,18 @@ function isEmpty(obj) {
   return true;
 }
 
+/* request every 60 sec */
+
+
 setInterval(function(){
-    $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000sw5U", function(response) { 
+    $.get(baseURL+reportURL, function(response) { 
     oldEmailCounter = newEmailCounter
     newEmailCounter = 0;
     var domHTML = new DOMParser().parseFromString(response, "text/html");    //parse string response into HTML
-  
-    allEmail = getJSON(domHTML);
+    var allEmailTest = [];
+    allEmailTest = getJSON(domHTML);
+    console.log(allEmailTest)
+    allEmail = allEmailTest
 
     /* request ok and table found */
     if(allEmail){
@@ -57,7 +63,6 @@ setInterval(function(){
       var currentCase;
       var casesNumbers = [];
       collapsedCases = [];
-      console.log(currentCase)
       allEmail.forEach((e, i) => {
         if (!(casesNumbers.includes(e["Case Number"]))) {
           casesNumbers.push(e["Case Number"])
@@ -118,5 +123,5 @@ setInterval(function(){
     }).fail(function() {
       console.log("request error");
     });
-  },60000)
+  },2000)
 
