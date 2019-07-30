@@ -13,50 +13,63 @@ chrome.storage.sync.get('color', function(data) {
 let bgpage = chrome.extension.getBackgroundPage(); //background page
 let request_html = bgpage.request_html;
 let string_html = String(request_html)
+let allEmail = bgpage.allEmail
+let newEmail = bgpage.newEmail
+let collapsedCases = bgpage.collapsedCases
+let baseURL = bgpage.baseURL
+let newEmailCounter = bgpage.newEmailCounter
+let logInSalesforce = bgpage.logInSalesforce
+
 
 new Vue({
   el: '#app',
   data: {
-    todos: [
-      {
-        caseid: 1,
-        title: 'Do the dishes',
-        status: 'in queue'
-
-      },
-      {
-        caseid: 2,
-        title: 'Take out the trash',
-        status: 'in queue'
-      },
-      {
-        caseid: 3,
-        title: 'Mow the lawn',
-        status: 'in queue'
-      }
-    ],
+    collapsedCases,
+    newEmailCounter,
+    logInSalesforce
   },
+  methods:{
+    clickCase(caseUrl,index){
+      var completeUrl = baseURL + caseUrl;
+
+      newEmailCounter -= collapsedCases[index]["New Emails"];
+      if(newEmailCounter != 0)
+        chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+      else
+        chrome.browserAction.setBadgeText({text: ""});
+      window.open(completeUrl, '_blank');
+    }
+  }
 })
 
-//var source = $("#renderHtml").html();
-//console.log(source)
-//$("#myHtml").html(template(my_obj.obj[0]))
-//console.log(template({my_obj}))
-//var allDiv = string_html.find("div");
-//console.log(allDiv)
-
 function test(){
-  console.log("sono popup.js");
-
-
-  console.log(string_html)
-  //$(string_html).appendTo('body')
-  //console.log(request_html)
-
-  // every time click in popup, new email goes to 0 and remove badge icon
-  bgpage.newEmailCounter = 0;
-  chrome.browserAction.setBadgeText({text: ""});
+  console.log(baseURL)
+  console.log(collapsedCases)
+  console.log(collapsedCases.length)
 }
 
 
 test();
+
+/*
+function emailRequest(){
+  $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) { 
+      //changing the variable
+      var caseHtml = response;
+      //trasforming the response in html
+      var caseDom = new DOMParser().parseFromString(caseHtml, "text/html");
+    console.log(caseDom)
+      //selecting all emails elements from the dom
+      var mailElements =  caseDom.querySelectorAll('.caseEventBody .feeditemtext');
+      var mailObjects = [];
+      var singleMailObject = {};
+      mailElements.forEach(function(element){
+          singleMailObject = {date: "standard", body: element.innerText };
+          mailObjects.push(singleMailObject);
+      });
+      console.log(mailObjects);
+      });
+}
+emailRequest();
+
+*/

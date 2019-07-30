@@ -6,18 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- css -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="popup.css">
+    <link rel="stylesheet" type="text/css" href="/lib/fontawesome-free-5.9.0-web/css/all.css">
+    
     <!-- js -->
     <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
-    <script src="https://unpkg.com/vue"></script>
+    <script type="text/javascript" src="/lib/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/vue.js"></script>
 </head>
 <body>
-    <div>
-      <ul id="app">
-        <li v-for="value in todos">casid: {{ value.caseid }} - status: {{ value.status}}</li>
-    </ul>
-    </div>
+        <div id="app">
+          <div v-if="newEmailCounter && logInSalesforce" class="container-fluid">
+              <div class="table-responsive">
+                <table class="table table-hover table-dark">
+                  <thead>
+                      <tr>
+          
+                          <th scope="col">Case Id</th>
+                          <th scope="col">Case Status</th>
+                          <th scope="col">New Email</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item,index) in collapsedCases" v-if="item['New Emails']" data-toggle="collapse" data-target="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      <td>
+                         <button @click='clickCase( item["Case ID"],index )' type="button" class="btn btn-secondary btn-sm">{{ item["Case Number"] }}</button>
+                      </td>
+                      <td>
+                          {{ item["Status"] }}
+                      </td>
+                      <td>
+                        <span class="badge badge-danger badge-pill"> {{ item["New Emails"] }} </span>
+                      </td>
+                    </tr>
+                </tbody>
+                </table>
+              </div>
+            </div>
+            <div v-else-if="newEmailCounter == 0 && logInSalesforce" class="text-center align-middle">
+                <p class="no-email top">No new emails</p>  
+                <img class="horizontal-line" src="images/no-email-check.svg">
+                <p class="no-email bottom">You're all caught up!</p> 
+              </div>
+              <div v-else class="text-center align-middle">
+                <a class= "btn btn-outline-light" href="https://login.salesforce.com/?locale=eu" target="_blank">Log in salesforce</a>
+
+              </div>
+        </div>
+        <footer class="page-footer fixed-bottom font-small pt-4">
+          <div class="footer-copyright text-center text-white py-3">© 2019 Copyright: S&T Team </div> 
+        </footer>
 <script type="text/javascript" src="popup.js"></script>
 </body>
 </html>
