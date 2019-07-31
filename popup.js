@@ -18,28 +18,33 @@ let newEmail = bgpage.newEmail
 let collapsedCases = bgpage.collapsedCases
 let baseURL = bgpage.baseURL
 let newEmailCounter = bgpage.newEmailCounter
+let logInSalesforce = bgpage.logInSalesforce
 
 
 new Vue({
   el: '#app',
   data: {
     collapsedCases,
-    newEmailCounter
+    newEmailCounter,
+    logInSalesforce
   },
   methods:{
-    clickCase(caseUrl){
+    clickCase(caseUrl,index){
       var completeUrl = baseURL + caseUrl;
+
+      newEmailCounter -= collapsedCases[index]["New Emails"];
+      if(newEmailCounter != 0)
+        chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+      else
+        chrome.browserAction.setBadgeText({text: ""});      //set the badge to an empty string if there is no new email
       window.open(completeUrl, '_blank');
     }
   }
 })
 
 function test(){
-  console.log(baseURL)
   console.log(collapsedCases)
   console.log(collapsedCases.length)
-  // every time click in popup remove badge icon
-  chrome.browserAction.setBadgeText({text: ""});
 }
 
 

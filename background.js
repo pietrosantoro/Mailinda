@@ -7,14 +7,15 @@
 /* global variable */
 var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
+var logInSalesforce = false
 var request_html = "";
 var getNotification = false;
 var allEmail;
 var newEmail = {};
 var myNewEmail = [];
 var newEmailObj = [];
-var baseURL = "https://smbsalesimplementation--uat.cs10.my.salesforce.com/";
-var reportURL = "00OJ0000000swwd";
+var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
+var reportURL = "00O1Q000007WM2w";
 
 
 var collapsedCases = [];
@@ -43,51 +44,51 @@ function isEmpty(obj) {
   return true;
 }
 
-/* request every 60 sec */
 
-
-setInterval(function(){
-    $.get(baseURL+reportURL, function(response) { 
+function request(){
+  $.get(baseURL+reportURL, function(response) { 
     oldEmailCounter = newEmailCounter
-    newEmailCounter = 0;
     var domHTML = new DOMParser().parseFromString(response, "text/html");    //parse string response into HTML
-    var allEmailTest = [];
-    allEmailTest = getJSON(domHTML);
-    console.log(allEmailTest)
-    allEmail = allEmailTest
+    allEmail = getJSON(domHTML);
+    console.log(allEmail)
+    logInSalesforce = false;
 
     /* request ok and table found */
     if(allEmail){
+      logInSalesforce = true;
+      newEmailCounter=0;
       allEmail.splice(allEmail.length-2, 2) //clean allEmail object, delete last 2 elements
     
       var currentCase;
       var casesNumbers = [];
       collapsedCases = [];
       allEmail.forEach((e, i) => {
-        if (!(casesNumbers.includes(e["Case Number"]))) {
-          casesNumbers.push(e["Case Number"])
-          e["Emails Indexes"] = []
-          e["Total Emails"] = 0
-          e["New Emails"] = 0
-          e["Read Emails"] = 0
-          e["Sent Emails"] = 0
-          e["Replied Emails"] = 0
-          collapsedCases.push(e)
-        } 
-        if (casesNumbers.includes(e["Case Number"])) {
-          currentCase = collapsedCases[casesNumbers.indexOf(e["Case Number"])]
-          currentCase["Total Emails"] ++;
-          currentCase["Emails Indexes"].push(i)
-          switch(e["Email Status"]) {
-            case "New": currentCase["New Emails"] ++; newEmailCounter++; break;
-            case "Read": currentCase["Read Emails"] ++; break;
-            case "Sent": currentCase["Sent Emails"] ++; break;
-            case "Replied": currentCase["Replied Emails"] ++; break;
+        if(e["Email Status"] != "-"){   //exclude email without status
+          if (!(casesNumbers.includes(e["Case Number"]))) {
+            casesNumbers.push(e["Case Number"])
+            e["Emails Indexes"] = []
+            e["Total Emails"] = 0
+            e["New Emails"] = 0
+            e["Read Emails"] = 0
+            e["Sent Emails"] = 0
+            e["Replied Emails"] = 0
+            collapsedCases.push(e)
+          } 
+          if (casesNumbers.includes(e["Case Number"])) {
+            currentCase = collapsedCases[casesNumbers.indexOf(e["Case Number"])]
+            currentCase["Total Emails"] ++;
+            currentCase["Emails Indexes"].push(i)
+            switch(e["Email Status"]) {
+              case "New": currentCase["New Emails"] ++; newEmailCounter++; break;
+              case "Read": currentCase["Read Emails"] ++; break;
+              case "Sent": currentCase["Sent Emails"] ++; break;
+              case "Replied": currentCase["Replied Emails"] ++; break;
+            }
           }
         }
       })
       console.log(collapsedCases)
-    
+    /* notification if you have new email */
       if(newEmailCounter > oldEmailCounter)
         getNotification = true
     
@@ -119,9 +120,16 @@ setInterval(function(){
     /* request ok but table not found */
     else{
       console.log("table not found")
+      newEmailCounter = -1; //not logged in salesforce
     }
     }).fail(function() {
       console.log("request error");
+      newEmailCounter = -1; //not logged in salesforce
     });
-  },2000)
+}
+
+/* exec request first time when chrome is started or extension is reloaded */
+request();
+/* request every 60 sec */
+setInterval(request,60000)
 
