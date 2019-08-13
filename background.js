@@ -15,7 +15,7 @@ var newEmail = {};
 var myNewEmail = [];
 var newEmailObj = [];
 var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
-var reportURL = "00O1Q000007WM2w";
+var reportURL = "00O1Q000007WM2m";
 
 
 var collapsedCases = [];
@@ -131,5 +131,5 @@ function request(){
 /* exec request first time when chrome is started or extension is reloaded */
 request();
 /* request every 60 sec */
-setInterval(request,60000)
+setInterval(request,10000)
 
