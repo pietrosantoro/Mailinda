@@ -133,3 +133,12 @@ request();
 /* request every 60 sec */
 setInterval(request,10000)
 
+function GetReportList(){}
+
+function GetReport(){}
+
+function GetFullEmailList(){}
+
+function GetUnreadEmail(){}
+
+function GetInboxEmail(){}
