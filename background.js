@@ -80,6 +80,7 @@ function request(){
             currentCase["Emails Indexes"].push(i)
             switch(e["Email Status"]) {
               case "New": currentCase["New Emails"] ++; newEmailCounter++; break;
+              case "Unread": currentCase["New Emails"] ++; newEmailCounter++; break;
               case "Read": currentCase["Read Emails"] ++; break;
               case "Sent": currentCase["Sent Emails"] ++; break;
               case "Replied": currentCase["Replied Emails"] ++; break;
