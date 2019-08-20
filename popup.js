@@ -31,8 +31,9 @@ new Vue({
   methods:{
     clickCase(caseUrl,index){
       var completeUrl = baseURL + caseUrl;
-
-      newEmailCounter -= collapsedCases[index]["New Emails"];
+     // newEmailCounter -= collapsedCases[index]["New Emails"];
+     // bgpage.newEmailCounter -= collapsedCases[index]["New Emails"];
+      //collapsedCases.splice(index,1);
       if(newEmailCounter != 0)
         chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
       else
@@ -45,6 +46,7 @@ new Vue({
 function test(){
   console.log(collapsedCases)
   console.log(collapsedCases.length)
+  console.log(newEmailCounter);
 }
 
 
