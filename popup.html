@@ -25,6 +25,7 @@
                       <tr>
                         <th scope="col">Case Id</th>
                           <th scope="col">Case Status</th>
+                          <th scope="col">Adv Contact Name</th>
                           <th scope="col">New Email</th>
                       </tr>
                   </thead>
@@ -36,6 +37,9 @@
                       <td>
                           {{ item["Status"] }}
                       </td>
+                      <td>
+                        {{ item["Contact Name: Full Name"] }}
+                    </td>
                       <td>
                         <span class="badge badge-danger badge-pill"> {{ item["New Emails"] }} </span>
                       </td>
