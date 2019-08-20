@@ -26,8 +26,10 @@ chrome.browserAction.setBadgeText({text: ""});  //delete badge icon  when chrome
 
 function getJSON(domHTML){
   var table = domHTML.querySelector(".reportTable");
+  console.log(table)
   if(table){
     table = table.outerHTML;
+    console.log($(table).tableToJSON({ignoreHiddenRows: false}))
     return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
   }
   else
@@ -121,18 +123,16 @@ function request(){
     /* request ok but table not found */
     else{
       console.log("table not found")
-      newEmailCounter = -1; //not logged in salesforce
     }
     }).fail(function() {
       console.log("request error");
-      newEmailCounter = -1; //not logged in salesforce
     });
 }
 
 /* exec request first time when chrome is started or extension is reloaded */
 request();
 /* request every 60 sec */
-setInterval(request,10000)
+setInterval(request,60000)
 
 function GetReportList(){}
 
