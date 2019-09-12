@@ -20,8 +20,6 @@ table{
 
 #app{
     margin: 10px;
-    height: 100%;
-    width: 100%;
     min-height: 100%;
 }
 
@@ -30,8 +28,9 @@ table{
     }
 
 .align-middle{
-    position: relative;
+    position: absolute;
     top: 30%;
+    left: 10%;
 }
 
 .no-email {
