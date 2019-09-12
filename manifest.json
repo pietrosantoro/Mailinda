@@ -14,12 +14,15 @@
       "management",
       "webNavigation",
       "webRequest", "webRequestBlocking",
+      "clipboardRead",
       "<all_urls>"
     ],
     "optional_permissions": ["contentSettings"],
     "content_scripts" : [
       {
-      "matches" : ["https://smbsalesimplementation.my.salesforce.com/*"],
+      "matches" : [
+        "https://smbsalesimplementation.my.salesforce.com/*"
+      ],
       "all_frames": true,
       "js" : ["lib/jquery-3.4.1.min.js","script.js"]
       }

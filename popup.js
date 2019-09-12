@@ -26,19 +26,30 @@ new Vue({
   data: {
     collapsedCases,
     newEmailCounter,
-    logInSalesforce
+    logInSalesforce,
+    allEmail,
+    bgpage
   },
   methods:{
     clickCase(caseUrl,index){
       var completeUrl = baseURL + caseUrl;
-     // newEmailCounter -= collapsedCases[index]["New Emails"];
-     // bgpage.newEmailCounter -= collapsedCases[index]["New Emails"];
+      //newEmailCounter -= collapsedCases[index]["New Emails"];
+      //bgpage.newEmailCounter -= collapsedCases[index]["New Emails"];
       //collapsedCases.splice(index,1);
-      if(newEmailCounter != 0)
-        chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
-      else
-        chrome.browserAction.setBadgeText({text: ""});      //set the badge to an empty string if there is no new email
+      // if(newEmailCounter != 0)
+      //   chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
+      // else
+      //   chrome.browserAction.setBadgeText({text: ""});      //set the badge to an empty string if there is no new email
       window.open(completeUrl, '_blank');
+    },
+    refresh(){
+      bgpage.request();       //call request when click refresh button
+      location.reload();
+
+    },
+    collapseEmail(index){     //collapse single email when table row is clicked
+      var selector = ".test" + index;
+      $(selector).toggleClass('active');
     }
   }
 })
@@ -49,28 +60,26 @@ function test(){
   console.log(newEmailCounter);
 }
 
-
 test();
 
-/*
-function emailRequest(){
-  $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) { 
-      //changing the variable
-      var caseHtml = response;
-      //trasforming the response in html
-      var caseDom = new DOMParser().parseFromString(caseHtml, "text/html");
-    console.log(caseDom)
-      //selecting all emails elements from the dom
-      var mailElements =  caseDom.querySelectorAll('.caseEventBody .feeditemtext');
-      var mailObjects = [];
-      var singleMailObject = {};
-      mailElements.forEach(function(element){
-          singleMailObject = {date: "standard", body: element.innerText };
-          mailObjects.push(singleMailObject);
-      });
-      console.log(mailObjects);
-      });
-}
-emailRequest();
+ 
+// function emailRequest(){
+//   $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) { 
+//       //changing the variable
+//       var caseHtml = response;
+//       //trasforming the response in html
+//       var caseDom = new DOMParser().parseFromString(caseHtml, "text/html");
+//     console.log(caseDom)
+//       //selecting all emails elements from the dom
+//       var mailElements =  caseDom.querySelectorAll('.caseEventBody .feeditemtext');
+//       var mailObjects = [];
+//       var singleMailObject = {};
+//       mailElements.forEach(function(element){
+//           singleMailObject = {date: "standard", body: element.innerText };
+//           mailObjects.push(singleMailObject);
+//       });
+//       console.log(mailObjects);
+//       });
+// }
+// emailRequest();
 
-*/

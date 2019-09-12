@@ -63,4 +63,43 @@
   }
 
 
+
+//   function salesforceId(){
+//     document.querySelector(".ics-ghosting-ghost").addEventListener("click", _=>{
+//       document.querySelector("[ng-model='$ctrl.justificationType']").setAttribute("aria-label","Justification type: Salesforce ID")
+//       document.querySelector("[ng-model='$ctrl.justificationType'] > md-select-value > span > div").innerHTML = "Salesforce ID";
+
+
+
+
+     
+//       var text = document.execCommand('paste')
+//       console.log(text)
+
+//     })
+//   }
+  
+  
+// setTimeout(salesforceId,1000)
+  
+// function markReadConfirmed(){
+//   var targLink  = document.querySelector('[src="/img/checkbox_unchecked.gif"]')
+//   if(targLink){
+//     var clickEvent  = document.createEvent('MouseEvents');
+//     clickEvent.initEvent('dblclick', true, true);
+//     targLink.dispatchEvent(clickEvent);
+
+//     document.getElementById("00N1Q00000TUWy9").checked = true
+
+//     //sfdcPage.save();
+
+//     document.querySelector("[value=' Save ']").click()
+//   }
+
+
+// }
+
+// setTimeout(markReadConfirmed,2000)
+
+
   console.log("script.js")

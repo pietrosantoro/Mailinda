@@ -1,17 +1,17 @@
 body {
     font-family: 'Roboto', sans-serif;
-    height: 600px;
+    height: 500px;
     width: 600px;
-    background-color:#263238;
-    overflow-x: hidden;
+    background-color:#252a2e;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
-.table{
+table{
     margin-top: 4%;
-}
-.container {
-    margin-right: auto;
-    margin-left: auto;
+   
 }
 
 .far{
@@ -19,9 +19,15 @@ body {
 }
 
 #app{
+    margin: 10px;
     height: 100%;
     width: 100%;
+    min-height: 100%;
 }
+
+.clickable-row{
+    cursor:pointer;
+    }
 
 .align-middle{
     position: relative;
@@ -43,3 +49,45 @@ body {
     font-size: 20px;
     padding-top: 5px;
 }
+td.email-collapse{
+  padding: 0;
+  border: none;
+
+}
+tr[class^='test']{
+    background-color: #434b53;
+    
+    font-size: 0.9rem;
+}
+
+tr, td {
+    border-bottom: 0px;
+    transition: border-bottom 0.5s;
+    padding: 0;
+  }
+
+tr td div {
+    max-height: 0;
+    padding: 0 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: max-height 0.3s, padding 0.3s;
+    
+
+}
+tr.active td{
+    border-bottom: 2px groove darkgrey;
+    transition: border-bottom 0.2s;
+}
+
+tr.active td div {
+    
+    max-height: 100px;
+    padding: 10px 10px;
+    transition: max-height 0.6s, padding 0.6s;
+  }
+
+
+  .testColor{
+     
+  }
