@@ -44,7 +44,9 @@ new Vue({
     },
     refresh(){
       bgpage.request();       //call request when click refresh button
-      location.reload();
+      setTimeout(function(){
+        location.reload();
+      },500);
 
     },
     collapseEmail(index){     //collapse single email when table row is clicked

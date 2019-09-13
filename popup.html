@@ -21,8 +21,9 @@
 <body>
 
         <div id="app">
+          <button @click='refresh()'  type="button" class="btn btn-danger btn-sm">Refresh</button>
           <div v-if="newEmailCounter && logInSalesforce" class="container-fluid">
-              <button @click='refresh()'  type="button" class="btn btn-danger btn-sm">Refresh</button>
+              
             
               <div class="table-responsive">
 
