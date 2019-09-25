@@ -105,6 +105,25 @@
 
 
 
+function setMarketParameter(){
+  let market = document.getElementById("00N3600000QISBE_ileinner")
+  if(market){
+    console.log(market.innerText)
+    /* send a message to background script to set marketParameter */
+    chrome.runtime.sendMessage(
+      {
+      type: "set_market_variable",
+      data: market.innerText
+      },
+       function(response) {
+      console.log(response.message);
+    });
+  }
+  else{
+    console.log("no market detected")
+    
+  }
+}
 
 
 
@@ -135,6 +154,9 @@ const changingSender = () => {
     });
   }
 }
+
+
+setMarketParameter();
 changingSender();
 
 

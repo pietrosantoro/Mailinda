@@ -18,6 +18,41 @@ var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
 var reportURL = "00O1Q000007WM2m";
 
 
+
+let marketMapping = {
+  'Polish':'pl',
+  'Dutch':'nl',
+  'Russian':'ru',
+  'Turkish':'tr',
+  'Italian':'it',
+  'French':'fr',
+  'Spanish':'es',
+  'German':'de'
+}
+
+var marketParameter;
+
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.type == "set_market_variable"){
+      marketParameter = marketMapping[request.data];
+      console.log(marketParameter)
+      sendResponse({message: "market variable set"});
+    }
+    if(request.type == "get_market_variable"){
+      console.log(marketParameter)
+      sendResponse({
+        message: "market variable sent",
+        data : marketParameter
+      });
+    }
+      
+  });
+
 var collapsedCases = [];
 
 chrome.browserAction.setBadgeText({text: ""});  //delete badge icon  when chrome is started

@@ -87,6 +87,8 @@ tr.active td div {
   }
 
 
-  .testColor{
-     
-  }
+  .salesforce{
+    position: absolute;
+    top: 40%;
+    left: 38%;
+    }
