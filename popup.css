@@ -5,7 +5,7 @@ body {
     background-color:#252a2e;
 }
 ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
+    width: 1px;  /* Remove scrollbar space */
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
