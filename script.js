@@ -82,24 +82,24 @@
   
 // setTimeout(salesforceId,1000)
   
-// function markReadConfirmed(){
-//   var targLink  = document.querySelector('[src="/img/checkbox_unchecked.gif"]')
-//   if(targLink){
-//     var clickEvent  = document.createEvent('MouseEvents');
-//     clickEvent.initEvent('dblclick', true, true);
-//     targLink.dispatchEvent(clickEvent);
+function markReadConfirmed(){
+  var targLink  = document.getElementById("00N1Q00000TUWy9_chkbox")
+  if(targLink && targLink.alt != "Checked"){
+    var clickEvent  = document.createEvent('MouseEvents');
+    clickEvent.initEvent('dblclick', true, true);
+    targLink.dispatchEvent(clickEvent);
 
-//     document.getElementById("00N1Q00000TUWy9").checked = true
+    document.getElementById("00N1Q00000TUWy9").checked = true
 
-//     //sfdcPage.save();
+    //sfdcPage.save();
 
-//     document.querySelector("[value=' Save ']").click()
-//   }
+    document.querySelector("[value=' Save ']").click()
+  }
 
 
-// }
+}
 
-// setTimeout(markReadConfirmed,2000)
+setTimeout(markReadConfirmed,2000)
 
 
 
