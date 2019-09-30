@@ -38,7 +38,7 @@
                   </thead>
                   <tbody>
                     <template v-for="(item,index) in collapsedCases">
-                      <tr @click='collapseEmail(index)'v-if="item['New Emails']"  role="button" class="clickable-row">
+                      <tr @click='collapseEmail(index)'v-if="item['Total Emails']"  role="button" class="clickable-row">
                         <td>
                           <button @click='clickCase( item["Case ID"],index )' type="button" class="btn btn-secondary btn-sm">{{ item["Case Number"] }}</button>
                         </td>
@@ -49,9 +49,9 @@
                           {{ item["Contact Name: Full Name"] }}
                       </td>
                         <td>
-                          <span class="badge badge-danger badge-pill"> {{ item["New Emails"] }} </span>
+                          <span class="badge badge-danger badge-pill"> {{ item["Total Emails"] }} </span>
                         </td>
-                        <tr v-for="(email,indexEmail) in item['Emails Indexes']" :class="[`test${index}`]" v-if="allEmail[email]['Email Status'] == 'New'">
+                        <tr v-for="(email,indexEmail) in item['Emails Indexes']" :class="[`test${index}`]" v-if="allEmail[email]['Email Status']">
                           
                           
                             <td class="email-collapse"><div><button @click='clickCase( allEmail[email]["Email Message ID"],index)' type="button" class="btn btn-secondary btn-sm">Email</button></div></td>

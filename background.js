@@ -115,10 +115,10 @@ function request(){
             currentCase = collapsedCases[casesNumbers.indexOf(e["Case Number"])]
             currentCase["Total Emails"] ++;
             currentCase["Emails Indexes"].push(i)
-            switch(e["Email Status"]) {
+            switch(e["Email Status"]) {                 //mailinda shows New-Unread-Read emails so newEmailCounter is incremented in those cases
               case "New": currentCase["New Emails"] ++; newEmailCounter++; break;
-              case "Unread": currentCase["New Emails"] ++; newEmailCounter++; break;
-              case "Read": currentCase["Read Emails"] ++; break;
+              case "Unread": currentCase["Unread Emails"] ++; newEmailCounter++; break;
+              case "Read": currentCase["Read Emails"] ++; newEmailCounter++; break;
               case "Sent": currentCase["Sent Emails"] ++; break;
               case "Replied": currentCase["Replied Emails"] ++; break;
             }
