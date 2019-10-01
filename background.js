@@ -8,7 +8,6 @@
 var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
 var logInSalesforce = false   //set false when chrome is started to prevent request if agent is not logged in salesfore 
-var request_html = "";
 var getNotification = false;  
 var allEmail;
 var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
@@ -52,7 +51,7 @@ chrome.runtime.onMessage.addListener(
 
 
 
-/* get HTML table and return a JSON */
+/* get HTML table and return a JSON. tableToJSON is an external library https://github.com/lightswitch05/table-to-json */
 
 function getJSON(domHTML){
   var table = domHTML.querySelector(".reportTable");
@@ -168,7 +167,6 @@ function request(){
       console.log(collapsedCases)
       CheckNotification();
       console.log("newEmail: ", newEmailCounter)
-      request_html = response;
       setBadge();
       
     }
