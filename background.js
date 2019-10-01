@@ -4,16 +4,13 @@
 
 'use strict';
 
-/* global variable */
+/* global variables declared as var beacouse used in popup.js */
 var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
-var logInSalesforce = false
+var logInSalesforce = false   //set false when chrome is started to prevent request if agent is not logged in salesfore 
 var request_html = "";
-var getNotification = false;
+var getNotification = false;  
 var allEmail;
-var newEmail = {};
-var myNewEmail = [];
-var newEmailObj = [];
 var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
 var reportURL = "00O1Q000007WM2m";
 
@@ -79,7 +76,7 @@ function isEmpty(obj) {
   return true;
 }
 
-
+/* get all emails from the report */
 function GetFullEmailList(response){
 
   var domHTML = new DOMParser().parseFromString(response, "text/html");    //parse string response into HTML
@@ -87,6 +84,7 @@ function GetFullEmailList(response){
 
 }
 
+/* filter all emails and get only not confirmed email. Not confirmed emails in the report are those one as Email Status is new, unread or read*/
 function GetUnreadEmail(allEmail){
   
   var currentCase;

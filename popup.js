@@ -14,7 +14,6 @@ let bgpage = chrome.extension.getBackgroundPage(); //background page
 let request_html = bgpage.request_html;
 let string_html = String(request_html)
 let allEmail = bgpage.allEmail
-let newEmail = bgpage.newEmail
 let collapsedCases = bgpage.collapsedCases
 let baseURL = bgpage.baseURL
 let newEmailCounter = bgpage.newEmailCounter
