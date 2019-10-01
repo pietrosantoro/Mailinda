@@ -33,19 +33,12 @@ new Vue({
   methods:{
     clickCase(caseUrl,index){
       var completeUrl = baseURL + caseUrl;
-      //newEmailCounter -= collapsedCases[index]["New Emails"];
-      //bgpage.newEmailCounter -= collapsedCases[index]["New Emails"];
-      //collapsedCases.splice(index,1);
-      // if(newEmailCounter != 0)
-      //   chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
-      // else
-      //   chrome.browserAction.setBadgeText({text: ""});      //set the badge to an empty string if there is no new email
       window.open(completeUrl, '_blank');
     },
     refresh(){
       bgpage.request();       //call request when click refresh button
       setTimeout(function(){
-        location.reload();
+        location.reload();    //popup page reloaded after 0.5 sec to let request completed
       },500);
 
     },
