@@ -17,6 +17,9 @@ table{
 .far{
 	color: white;
 }
+.fa-angle-down{
+    color: gray;
+}
 
 #app{
     margin: 10px;
