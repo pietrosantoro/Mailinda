@@ -102,9 +102,11 @@ var fireAlert = (Data, date) => {
   Data.records.forEach(function(element) {
     //depending on wich team is managing the task
     if(element.Resource_location__c == "Dublin Team") {
-      dateChecker = (date.getHours() +2).toString();
+      dateChecker = (date.getHours()).toString();
+      console.log(`dublin time: ${dateChecker}`);
     } else {
       dateChecker = (date.getHours() +1).toString();
+      console.log(`krakow time: ${dateChecker}`);
     }
     //if the appoinment has not been rescheduled
       if(element.Rescheduled_Appointment_Date_Time__c != null ) {
@@ -117,8 +119,6 @@ var fireAlert = (Data, date) => {
           
             currentCase = element.Id;
            
-          
-            
           }  
          
         }
