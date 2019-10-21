@@ -88,6 +88,72 @@ test();
 
 
 
+var fireAlert = (Data, date) => {
+  var inprogressChecker = false;
+  var currentCase = "";
+  var dateChecker = (date.getHours() +1).toString();
+  var myOutput = {
+    caseId: "",
+    oncall: false
+
+  };
+  //loppo nella array d oggetti
+  Data.records.forEach(function(element) {
+      //if the appoinment has not been rescheduled
+      if(element.Rescheduled_Appointment_Date_Time__c != null ) {
+        //if the rescheduled date is within the next hour
+        if(element.Rescheduled_Appointment_Date_Time__c.match(/\T(.*)/)[0].includes(dateChecker)) {
+          //if the case status is still not oncall
+          if (element.Status != "On Call") {
+            currentCase = element.id;
+            console.log(currentCase);
+          }  
+         
+        }
+      //if the appoinment has not been rescheduled
+        //if  the appoinment date matches the checker
+      } else if (element.Appointment_Date__c.match(/\T(.*)/)[0].includes(dateChecker)) {
+         //if the case status is still not oncall
+         if (element.Status != "On Call") {
+          currentCase = element.id;
+          console.log(currentCase);
+        }  
+      }
+    }); 
+    //if myCase.lengt > 1 
+    if(currentCase.length > 1) {
+      //inprogress checker = true
+      inprogressChecker = true;
+       //else
+    } else {
+      //inprogress checker = false
+      inprogressChecker = false;
+    }
+
+    
+    myOutput.caseId = currentCase;
+    myOutput.oncall = inprogressChecker;
+    console.log(myOutput);
+    return myOutput;
+
+}
+
+const returnDate = (ldap) => {
+var date = new Date();
+if(date.getMinutes()) {
+  //requesting day cases via api
+  $.getJSON(`https://msito-dot-msite-incubator.appspot.com/api/salesforce?ldap=${ldap}`, function(data) {
+
+   fireAlert(data, date);
+  });
+}
+}
+returnDate("llando");
+
+
+
+
+
 
 
 
