@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="popup.css">
     <link rel="stylesheet" type="text/css" href="/lib/fontawesome-free-5.9.0-web/css/all.css">
-    <link rel="stylesheet" href="/lib/fontawesome-free-5.9.0-web/css/font-awesome-animation.min.css">
     
     <!-- js -->
    
@@ -35,7 +34,6 @@
                         <th class="th-sm" scope="col">Case Status</th>
                         <th class="th-sm" scope="col">Adv Contact Name</th>
                         <th class="th-sm" scope="col">New Email</th>
-                        <th class="th-sm" scope="col"></th>
                       </tr>
                   </thead>
                   <tbody>
@@ -52,11 +50,7 @@
                       </td>
                         <td>
                           <span class="badge badge-danger badge-pill"> {{ item["Total Emails"] }} </span>
-                          
                         </td>
-                        <td><i class="fas fa-angle-down fa-lg faa-float animated"></i></td>
-                        
-                        
                         <tr v-for="(email,indexEmail) in item['Emails Indexes']" :class="[`test${index}`]" v-if="allEmail[email]['Email Status']">
                           
                           
@@ -64,7 +58,7 @@
                             <td class="email-collapse"><div>{{ allEmail[email]["Email Status"] }}</div></td>
                             <td class="email-collapse"><div>{{ allEmail[email]["From Address"] }}</div></td>
                             <td class="email-collapse"><div>{{ allEmail[email]["Message Date"] }}</div></td>
-                            <td class="email-collapse"></td>
+                          
                         </tr>
                       </tr>
                       
