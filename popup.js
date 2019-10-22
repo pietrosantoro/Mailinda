@@ -96,7 +96,17 @@ var fireAlert = (Data, date) => {
     oncall: true
 
   };
-  //loppo nella array d oggetti
+  //loppo nella array d oggetti//salesforce id
+5001Q00000tDuPu
+//id
+01074885
+//googler
+mariarita@google.com
+//task
+
+//contatti
+Gianfranco Vivona	Advertiser Contact	(+39)0924514511	Gianfranco Vivona	0	info@original-legno.it	Advertiser Contact
+//appunti
   Data.records.forEach(function(element) {
     //depending on wich team is managing the task
     if(element.Resource_location__c == "Dublin Team") {
