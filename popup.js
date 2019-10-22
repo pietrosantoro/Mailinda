@@ -86,8 +86,6 @@ test();
 // emailRequest();
 
 
-
-
 var fireAlert = (Data, date) => {
   var inprogressChecker = false;
   var currentCase = "";
