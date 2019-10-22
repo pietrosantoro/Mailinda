@@ -63,7 +63,7 @@ tr[class^='test']{
 /* align tr with grid */
 tr {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1.3fr 2fr 2fr 2fr;
     text-align: center;
     
 }
