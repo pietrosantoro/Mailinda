@@ -86,58 +86,50 @@ test();
 // emailRequest();
 
 
+
+
+
+
 var fireAlert = (Data, date) => {
   var inprogressChecker = false;
   var currentCase = "";
-  var dateChecker = "";
+  var dateChecker = date;
   console.log(dateChecker);
   var myOutput = {
     caseId: "",
     oncall: true
 
   };
-  //loppo nella array d oggetti//salesforce id
-5001Q00000tDuPu
-//id
-01074885
-//googler
-mariarita@google.com
-//task
 
-//contatti
-Gianfranco Vivona	Advertiser Contact	(+39)0924514511	Gianfranco Vivona	0	info@original-legno.it	Advertiser Contact
-//appunti
-  Data.records.forEach(function(element) {
-    //depending on wich team is managing the task
-    if(element.Resource_location__c == "Dublin Team") {
-      dateChecker = (date.getHours()).toString();
-      console.log(`dublin time: ${dateChecker}`);
-    } else {
-      dateChecker = (date.getHours() +1).toString();
-      console.log(`krakow time: ${dateChecker}`);
-    }
+
+  console.log(Data);
+  //loppo nella array d oggetti//salesforce id
+
+  Data.forEach(function(element) {
+    
+    console.log(element["Case Number"]);
     //if the appoinment has not been rescheduled
-      if(element.Rescheduled_Appointment_Date_Time__c != null ) {
+      if(element["Rescheduled Appointment Date/Time"].length > 2 ) {
         //if the rescheduled date is within the next hour
         
-        if(element.Rescheduled_Appointment_Date_Time__c.match(/\T(.*)/)[0].includes(dateChecker)) {
+        if(element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
           //if the case status is still not oncall
           
           if (element.Status != "On Call") {
           
-            currentCase = element.Id;
+            currentCase = element["Case ID"];
            
           }  
          
         }
       //if the appoinment has not been rescheduled
         //if  the appoinment date matches the checker
-      } else if (element.Appointment_Date__c.match(/\T(.*)/)[0].includes(dateChecker)) {
+      } else if (element["Appointment Date/Time"].includes(dateChecker)) {
         
          //if the case status is still not oncall
          if (element.Status != "On Call") {
           
-          currentCase = element.Id;
+          currentCase = element["Case ID"];
          
           
         }  
@@ -161,19 +153,44 @@ Gianfranco Vivona	Advertiser Contact	(+39)0924514511	Gianfranco Vivona	0	info@or
 
 }
 
+
+
+
+//vedo cosa mi ritorna il report
+function getJSON(domHTML){
+  var table = domHTML.querySelector(".reportTable");
+  //console.log(table)
+  if(table){
+    table = table.outerHTML;
+    //console.log($(table).tableToJSON({ignoreHiddenRows: false}))
+    return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+  }
+  else
+    return 0;
+}
+
+
+
 const returnDate = (ldap) => {
-var date = new Date();
+  var date = new Date();
+  var hours = date.getHours();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  var strTime = hours+1  + ":00 "+ ampm;
 if(date.getMinutes()) {
   //requesting day cases via api
-  $.getJSON(`https://msito-dot-msite-incubator.appspot.com/api/salesforce?ldap=${ldap}`, function(data) {
-
-   fireAlert(data, date);
-  });
+  $.get('https://smbsalesimplementation.my.salesforce.com/00O1Q000007WYvy', function(response) { 
+    var alertHTML = new DOMParser().parseFromString(response, "text/html");    //parse string response into HTML
+     var mycaseReport = getJSON(alertHTML);
+     mycaseReport.pop();
+     mycaseReport.pop();
+     
+     fireAlert(mycaseReport, strTime);
+   });
 }
 }
-returnDate("llando");
-
-
+returnDate();
 
 
 
