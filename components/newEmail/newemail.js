@@ -1,8 +1,9 @@
 var templateNewEmail = `
 <div id="newEmailComponent">
-  <button @click='refresh()'  type="button" class="btn btn-danger btn-sm">Refresh</button>
+  <div class="container-fluid">
+    <button @click='refresh()'  type="button" class="btn btn-danger btn-sm">Refresh</button>
   
-          <div v-if="this.newEmailCounter && this.logInSalesforce" class="container-fluid">
+          <div v-if="this.newEmailCounter && this.logInSalesforce">
               
             
               <div class="table-responsive">
@@ -48,6 +49,7 @@ var templateNewEmail = `
                 </div>
               
             </div>
+          </div>
             <div v-else-if="this.newEmailCounter == 0 && this.logInSalesforce" class="text-center align-middle">
               <p class="no-email top">No new emails</p>  
               <img class="horizontal-line" src="../../images/no-email-check.svg">
