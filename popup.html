@@ -1,86 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!-- css -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
-    <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.3.1-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="popup.css">
-    <link rel="stylesheet" type="text/css" href="/lib/fontawesome-free-5.9.0-web/css/all.css">
-    
-    <!-- js -->
-   
-    <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="lib/tooltip.min.js"></script>
-    <script type="text/javascript" src="/lib/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/lib/vue.min.js"></script>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <!-- css -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
+  <link rel="stylesheet" type="text/css" href="lib/bootstrap-4.3.1-dist/css/bootstrap.min.css" />
+
+  <link rel="stylesheet" type="text/css" href="/lib/fontawesome-free-5.9.0-web/css/all.css" />
+
+  <!-- main css-->
+  <link rel="stylesheet" type="text/css" href="popup.css" />
+
+  <!-- components css-->
+  <link rel="stylesheet" type="text/css" href="components/EmailTemplate/emailtemplate.css" />
+  <link rel="stylesheet" type="text/css" href="components/GhostForce/ghostforce.css" />
+  <link rel="stylesheet" type="text/css" href="components/JuniorSme/juniorsme.css" />
+  <link rel="stylesheet" type="text/css" href="components/KnowledgeBase/knowledgebase.css" />
+  <link rel="stylesheet" type="text/css" href="components/newEmail/newemail.css" />
+
+  <!-- js -->
+
+  <script type="text/javascript" src="lib/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="lib/tooltip.min.js"></script>
+  <script type="text/javascript" src="/lib/bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/lib/vue.min.js"></script>
 </head>
+
 <body>
+  <div id="app">
+    <button v-for="tab in tabs" v-bind:key="tab"
+      v-bind:class="['tab-button btn btn-outline-light btn-sm', { active: currentTab === tab }]"
+      v-on:click="currentTab = tab">{{ tab }}</button>
+    <component v-bind:is="currentTabComponent" class="tab"></component>
 
-        <div id="app">
-          <button @click='refresh()'  type="button" class="btn btn-danger btn-sm">Refresh</button>
-          <div v-if="newEmailCounter && logInSalesforce" class="container-fluid">
-              
-            
-              <div class="table-responsive">
+  </div>
+  <footer class="page-footer font-small pt-4">
+    <div class="footer-copyright text-center text-white py-3">
+      © 2019 Copyright: S&T Team
+    </div>
+  </footer>
 
-                <table class="table table-hover table-dark">
-                  <thead>
-                      <tr>
-                        <th class="th-sm" scope="col">Case Id</th>
-                        <th class="th-sm" scope="col">Case Status</th>
-                        <th class="th-sm" scope="col">Adv Contact Name</th>
-                        <th class="th-sm" scope="col">New Email</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                    <template v-for="(item,index) in collapsedCases">
-                      <tr @click='collapseEmail(index)'v-if="item['Total Emails']"  role="button" class="clickable-row">
-                        <td>
-                          <button @click='clickCase( item["Case ID"],index )' type="button" class="btn btn-secondary btn-sm">{{ item["Case Number"] }}</button>
-                        </td>
-                        <td class='testColor'>
-                            {{ item["Status"] }}
-                        </td>
-                        <td>
-                          {{ item["Contact Name: Full Name"] }}
-                      </td>
-                        <td>
-                          <span class="badge badge-danger badge-pill"> {{ item["Total Emails"] }} </span>
-                        </td>
-                        <tr v-for="(email,indexEmail) in item['Emails Indexes']" :class="[`test${index}`]" v-if="allEmail[email]['Email Status']">
-                          
-                          
-                            <td class="email-collapse"><div><button @click='clickCase( allEmail[email]["Email Message ID"],index)' type="button" class="btn btn-secondary btn-sm">Email</button></div></td>
-                            <td class="email-collapse"><div>{{ allEmail[email]["Email Status"] }}</div></td>
-                            <td class="email-collapse"><div>{{ allEmail[email]["From Address"] }}</div></td>
-                            <td class="email-collapse"><div>{{ allEmail[email]["Message Date"] }}</div></td>
-                          
-                        </tr>
-                      </tr>
-                      
-                    </template>
-                  </tbody>
-                </table>
-                </div>
-              
-            </div>
-            <div v-else-if="newEmailCounter == 0 && logInSalesforce" class="text-center align-middle">
-              <p class="no-email top">No new emails</p>  
-              <img class="horizontal-line" src="images/no-email-check.svg">
-              <p class="no-email bottom">You're all caught up!</p> 
-            </div>
-            <div v-else class="text-center salesforce">
-              <a class= "btn btn-outline-light" href="https://login.salesforce.com/?locale=eu" target="_blank">Log in salesforce</a>
-            </div>
-        </div>
-        <footer class="page-footer font-small pt-4">
-          <div class="footer-copyright text-center text-white py-3">© 2019 Copyright: S&T Team </div> 
-        </footer>
-        <script type="text/javascript" src="popup.js"></script>
+  <!--Components-->
+  <script src="components/EmailTemplate/emailtemplate.js"></script>
+  <script src="components/GhostForce/ghostforce.js"></script>
+  <script src="components/JuniorSme/juniorsme.js"></script>
+  <script src="components/KnowledgeBase/knowledgebase.js"></script>
+  <script src="components/newEmail/newemail.js"></script>
 
+  <script type="text/javascript" src="popup.js"></script>
 </body>
+
 </html>
