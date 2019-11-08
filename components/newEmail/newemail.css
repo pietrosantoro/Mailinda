@@ -45,7 +45,7 @@ tr[class^='single-email']{
 }
 
 /* align tr with grid */
-tr {
+#newEmailComponent tr {
     display: grid;
     grid-template-columns: 1.3fr 2fr 2fr 2fr;
     text-align: center;

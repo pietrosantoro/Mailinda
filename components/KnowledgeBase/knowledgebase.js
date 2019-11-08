@@ -1,7 +1,11 @@
 var templateknowledgebase = `
+
 <div>
-  <div>Knowledge Base template</div>
+  
+  <div id="red">Knowledge Base template</div>
+  
 </div>
+
 `;
 
 var knowledgebase = Vue.component("knowledgebase", {

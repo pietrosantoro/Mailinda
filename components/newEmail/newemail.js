@@ -114,3 +114,5 @@ var newemail = Vue.component("newemail", {
     }
   }
 });
+var date = new Date()
+console.log(date)
