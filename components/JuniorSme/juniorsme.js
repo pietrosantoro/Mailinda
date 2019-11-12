@@ -6,12 +6,14 @@ var templatejuniorsme = `
       <tr>
         <th class="th-sm" scope="col">Hour</th>
         <th class="th-sm" scope="col">Agent Available</th>
+        <th  class="th-sm" scope="col"></th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(agent,index) in this.junior_sme_daily" v-bind:class="['clickable-row',{ 'table-primary': index == current_hours }]" @click="hangoutLink(agent)" role="button">
+      <tr v-for="(agent,index) in this.junior_sme_daily" v-bind:class="['clickable-row',{ 'table-primary': index == current_hours }]"  role="button">
         <td>{{ index }}:00</td>
         <td>{{agent}}</td>
+        <td @click="hangoutLink(agent)"><i class="fas fa-comment-dots fa-lg"></i></td>
       </tr>
     </tbody>
   </table>
