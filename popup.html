@@ -32,9 +32,44 @@
 
 <body>
   <div id="app">
-    <button v-for="tab in tabs" v-bind:key="tab"
-      v-bind:class="['tab-button btn btn-outline-light btn-sm', { active: currentTab === tab }]"
-      v-on:click="currentTab = tab">{{ tab }}</button>
+    <!-- <nav class="navbar navbar-default navbar-static-top">
+      <li v-for="tab in tabs" v-bind:key="tab"
+        v-bind:class="['tab-button btn btn-outline-light btn-sm', { active: currentTab === tab }]"
+        v-on:click="currentTab = tab">
+        {{ tab }}
+      </li>
+    </nav> -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+
+      <div class="navbar-collapse" id="navbarsExample05">
+        <ul class="navbar-nav pl-md-5 ml-auto">
+          <li v-for="tab in tabs" v-bind:key="tab" v-bind:class="['nav-item nav-link', { active: currentTab === tab }]"
+            v-on:click="currentTab = tab">
+            {{ tab }}
+
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link active" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="blog.html">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li> -->
+        </ul>
+
+
+      </div>
+
+    </nav>
+
     <component v-bind:is="currentTabComponent" class="tab"></component>
 
   </div>

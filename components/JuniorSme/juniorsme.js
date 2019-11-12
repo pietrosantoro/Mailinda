@@ -9,7 +9,7 @@ var templatejuniorsme = `
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(agent,index) in this.junior_sme_daily" v-bind:class="['clickable-row',{ available: index == current_hours }]" @click="hangout_link()" role="button">
+      <tr v-for="(agent,index) in this.junior_sme_daily" v-bind:class="['clickable-row',{ 'table-primary': index == current_hours }]" @click="hangoutLink(agent)" role="button">
         <td>{{ index }}:00</td>
         <td>{{agent}}</td>
       </tr>
@@ -24,6 +24,7 @@ var juniorsme = Vue.component("juniorsme", {
     return {
       count: 0,
       junior_sme_daily: "",
+      hangout_link: "",
       current_day: "",
       current_hours: ""
     };
@@ -46,8 +47,9 @@ var juniorsme = Vue.component("juniorsme", {
       .then(data => {
         console.log(data)
         console.log(data.juniorsme[this.current_day])
-        console.log(this.all_hours)
         this.junior_sme_daily = data.juniorsme[this.current_day]
+        this.hangout_link = data.hangout_link
+        console.log(this.hangout_link)
       })
       .catch(error => console.error(error))
     console.log('Junior SME mounted')
@@ -56,10 +58,10 @@ var juniorsme = Vue.component("juniorsme", {
     console.log('Junior SME destroyed')
   },
   methods: {
-    hangout_link() {
+    hangoutLink(agent) {
+
       console.log("hangout")
-      $.get("https://hangouts.google.com/?action=chat&pi=105293196973033874840")
-      // window.open("https://hangouts.google.com/?action=chat&pi=105293196973033874840");
+      window.open(this.hangout_link[agent]);
     }
   },
 });
