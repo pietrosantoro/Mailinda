@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-'use strict';
+"use strict";
 
 /*let changeColor = document.getElementById('changeColor');
 chrome.storage.sync.get('color', function(data) {
@@ -10,63 +10,44 @@ chrome.storage.sync.get('color', function(data) {
   changeColor.setAttribute('value', data.color);
 });
 */
-let bgpage = chrome.extension.getBackgroundPage(); //background page
-let request_html = bgpage.request_html;
-let string_html = String(request_html)
-let allEmail = bgpage.allEmail
-let newEmail = bgpage.newEmail
-let collapsedCases = bgpage.collapsedCases
-let baseURL = bgpage.baseURL
-let newEmailCounter = bgpage.newEmailCounter
-let logInSalesforce = bgpage.logInSalesforce
-
+var bgpage = chrome.extension.getBackgroundPage(); //background page
+var allEmail = bgpage.allEmail;
+var collapsedCases = bgpage.collapsedCases;
+var baseURL = bgpage.baseURL;
+var newEmailCounter = bgpage.newEmailCounter;
+var logInSalesforce = bgpage.logInSalesforce;
 
 new Vue({
-  el: '#app',
-  data: {
-    collapsedCases,
-    newEmailCounter,
-    logInSalesforce,
-    allEmail,
-    bgpage
+  el: "#app",
+  component: {
+    newemail,
+    ghostforce,
+    emailtemplate,
+    juniorsme,
+    knowledgebase
   },
-  methods:{
-    clickCase(caseUrl,index){
-      var completeUrl = baseURL + caseUrl;
-      //newEmailCounter -= collapsedCases[index]["New Emails"];
-      //bgpage.newEmailCounter -= collapsedCases[index]["New Emails"];
-      //collapsedCases.splice(index,1);
-      // if(newEmailCounter != 0)
-      //   chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
-      // else
-      //   chrome.browserAction.setBadgeText({text: ""});      //set the badge to an empty string if there is no new email
-      window.open(completeUrl, '_blank');
-    },
-    refresh(){
-      bgpage.request();       //call request when click refresh button
-      setTimeout(function(){
-        location.reload();
-      },500);
-
-    },
-    collapseEmail(index){     //collapse single email when table row is clicked
-      var selector = ".test" + index;
-      $(selector).toggleClass('active');
+  data: {
+    bgpage,
+    currentTab: 'New Email',
+    tabs: ['New Email', 'Ghost Force', 'Email Template', 'Junior SME', 'Knowledge Base']
+  },
+  computed: {
+    currentTabComponent: function () {
+      return this.currentTab.replace(" ", "").toLowerCase()
     }
   }
-})
+});
 
-function test(){
-  console.log(collapsedCases)
-  console.log(collapsedCases.length)
+function test() {
+  console.log(collapsedCases);
+  console.log(collapsedCases.length);
   console.log(newEmailCounter);
 }
 
 test();
 
- 
 // function emailRequest(){
-//   $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) { 
+//   $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) {
 //       //changing the variable
 //       var caseHtml = response;
 //       //trasforming the response in html
