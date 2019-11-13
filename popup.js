@@ -24,12 +24,14 @@ new Vue({
     ghostforce,
     emailtemplate,
     juniorsme,
-    knowledgebase
+    knowledgebase,
+    injector
+    
   },
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'Ghost Force', 'Email Template', 'Junior SME', 'Knowledge Base']
+    tabs: ['New Email', 'Ghost Force', 'Email Template', 'Junior SME', 'Knowledge Base', 'injector']
   },
   computed: {
     currentTabComponent: function () {
