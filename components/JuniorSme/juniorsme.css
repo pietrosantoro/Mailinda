@@ -1,4 +1,10 @@
-.available{
-    color:red;
+#juniorsmecomponent{
+    padding-top: 15px;
 }
 
+#juniorsmecomponent tr {
+    display: grid;
+    grid-template-columns: 1.3fr 2fr 2fr;
+    text-align: center;
+    
+}

@@ -44,7 +44,7 @@ function test() {
   console.log(newEmailCounter);
 }
 
-test();
+//test();
 
 // function emailRequest(){
 //   $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) {
