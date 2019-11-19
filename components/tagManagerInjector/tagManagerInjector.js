@@ -1,17 +1,3 @@
-//sul bottone start 
-//verifico che ci sia un gtm id valido
-//verifico se ci sono dei domini nel quale voglio applicarlo
-//in base hai domii storati e al gtm id 
-//creo un oggetto con gtm id 
-//dominii nel quale installarlo
-//salvo tutto nel local storage
-//quando sono su un nuovo dominio tagmager.js viene eseguito
-//se trova le info nel local storag e il domio e` corretto esegue l installazione
-//quando premo sto pulisco il local storage
-
-
-
-
 var templateInjector = `
 <div id="injector">
 
@@ -20,34 +6,28 @@ var templateInjector = `
 	</div>
 	
 	<div class="row form-group">
-		<div class="col-6 col-sm-6 col-md-6 align-middle">
-			<label for="GTM_ID">
-				<strong>GTM Container ID *</strong>
-      </label>
-      <div class="col-6 col-sm-6 col-md-6">
-		  	<input type="text" id="GTM_ID" placeholder="GTM-XXXXXX" autofocus>
-		</div>
-		</div>
-</div>
-	
-	<div class="row">
+		<label for="GTM_ID">
+			<strong>GTM Container ID</strong>
+    </label>
+    <input type="text" id="GTM_ID" placeholder="GTM-XXXXXX" autofocus>
+    <div class="invalid-feedback">
+          <p>Please choose a valid GTM ID.</p>
+    </div>
+    <div class="injectionSuccess">
+          <p>Your are injecting the GTM</p>
+          <p>(possibly you need to refresh the page)</p>
+    </div>
+    <div class="injectionFailed">
+          <p>Your are not injecting the GTM</p>
+    </div>
+	</div>
+  
+<div class="row button-group">
 		<div class="col-6 col-sm-6 col-md-6" >
-			<label for="TMI_DOMAIN">
-				<strong>Include Domain(s):</strong>
-			</label>
-      <span title="Leaving the domain blank will enable TMI across all domains">(i)</span>
-      <div class="col-6 col-sm-6 col-md-6">
-		  	<input type="text" id="GTM_ID" placeholder="GTM-XXXXXX" autofocus>
-		</div>
-		</div>
-  </div>
-
-  <div class="row">
-		<div class="col-6 col-sm-6 col-md-6" >
-			<button class="btn btn-secondary btn-block" id="gobtn">Start</button><br/>
+			<button @click='clickStart()' class="btn btn-secondary btn-block">Start</button><br/>
 		</div>
 		<div class="col-6 col-sm-6 col-md-6">
-			<button class="btn btn-secondary btn-block" id="deactivate">Stop</button>
+			<button @click='clickStop()' class="btn btn-secondary btn-block">Stop</button>
 		</div>
   </div>
  
@@ -61,14 +41,94 @@ var injector = Vue.component("injector", {
       count: 0
     };
   },
+  methods: {
+    
+    clickStart(gtmId) {
+      var gtmField = document.querySelector('#GTM_ID');
+      var errorMessage = document.querySelector('.invalid-feedback');
+      var injectionSuccess = document.querySelector('.injectionSuccess');
+      var injectionFailed = document.querySelector('.injectionFailed');
+      var gtmId = gtmField.value.replace(/ /g, '');
+     //controllo che gtmId 
+      if(gtmId.includes('GTM')){
+        gtmField.classList.add('success');
+        errorMessage.classList.remove('visible');
+        injectionFailed.classList.remove('visible');
+        injectionSuccess.classList.add('visible');
+        gtmField.classList.add('success');
+        gtmField.classList.remove('error');
+        gtmField.classList.remove('medium');
+        chrome.storage.sync.set({gtm: gtmId}, function() {
+          console.log('Value is set to ' + gtmId);
+        });
+        chrome.storage.sync.set({injectionController: true}, function() {
+          console.log('injectionController is true');
+        });
+
+      } else {
+        gtmField.classList.remove('success');
+        gtmField.classList.remove('medium');
+        gtmField.classList.add('error');
+        injectionFailed.classList.remove('visible');
+        injectionSuccess.classList.remove('visible');
+        errorMessage.classList.add('visible');
+      }
+     },
+    clickStop() {
+      var gtmField = document.querySelector('#GTM_ID');
+      var errorMessage = document.querySelector('.invalid-feedback');
+      var injectionSuccess = document.querySelector('.injectionSuccess');
+      var injectionFailed = document.querySelector('.injectionFailed');
+      errorMessage.classList.remove('visible');
+      injectionSuccess.classList.remove('visible');
+      injectionFailed.classList.add('visible');
+      gtmField.classList.remove('success');
+      gtmField.classList.remove('error');
+      gtmField.classList.add('medium');
+      chrome.storage.sync.set({injectionController: false}, function(result) {
+        console.log('injectionController is false');
+      });
+    }
+  },
   activated: function () {
-    console.log('injector activated')
+
+    console.log('injector  activated')
+
   },
   deactivated: function () {
     console.log('injector  deactivated')
   },
   mounted: function () {
     console.log('injector  mounted')
+    //retrivo il valore del gtm dallo storage
+    //lo associo come value al campo imput
+    //se la variabile di controllo e uguale a true do il messaggio che e ignettato
+    //se la variabile di controllo e` false do il messaggio di controllo che non e ignettato
+    var gtmField = document.querySelector('#GTM_ID');
+    var errorMessage = document.querySelector('.invalid-feedback');
+    var injectionSuccess = document.querySelector('.injectionSuccess');
+    var injectionFailed = document.querySelector('.injectionFailed');
+    chrome.storage.sync.get(['gtm'], function(result) {
+      gtmField.value = result.gtm;
+    });
+    chrome.storage.sync.get(['injectionController'], function(result) {
+      if(result.injectionController){
+        errorMessage.classList.remove('visible');
+        injectionFailed.classList.remove('visible');
+        injectionSuccess.classList.add('visible');
+        gtmField.classList.add('success');
+        gtmField.classList.remove('error');
+        gtmField.classList.remove('medium');
+      } else {
+        errorMessage.classList.remove('visible');
+        injectionFailed.classList.add('visible');
+        injectionSuccess.classList.remove('visible');
+        gtmField.classList.remove('success');
+        gtmField.classList.remove('error');
+        gtmField.classList.add('medium');
+      }
+    });
+
   },
   destroyed: function () {
     console.log('injector  destroyed')
