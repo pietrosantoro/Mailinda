@@ -58,7 +58,6 @@ function getJSON(domHTML) {
   //console.log(table)
   if (table) {
     table = table.outerHTML;
-    //console.log($(table).tableToJSON({ignoreHiddenRows: false}))
     return $(table).tableToJSON({ ignoreHiddenRows: false }); // Convert the table into a javascript object
   }
   else
@@ -149,12 +148,12 @@ function setBadge() {
   }
 }
 
-/* request is the main function: http request to the report to get all the emails*/
+/* request is the main function: http request to the report to get all the emails */
 function request() {
   $.get(baseURL + reportURL, function (response) {
     oldEmailCounter = newEmailCounter
     allEmail = GetFullEmailList(response)
-    console.log(allEmail)
+    //console.log(allEmail)
     logInSalesforce = false;
 
     /* request ok and table found */

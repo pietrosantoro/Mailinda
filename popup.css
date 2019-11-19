@@ -30,7 +30,7 @@ body {
 
 .navbar-nav{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);  /*5 is the number of menu items*/
+    grid-template-columns: repeat(5, 1fr);  /* 5 is the number of menu items */
 }
 
 .navbar .nav-link {

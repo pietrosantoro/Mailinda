@@ -46,7 +46,7 @@ var templateNewEmail = `
                     </template>
                   </tbody>
                 </table>
-                </div>
+              
               
             </div>
           </div>
@@ -58,6 +58,7 @@ var templateNewEmail = `
             <div v-else class="text-center salesforce">
               <a class= "btn btn-outline-light" href="https://login.salesforce.com/?locale=eu" target="_blank">Log in salesforce</a>
             </div>
+  </div>
 </div>
 `;
 
@@ -74,10 +75,7 @@ var newemail = Vue.component("newemail", {
     };
   },
   props: {
-    addNum: {
-      type: Number,
-      default: 3
-    }
+
   },
   activated: function () {
     console.log('New Email activated')
@@ -114,5 +112,3 @@ var newemail = Vue.component("newemail", {
     }
   }
 });
-var date = new Date()
-console.log(date)
