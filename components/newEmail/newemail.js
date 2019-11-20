@@ -48,7 +48,7 @@ var templateNewEmail = `
                 </table>
               
               
-            </div>
+            
           </div>
             <div v-else-if="this.newEmailCounter == 0 && this.logInSalesforce" class="text-center align-middle">
               <p class="no-email top">No new emails</p>  
@@ -58,7 +58,7 @@ var templateNewEmail = `
             <div v-else class="text-center salesforce">
               <a class= "btn btn-outline-light" href="https://login.salesforce.com/?locale=eu" target="_blank">Log in salesforce</a>
             </div>
-  </div>
+          </div>
 </div>
 `;
 

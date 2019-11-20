@@ -103,7 +103,7 @@ function removeEmailDel(foundTable) {
 
 
 
-
+//esempio messaggio
 
 function setMarketParameter() {
   let market = document.getElementById("00N3600000QISBE_ileinner")

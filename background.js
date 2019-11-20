@@ -30,6 +30,9 @@ var marketParameter;      //contains the market parameter recorded last time an 
 
 chrome.browserAction.setBadgeText({ text: "" });  //delete badge icon  when chrome is started
 
+
+
+//ascolta i messaggi
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     if (request.type == "set_market_variable") {         //if an agent visited a ticket, script.js send market parameter and backgroung.js set it

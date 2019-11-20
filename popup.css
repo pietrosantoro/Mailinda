@@ -30,23 +30,16 @@ body {
 
 .navbar-nav{
     display: grid;
-    grid-template-columns: repeat(5, 1fr);  /* 5 is the number of menu items */
+    grid-template-columns: repeat(6, 1fr);
 }
 
 .navbar .nav-link {
-    position: relative;
-    padding: .5rem 0rem;
-    outline: none !important;
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    letter-spacing: .2em;
-    -webkit-transition: .3s all ease;
-    -o-transition: .3s all ease;
-    transition: .3s all ease;
-    text-decoration: none;
-    cursor:pointer;
+  padding: .5rem 0rem;
+  outline: none !important;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  text-align: center;
 }
 
 .navbar .nav-link.active {
