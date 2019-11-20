@@ -51,7 +51,6 @@ var injector = Vue.component("injector", {
       var gtmId = gtmField.value.replace(/ /g, '');
      //controllo che gtmId 
       if(gtmId.includes('GTM')){
-        gtmField.classList.add('success');
         errorMessage.classList.remove('visible');
         injectionFailed.classList.remove('visible');
         injectionSuccess.classList.add('visible');
@@ -72,6 +71,9 @@ var injector = Vue.component("injector", {
         injectionFailed.classList.remove('visible');
         injectionSuccess.classList.remove('visible');
         errorMessage.classList.add('visible');
+        chrome.storage.sync.set({injectionController: false}, function() {
+          console.log('injectionController is true');
+        });
       }
      },
     clickStop() {
@@ -100,10 +102,6 @@ var injector = Vue.component("injector", {
   },
   mounted: function () {
     console.log('injector  mounted')
-    //retrivo il valore del gtm dallo storage
-    //lo associo come value al campo imput
-    //se la variabile di controllo e uguale a true do il messaggio che e ignettato
-    //se la variabile di controllo e` false do il messaggio di controllo che non e ignettato
     var gtmField = document.querySelector('#GTM_ID');
     var errorMessage = document.querySelector('.invalid-feedback');
     var injectionSuccess = document.querySelector('.injectionSuccess');
