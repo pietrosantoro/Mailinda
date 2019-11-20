@@ -31,7 +31,7 @@ new Vue({
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'Ghost Force', 'Email Template', 'Junior SME', 'Knowledge Base', 'GTM injector']
+    tabs: ['New Email', 'GTM injector', 'Junior SME']
   },
   computed: {
     currentTabComponent: function () {

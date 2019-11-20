@@ -23,16 +23,17 @@
   ],
   "content_scripts": [
     {
-      "exclude_matches": [ "https://tagmanager.google.com/*" ],
+      "exclude_matches": [
+        "https://tagmanager.google.com/*"
+      ],
       "js": [
         "tagManager.js"
-        ],
-        "matches": [
+      ],
+      "matches": [
         "\u003Call_urls>"
-        ],
-        "run_at": "document_start"
-        },
-    
+      ],
+      "run_at": "document_start"
+    },
     {
       "matches": [
         "https://smbsalesimplementation.my.salesforce.com/*"
@@ -70,7 +71,3 @@
   "manifest_version": 2,
   "author": "Tag Team"
 }
-
-
-
-
