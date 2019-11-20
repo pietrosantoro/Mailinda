@@ -49,7 +49,8 @@ var templateNewEmail = `
               
               
             
-          </div>
+              </div>
+            </div>
             <div v-else-if="this.newEmailCounter == 0 && this.logInSalesforce" class="text-center align-middle">
               <p class="no-email top">No new emails</p>  
               <img class="horizontal-line" src="../../images/no-email-check.svg">
@@ -59,7 +60,8 @@ var templateNewEmail = `
               <a class= "btn btn-outline-light" href="https://login.salesforce.com/?locale=eu" target="_blank">Log in salesforce</a>
             </div>
           </div>
-</div>
+
+  </div>
 `;
 
 var newemail = Vue.component("newemail", {
