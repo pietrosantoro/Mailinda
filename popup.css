@@ -34,12 +34,19 @@ body {
 }
 
 .navbar .nav-link {
-  padding: .5rem 0rem;
-  outline: none !important;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: .2em;
-  text-align: center;
+  position: relative;
+    padding: .5rem 0rem;
+    outline: none !important;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: .2em;
+    -webkit-transition: .3s all ease;
+    -o-transition: .3s all ease;
+    transition: .3s all ease;
+    text-decoration: none;
+    cursor:pointer;
 }
 
 .navbar .nav-link.active {
