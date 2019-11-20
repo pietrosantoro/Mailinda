@@ -25,13 +25,13 @@ new Vue({
     emailtemplate,
     juniorsme,
     knowledgebase,
-    injector
-    
+    gtminjector
+
   },
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'Ghost Force', 'Email Template', 'Junior SME', 'Knowledge Base', 'injector']
+    tabs: ['New Email', 'Ghost Force', 'Email Template', 'Junior SME', 'Knowledge Base', 'GTM injector']
   },
   computed: {
     currentTabComponent: function () {
@@ -75,13 +75,13 @@ function test() {
 
 
 //vedo cosa mi ritorna il report
-function getJSON(domHTML){
+function getJSON(domHTML) {
   var table = domHTML.querySelector(".reportTable");
   //console.log(table)
-  if(table){
+  if (table) {
     table = table.outerHTML;
     //console.log($(table).tableToJSON({ignoreHiddenRows: false}))
-    return $(table).tableToJSON({ignoreHiddenRows: false}); // Convert the table into a javascript object
+    return $(table).tableToJSON({ ignoreHiddenRows: false }); // Convert the table into a javascript object
   }
   else
     return 0;
@@ -93,45 +93,45 @@ var fireAlert = (Data, date) => {
   var inprogressChecker = false;
   var currentCase = "";
   var dateChecker = date;
-var myOutput = {
+  var myOutput = {
     caseId: "",
     oncall: true
 
   };
-  
-  Data.forEach(function(element) {
+
+  Data.forEach(function (element) {
     //if the appoinment has not been rescheduled
-      if(element["Rescheduled Appointment Date/Time"].length > 2 ) {
-        //if the rescheduled date is within the next hour
-        if(element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
-          //if the case status is still not oncall
-          if (element.Status != "On Call") {
-            currentCase = element["Case ID"];
-           }  
-         
-        }
-      //if the appoinment has not been rescheduled
-        //if  the appoinment date matches the checker
-      } else if (element["Appointment Date/Time"].includes(dateChecker)) {
+    if (element["Rescheduled Appointment Date/Time"].length > 2) {
+      //if the rescheduled date is within the next hour
+      if (element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
         //if the case status is still not oncall
-         if (element.Status != "On Call") {
+        if (element.Status != "On Call") {
           currentCase = element["Case ID"];
-         }  
+        }
+
       }
-    }); 
-    //if myCase.lengt > 1 
-    if(currentCase.length > 1) {
-      //inprogress checker = true
-      inprogressChecker = false;
-       //else
-    } else {
-      //inprogress checker = false
-      inprogressChecker = true;
+      //if the appoinment has not been rescheduled
+      //if  the appoinment date matches the checker
+    } else if (element["Appointment Date/Time"].includes(dateChecker)) {
+      //if the case status is still not oncall
+      if (element.Status != "On Call") {
+        currentCase = element["Case ID"];
+      }
     }
-    myOutput.caseId = currentCase;
-    myOutput.oncall = inprogressChecker;
-    console.log(myOutput);
-    return myOutput;
+  });
+  //if myCase.lengt > 1 
+  if (currentCase.length > 1) {
+    //inprogress checker = true
+    inprogressChecker = false;
+    //else
+  } else {
+    //inprogress checker = false
+    inprogressChecker = true;
+  }
+  myOutput.caseId = currentCase;
+  myOutput.oncall = inprogressChecker;
+  console.log(myOutput);
+  return myOutput;
 
 }
 
@@ -144,23 +144,23 @@ const returnDate = () => {
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
   //strTime the next hour in am pm format hour checker
-  var strTime = hours+1  + ":00 "+ ampm;
+  var strTime = hours + 1 + ":00 " + ampm;
 
   //if the curent minute is more then 55
-  if(date.getMinutes() > 55) {
-  //1- requesting all cases via http request to brendan report
+  if (date.getMinutes() > 55) {
+    //1- requesting all cases via http request to brendan report
     //2- parse string response into HTML
-      //3- return a json of the table 
-        //4- eliminating last element of the arry(not useful)  
-          //5- fire the function passing the arry of the day cases and the hour checker
-  $.get('https://smbsalesimplementation.my.salesforce.com/00O1Q000007WYvy', function(response) {  //1
-    var alertHTML = new DOMParser().parseFromString(response, "text/html"); //2   
-    var mycaseReport = getJSON(alertHTML); //3
-    mycaseReport.pop();//4
-    mycaseReport.pop();//4
-     fireAlert(mycaseReport, strTime); //5
-   });
-}
+    //3- return a json of the table 
+    //4- eliminating last element of the arry(not useful)  
+    //5- fire the function passing the arry of the day cases and the hour checker
+    $.get('https://smbsalesimplementation.my.salesforce.com/00O1Q000007WYvy', function (response) {  //1
+      var alertHTML = new DOMParser().parseFromString(response, "text/html"); //2   
+      var mycaseReport = getJSON(alertHTML); //3
+      mycaseReport.pop();//4
+      mycaseReport.pop();//4
+      fireAlert(mycaseReport, strTime); //5
+    });
+  }
 }
 returnDate();
 

@@ -34,7 +34,7 @@ var templateInjector = `
 </div>
 `;
 
-var injector = Vue.component("injector", {
+var gtminjector = Vue.component("gtminjector", {
   template: templateInjector,
   data() {
     return {
@@ -42,25 +42,25 @@ var injector = Vue.component("injector", {
     };
   },
   methods: {
-    
+
     clickStart(gtmId) {
       var gtmField = document.querySelector('#GTM_ID');
       var errorMessage = document.querySelector('.invalid-feedback');
       var injectionSuccess = document.querySelector('.injectionSuccess');
       var injectionFailed = document.querySelector('.injectionFailed');
       var gtmId = gtmField.value.replace(/ /g, '');
-     //controllo che gtmId 
-      if(gtmId.includes('GTM')){
+      //controllo che gtmId 
+      if (gtmId.includes('GTM')) {
         errorMessage.classList.remove('visible');
         injectionFailed.classList.remove('visible');
         injectionSuccess.classList.add('visible');
         gtmField.classList.add('success');
         gtmField.classList.remove('error');
         gtmField.classList.remove('medium');
-        chrome.storage.sync.set({gtm: gtmId}, function() {
+        chrome.storage.sync.set({ gtm: gtmId }, function () {
           console.log('Value is set to ' + gtmId);
         });
-        chrome.storage.sync.set({injectionController: true}, function() {
+        chrome.storage.sync.set({ injectionController: true }, function () {
           console.log('injectionController is true');
         });
 
@@ -71,11 +71,11 @@ var injector = Vue.component("injector", {
         injectionFailed.classList.remove('visible');
         injectionSuccess.classList.remove('visible');
         errorMessage.classList.add('visible');
-        chrome.storage.sync.set({injectionController: false}, function() {
+        chrome.storage.sync.set({ injectionController: false }, function () {
           console.log('injectionController is true');
         });
       }
-     },
+    },
     clickStop() {
       var gtmField = document.querySelector('#GTM_ID');
       var errorMessage = document.querySelector('.invalid-feedback');
@@ -87,7 +87,7 @@ var injector = Vue.component("injector", {
       gtmField.classList.remove('success');
       gtmField.classList.remove('error');
       gtmField.classList.add('medium');
-      chrome.storage.sync.set({injectionController: false}, function(result) {
+      chrome.storage.sync.set({ injectionController: false }, function (result) {
         console.log('injectionController is false');
       });
     }
@@ -106,11 +106,11 @@ var injector = Vue.component("injector", {
     var errorMessage = document.querySelector('.invalid-feedback');
     var injectionSuccess = document.querySelector('.injectionSuccess');
     var injectionFailed = document.querySelector('.injectionFailed');
-    chrome.storage.sync.get(['gtm'], function(result) {
+    chrome.storage.sync.get(['gtm'], function (result) {
       gtmField.value = result.gtm;
     });
-    chrome.storage.sync.get(['injectionController'], function(result) {
-      if(result.injectionController){
+    chrome.storage.sync.get(['injectionController'], function (result) {
+      if (result.injectionController) {
         errorMessage.classList.remove('visible');
         injectionFailed.classList.remove('visible');
         injectionSuccess.classList.add('visible');
