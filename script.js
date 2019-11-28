@@ -104,7 +104,7 @@ function removeEmailDel(foundTable) {
 
 
 //esempio messaggio
-
+// //marketParameter is setted in Mailinda on every access to the ticket based on the market 
 function setMarketParameter() {
   let market = document.getElementById("00N3600000QISBE_ileinner")
   if (market) {
@@ -130,7 +130,7 @@ function setMarketParameter() {
 
 
 //function to change the sender on the email setting the market one as a default
-// //marketParameter is setted in Mailinda on every access to the ticket based on the market 
+
 const changingSender = () => {
   let fromEmail = document.querySelector("#p26")
   if (fromEmail) {
