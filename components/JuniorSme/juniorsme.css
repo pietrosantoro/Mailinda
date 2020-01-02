@@ -8,3 +8,9 @@
     text-align: center;
     
 }
+
+#juniorsmecomponent .country{
+    height: 35px;
+    width: 35px;
+    margin-left: 20px;
+}
