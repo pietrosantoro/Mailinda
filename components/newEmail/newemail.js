@@ -97,7 +97,7 @@ var newemail = Vue.component("newemail", {
       window.open(completeUrl, "_blank");
     },
     refresh() {
-      bgpage.request(); //call request when click refresh button
+      bgpage.request_email(); //call request when click refresh button
       setTimeout(function () {
         location.reload(); //popup page reloaded after 0.5 sec to let request completed
       }, 500);

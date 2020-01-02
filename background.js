@@ -12,6 +12,9 @@ var getNotification = false;
 var allEmail;
 var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
 var reportURL = "00O1Q000007WM2m";
+var dailyCasesURL = "00O1Q000007WYvy";
+
+var currentHourCase;
 
 var collapsedCases = [];      //all cases with new emails
 
@@ -32,7 +35,7 @@ chrome.browserAction.setBadgeText({ text: "" });  //delete badge icon  when chro
 
 
 
-//ascolta i messaggi
+//listen message
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     if (request.type == "set_market_variable") {         //if an agent visited a ticket, script.js send market parameter and backgroung.js set it
@@ -50,9 +53,14 @@ chrome.runtime.onMessage.addListener(
 
   });
 
+//listen click on notification button
+chrome.notifications.onButtonClicked.addListener(function (notificationId, buttonIndex) {
+  if (notificationId = "onCall") {    //onCall is the name of the notification
+    console.log(currentHourCase)
+    window.open(baseURL + currentHourCase.caseId, "_blank");
+  }
 
-
-
+})
 
 /* get HTML table and return a JSON. tableToJSON is an external library https://github.com/lightswitch05/table-to-json */
 
@@ -151,8 +159,8 @@ function setBadge() {
   }
 }
 
-/* request is the main function: http request to the report to get all the emails */
-function request() {
+/* request_email is the main function: http request to the report to get all the emails */
+function request_email() {
   $.get(baseURL + reportURL, function (response) {
     oldEmailCounter = newEmailCounter
     allEmail = GetFullEmailList(response)
@@ -182,13 +190,92 @@ function request() {
 }
 
 /* exec request first time when chrome is started or extension is reloaded */
-request();
+request_email();
 /* request every 60 sec */
-setInterval(request, 60000)
+setInterval(request_email, 60000)
 
 
-function GetReportList() { }
 
-function GetReport() { }
 
-function GetInboxEmail() { }
+
+//based on next hour and case report generate an object with the case id and if you are on call
+var fireAlert = (Data, date) => {
+  var dateChecker = date;
+  var myOutput = {
+    caseId: "",
+    CaseNumber: "",
+    oncall: true
+  };
+
+  Data.forEach(function (element) {
+    //if the appoinment has been rescheduled
+    if (element["Rescheduled Appointment Date/Time"].length > 2) {
+      //if the rescheduled date is within the next hour
+      if (element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
+        //if the case status is still not oncall
+        if (element.Status != "On Call") {
+          myOutput.caseId = element["Case ID"];
+          myOutput.caseNumber = element["Case Number"];
+          myOutput.oncall = false;
+        }
+      }
+      //if the appoinment has not been rescheduled
+      //if  the appoinment date matches the checker
+    } else if (element["Appointment Date/Time"].includes(dateChecker)) {
+      //if the case status is still not oncall
+      if (element.Status != "On Call") {
+        myOutput.caseId = element["Case ID"];
+        myOutput.caseNumber = element["Case Number"];
+        myOutput.oncall = false;
+      }
+    }
+  });
+  console.log(myOutput);
+  return myOutput;
+
+}
+
+const checkOnCall = () => {
+  //restriving date object
+  var date = new Date();
+  //start changing date format into am pm
+  var hours = date.getHours();
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  //strTime the next hour in am pm format hour checker
+  var strTime = hours + 1 + ":00 " + ampm;
+  //if the curent minute is more then 55
+  if (date.getMinutes() > 55) {
+    //1- requesting all cases via http request to brendan report
+    //2- parse string response into HTML
+    //3- return a json of the table 
+    //4- eliminating last element of the arry(not useful)  
+    //5- fire the function passing the arry of the day cases and the hour checker
+    $.get(baseURL + dailyCasesURL, function (response) {  //1
+      var alertHTML = new DOMParser().parseFromString(response, "text/html"); //2   
+      var mycaseReport = getJSON(alertHTML); //3
+      mycaseReport.pop();//4
+      mycaseReport.pop();//4
+      currentHourCase = fireAlert(mycaseReport, strTime); //5
+      if (!currentHourCase.oncall) {
+        chrome.notifications.create(
+          'onCall', {
+            type: 'basic',
+            iconUrl: 'images/mail_icon.png',
+            title: "Case " + currentHourCase.caseNumber + "is not On Call",
+            message: "Click the button and put On Call your case",
+            buttons: [{
+              title: "On Call"
+            }
+            ]
+          },
+          function () {
+          }
+        );
+      }
+    });
+  }
+}
+checkOnCall();
+setInterval(checkOnCall, 60000)
