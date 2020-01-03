@@ -154,10 +154,20 @@ function setBadge() {
     chrome.browserAction.setBadgeText({ text: "" });
   }
   else {
-    chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] }); //red color badge
+    
     chrome.browserAction.setBadgeText({ text: String(newEmailCounter) });
+    //ghetting controller value from the localstorage
+    chrome.storage.sync.get(['injectionController'], function (result) {
+      console.log(result.injectionController);
+      if (result.injectionController) {
+        chrome.browserAction.setBadgeBackgroundColor({ color: [42, 187, 155, 1] }); //green color badge
+      } else {
+        chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] }); //red color badge
+      }
+    });
   }
 }
+
 
 /* request_email is the main function: http request to the report to get all the emails */
 function request_email() {

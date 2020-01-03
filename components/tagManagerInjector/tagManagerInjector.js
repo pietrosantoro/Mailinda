@@ -38,7 +38,8 @@ var gtminjector = Vue.component("gtminjector", {
   template: templateInjector,
   data() {
     return {
-      count: 0
+      count: 0,
+      bgpage: bgpage
     };
   },
   methods: {
@@ -75,6 +76,7 @@ var gtminjector = Vue.component("gtminjector", {
           console.log('injectionController is true');
         });
       }
+      bgpage.request_email(); //call request when click refresh button
     },
     clickStop() {
       var gtmField = document.querySelector('#GTM_ID');
@@ -90,7 +92,9 @@ var gtminjector = Vue.component("gtminjector", {
       chrome.storage.sync.set({ injectionController: false }, function (result) {
         console.log('injectionController is false');
       });
+      bgpage.request_email(); //call request when click refresh button
     }
+    
   },
   activated: function () {
 
