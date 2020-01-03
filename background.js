@@ -189,7 +189,7 @@ function request_email() {
   });
 }
 
-/* exec request first time when chrome is started or extension is reloaded */
+/* exec request_email first time when chrome is started or extension is reloaded */
 request_email();
 /* request every 60 sec */
 setInterval(request_email, 60000)
@@ -235,7 +235,7 @@ var fireAlert = (Data, date) => {
 
 }
 
-const checkOnCall = () => {
+function checkOnCall() {
   //restriving date object
   var date = new Date();
   //start changing date format into am pm
@@ -246,7 +246,7 @@ const checkOnCall = () => {
   //strTime the next hour in am pm format hour checker
   var strTime = hours + 1 + ":00 " + ampm;
   //if the curent minute is more then 55
-  if (date.getMinutes() > 55) {
+  if (date.getMinutes() >= 55) {
     //1- requesting all cases via http request to brendan report
     //2- parse string response into HTML
     //3- return a json of the table 
@@ -263,8 +263,9 @@ const checkOnCall = () => {
           'onCall', {
             type: 'basic',
             iconUrl: 'images/mail_icon.png',
-            title: "Case " + currentHourCase.caseNumber + "is not On Call",
+            title: "Case " + currentHourCase.caseNumber + " is not On Call",
             message: "Click the button and put On Call your case",
+            requireInteraction: true,
             buttons: [{
               title: "On Call"
             }
