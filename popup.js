@@ -17,6 +17,8 @@ var baseURL = bgpage.baseURL;
 var newEmailCounter = bgpage.newEmailCounter;
 var logInSalesforce = bgpage.logInSalesforce;
 
+var ghostforce_active = true;
+
 new Vue({
   el: "#app",
   component: {
@@ -26,15 +28,25 @@ new Vue({
     juniorsme,
     knowledgebase,
     gtminjector
-
   },
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'GTM injector', 'Junior SME']
+    tabs: ['New Email', 'GTM injector', 'Junior SME'],    //tab present in menu
+    ghostforce_active
   },
   computed: {
     currentTabComponent: function () {
+      //if agent is inside a ticket, the first component loaded is gonna be ghostforce
+      if (this.ghostforce_active) {
+        const new_tab = 'Ghost Force';
+        this.tabs = [new_tab].concat(this.tabs)   //new tab added to the tabs menu
+        this.currentTab = new_tab                 //current tab is Ghostforce
+        this.ghostforce_active = false;
+      }
+
+      document.documentElement.style.setProperty('--tabNumber', this.tabs.length);      //set CSS variable in popup.css placed in :root
+      //console.log(this.currentTab)
       return this.currentTab.replace(" ", "").toLowerCase()
     }
   }
@@ -47,26 +59,6 @@ function test() {
 }
 
 //test();
-
-// function emailRequest(){
-//   $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com//02sJ0000007CP46", function(response) {
-//       //changing the variable
-//       var caseHtml = response;
-//       //trasforming the response in html
-//       var caseDom = new DOMParser().parseFromString(caseHtml, "text/html");
-//     console.log(caseDom)
-//       //selecting all emails elements from the dom
-//       var mailElements =  caseDom.querySelectorAll('.caseEventBody .feeditemtext');
-//       var mailObjects = [];
-//       var singleMailObject = {};
-//       mailElements.forEach(function(element){
-//           singleMailObject = {date: "standard", body: element.innerText };
-//           mailObjects.push(singleMailObject);
-//       });
-//       console.log(mailObjects);
-//       });
-// }
-// emailRequest();
 
 
 

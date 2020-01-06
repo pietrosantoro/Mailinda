@@ -1,3 +1,7 @@
+:root{
+  --tabNumber: 3      /* default value or tab in menu. The value is set via Javascript in popup.js*/
+}
+
 body {
     font-family: "Oxygen", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-weight: 400;
@@ -30,7 +34,7 @@ body {
 
 .navbar-nav{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 3 is the number of menu items*/
+    grid-template-columns: repeat(var(--tabNumber), 1fr);  /* tabNumber is the number of menu items and it set via Javascript in popup.js */
 }
 
 .navbar .nav-link {
