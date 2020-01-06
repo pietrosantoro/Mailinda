@@ -1,5 +1,5 @@
 :root{
-  --tabNumber: 3      /* default value or tab in menu. The value is set via Javascript in popup.js*/
+  --tabNumber: 4      /* default value or tab in menu. The value is set via Javascript in popup.js*/
 }
 
 body {

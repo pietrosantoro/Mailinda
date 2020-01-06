@@ -32,7 +32,7 @@ new Vue({
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'GTM injector', 'Junior SME'],    //tab present in menu
+    tabs: ['New Email', 'Ghost Force', 'GTM injector', 'Junior SME'],    //tab present in menu
     ghostforce_active
   },
   computed: {
@@ -40,7 +40,7 @@ new Vue({
       //if agent is inside a ticket, the first component loaded is gonna be ghostforce
       if (this.ghostforce_active) {
         const new_tab = 'Ghost Force';
-        this.tabs = [new_tab].concat(this.tabs)   //new tab added to the tabs menu
+        //this.tabs = [new_tab].concat(this.tabs)   //new tab added to the tabs menu
         this.currentTab = new_tab                 //current tab is Ghostforce
         this.ghostforce_active = false;
       }
