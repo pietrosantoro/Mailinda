@@ -19,17 +19,24 @@ var templateghostforce = `
            <span class='tip'>High Touch</span>
            <img class='quickbtn' src='../images/ghost_icons/icon-high-touch.svg'>
          </a>
+
+          <a v-if="this.current_level == 'L1' "  href="#" class='tool'>
+           <span class='tip'>Level 1</span>
+           <img class='quickbtn' src='../images/ghost_icons/icon-level-1.png'>
+         </a>
+         <a v-if="this.current_level == 'L2' " href="#" class='tool'>
+           <span class='tip'>Level 2</span>
+           <img class='quickbtn' src='../images/ghost_icons/icon-level-2.png'>
+         </a>
        </div>
 
       </div>
       <div class='detail_info' v-if="ghostforce_active">
-        <b>
-          Advertiser:  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          Webmaster:  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          Sales Rep:  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
-          Account:  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
-          Account:  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-        </b>
+          <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
       </div>
    </div>
 `;
@@ -56,8 +63,9 @@ var ghostforce = Vue.component("ghostforce", {
         { name: "Level 1", src: "../images/ghost_icons/icon-level-1.png" },
         { name: "Level 2", src: "../images/ghost_icons/icon-level-2.png" }
       ],
-      program_level: "a",
+      program_level: "",
       current_program: "",
+      all_task: "",
       task_level: "",
       current_level: "",
       all_salesforce_fields: all_salesforce_fields
@@ -71,20 +79,66 @@ var ghostforce = Vue.component("ghostforce", {
   },
   mounted: function () {
     if (this.ghostforce_active) {
-
+      //fetch all program data
       fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data.json')
         .then(response => response.json())
         .then(data => {
           this.program_level = data;
           console.log(this.program_level)
-          console.log(this.all_salesforce_fields)
-          var current_obj = this.program_level.programList.filter(obj => {
+
+          let current_obj = this.program_level.programList.find(obj => {
+            //console.log(obj)
             return obj["program_Name"] === this.all_salesforce_fields["Team"]
           })
-          this.current_program = current_obj[0].program_Level
+          if (current_obj) {
+            this.current_program = current_obj.program_Level
+          }
+
 
           console.log(this.current_program)
           console.log(this.program_level)
+        })
+        .catch(err => {
+          //handle the error
+          console.log(' Cant fetch the JSON file, Im inside the newemail.js')
+        })
+      //fetch all task
+      fetch('http://35.228.175.186/process_data/general-data/raw/master/task_data.json')
+        .then(response => response.json())
+        .then(data => {
+          this.task_level = data;
+          //all_task is an array which contains all ticket tasks 
+          this.all_task = this.all_salesforce_fields["Tags"]
+          console.log(this.all_task)
+          //task_type is an array which contains all ticket tasks type
+          var task_type = []
+          this.all_task.forEach(element => {
+            console.log(element.Task_Type)
+            task_type.push(element.Task_Type)
+          });
+          console.log(task_type)
+
+          let current_obj = []
+          task_type.forEach(element => {
+            var temp = this.task_level.taskList.find(obj => {
+              console.log(obj)
+              console.log(element)
+              return obj["task_Name"] === element
+            })
+            if (temp) {
+              current_obj.push(temp.task_LVL)
+              console.log(current_obj)
+            }
+          })
+          console.log(current_obj)
+          //current_level is the level of the ticket. If I found a level 2 task, the ticket will be level 2, otherwise level 1
+          this.current_level = current_obj.find(obj => {
+            return obj == "L2"
+          })
+          if (!this.current_level) {
+            this.current_level = "L1"
+          }
+          console.log(this.current_level)
         })
         .catch(err => {
           //handle the error
