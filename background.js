@@ -9,10 +9,12 @@ var newEmailCounter = 0;      //new email after request
 var oldEmailCounter = 0;      //new email before request
 var logInSalesforce = false   //set false when chrome is started to prevent request if agent is not logged in salesfore 
 var getNotification = false;
+var ghostforce_active = false;
 var allEmail;
 var baseURL = "https://smbsalesimplementation.my.salesforce.com/";
 var reportURL = "00O1Q000007WM2m";
 var dailyCasesURL = "00O1Q000007WYvy";
+
 
 var currentHourCase;
 
@@ -151,25 +153,25 @@ function CheckNotification() {
 
 /* set badge text every time request is called*/
 function setBadge() {
-   chrome.storage.sync.get(['injectionController'], function (result) {
+  chrome.storage.sync.get(['injectionController'], function (result) {
     console.log(result.injectionController);
     if (result.injectionController) {
-        if (newEmailCounter == 0) {
-            chrome.browserAction.setBadgeText({ text: " " });
-          }
-          else {
-            chrome.browserAction.setBadgeText({ text: String(newEmailCounter) });
-            //ghetting controller value from the localstorage
-          }
+      if (newEmailCounter == 0) {
+        chrome.browserAction.setBadgeText({ text: " " });
+      }
+      else {
+        chrome.browserAction.setBadgeText({ text: String(newEmailCounter) });
+        //ghetting controller value from the localstorage
+      }
       chrome.browserAction.setBadgeBackgroundColor({ color: [42, 187, 155, 1] }); //green color badge
     } else {
-        if (newEmailCounter == 0) {
-            chrome.browserAction.setBadgeText({ text: "" });
-          }
-          else {
-            chrome.browserAction.setBadgeText({ text: String(newEmailCounter) });
-            //ghetting controller value from the localstorage
-          }
+      if (newEmailCounter == 0) {
+        chrome.browserAction.setBadgeText({ text: "" });
+      }
+      else {
+        chrome.browserAction.setBadgeText({ text: String(newEmailCounter) });
+        //ghetting controller value from the localstorage
+      }
       chrome.browserAction.setBadgeBackgroundColor({ color: [255, 0, 0, 255] }); //red color badge
     }
   });
@@ -227,10 +229,13 @@ var fireAlert = (Data, date) => {
   };
 
   Data.forEach(function (element) {
+    console.log(element)
     //if the appoinment has been rescheduled
     if (element["Rescheduled Appointment Date/Time"].length > 2) {
+      console.log("dentro reschedule")
       //if the rescheduled date is within the next hour
       if (element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
+        console.log("dentro reschedule e data checker")
         //if the case status is still not oncall
         if (element.Status != "On Call") {
           myOutput.caseId = element["Case ID"];
@@ -241,6 +246,7 @@ var fireAlert = (Data, date) => {
       //if the appoinment has not been rescheduled
       //if  the appoinment date matches the checker
     } else if (element["Appointment Date/Time"].includes(dateChecker)) {
+      console.log("dentro non reschedule")
       //if the case status is still not oncall
       if (element.Status != "On Call") {
         myOutput.caseId = element["Case ID"];
@@ -255,15 +261,23 @@ var fireAlert = (Data, date) => {
 }
 
 function checkOnCall() {
-  //restriving date object
+  //retriving date object
   var date = new Date();
   //start changing date format into am pm
   var hours = date.getHours();
   var ampm = hours >= 12 ? 'PM' : 'AM';
   hours = hours % 12;
   hours = hours ? hours : 12; // the hour '0' should be '12'
+  console.log(hours)
   //strTime the next hour in am pm format hour checker
-  var strTime = hours + 1 + ":00 " + ampm;
+  if (hours == 12) {
+    var strTime = "1:00 " + ampm;
+  }
+  else {
+    var strTime = hours + 1 + ":00 " + ampm;
+  }
+
+  console.log(strTime)
   //if the curent minute is more then 55
   if (date.getMinutes() >= 55) {
     //1- requesting all cases via http request to brendan report
@@ -273,9 +287,14 @@ function checkOnCall() {
     //5- fire the function passing the arry of the day cases and the hour checker
     $.get(baseURL + dailyCasesURL, function (response) {  //1
       var alertHTML = new DOMParser().parseFromString(response, "text/html"); //2   
+      console.log(alertHTML)
       var mycaseReport = getJSON(alertHTML); //3
+      console.log("prima di pop")
+      console.log(mycaseReport)
       mycaseReport.pop();//4
       mycaseReport.pop();//4
+      console.log("dopo di pop")
+      console.log(mycaseReport)
       currentHourCase = fireAlert(mycaseReport, strTime); //5
       if (!currentHourCase.oncall) {
         chrome.notifications.create(

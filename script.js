@@ -1,9 +1,5 @@
 //content script runs after page load
 
-// http request every 30 seconds
-
-
-
 
 // setInterval(function(){
 // $.get("https://smbsalesimplementation--uat.cs10.my.salesforce.com/00OJ0000000sw5U", function(response) { 
@@ -102,8 +98,6 @@ function removeEmailDel(foundTable) {
 // setTimeout(markReadConfirmed,2000)
 
 
-
-//esempio messaggio
 // //marketParameter is setted in Mailinda on every access to the ticket based on the market 
 function setMarketParameter() {
   let market = document.getElementById("00N3600000QISBE_ileinner")
@@ -159,5 +153,154 @@ const changingSender = () => {
 setMarketParameter();
 changingSender();
 
+
+// From here we are filling the required fields
+var all_salesforce_fields = {}
+
+// returns the part of salesforce page that contains interesting data
+function getActiveFrame() {
+  let frame = $('iframe.x-border-panel[src^="https://smbsalesimplementation.my.salesforce.com"]').add('iframe.x-border-panel[src^="/"]').not('iframe.x-border-panel[src*="ResourceCalendar"]').filter(":visible").contents().find("html");
+  if (frame.length == 0)
+    frame = $("html");
+  return frame
+}
+
+chrome.runtime.onMessage.addListener(
+  function (request, sender, sendResponse) {
+    if (request.txt === "start") {
+      console.log("start message from popup");
+      let iframe = getActiveFrame();
+      if (iframe[0].querySelector(".pageType").innerText == "Case") {
+        console.log(iframe[0].querySelector(".pageType").innerText)
+        sendResponse({ message: "inside case" });
+      }
+      else {
+        sendResponse({ message: "outside case" });
+      }
+
+    }
+    else if (request.txt == "checkTicket") {
+
+      // Get the HTML of the active iFrame
+      let iframes = getActiveFrame()
+      // We only need the rows
+      let trs = iframes.find('tr');
+      //get the mondatory fields from the JSON GitLab 
+      let result = request.data["mfields"]
+      //separate the fields
+      let newresult = new RegExp(result.join("|"));
+      //get the rows that contains these fields
+      let rows = trs.filter(function (index) {
+        return newresult.test($(this).text());
+      })
+      // Getting the value and the associated label
+      let fieldTitle = rows.find("td.labelCol");
+      let field = rows.find("td.dataCol");
+
+      //get all the fields from the the top of the active tab
+      let allTitles = trs.find("td.labelCol");
+      let allfiels = trs.find("td.dataCol");
+
+      for (let i = 0; i < allTitles.length; i++) {
+        all_salesforce_fields[allTitles[i].textContent] = allfiels[i].textContent
+      }
+
+      //replace any special caracater with underscore _
+      function replaceSpecialChars(string) {
+        string = string.replace(/[!"#%&'()*+,./;<=>@[\]^`{|}~\\]/g, "");
+        return string.replace(/\s/g, "_");
+      }
+      //find the tables that are at the bottom
+      let pageBlocks = iframes.find(".bPageBlock");
+
+      pageBlocks.each(function (index) {
+        let block = $(this);
+
+        let blockName = block.find(".pbTitle").text();
+        blockName = blockName.replace(/\s/g, "_");
+
+
+        let columns = block.find(".headerRow").children();
+        let dataRows = block.find(".dataRow");
+
+        for (let rowID = 0; rowID < dataRows.length; rowID++) {
+
+          let cells = dataRows[rowID].children;
+
+          for (let colID = 0; colID < columns.length; colID++) {
+
+            let colName = replaceSpecialChars(columns[colID].textContent);
+
+            let cellText = cells[colID].textContent;
+
+
+            if (!(all_salesforce_fields[blockName] instanceof Array))
+              all_salesforce_fields[blockName] = [];
+            if (!(all_salesforce_fields[blockName][rowID] instanceof Object))
+              all_salesforce_fields[blockName][rowID] = {};
+
+            all_salesforce_fields[blockName][rowID][colName] = cellText;
+          }
+        }
+      });
+
+      //get the url link 
+
+      //check first the implementation type as the url is in different place for shopping cases
+      let implementationType = all_salesforce_fields['Subject'];
+      let url = "";
+      if (implementationType == 'Tag Implementation') {
+
+        url = iframes[0].querySelector('.cellCol2 > a').href
+        all_salesforce_fields.URL = url
+
+      }
+      else if (implementationType == 'Shopping Campaign') {
+        url = iframes[0].querySelector("#\\30 0N3600000QISDx_ileinner > a").href
+        all_salesforce_fields.URL = url
+        console.log("url shopping" + all_salesforce_fields.URL)
+      }
+
+      //the whole object that gets all the fields of the case 
+      console.log(all_salesforce_fields)
+      sendResponse({
+        message: "salesforce",
+        data: all_salesforce_fields
+      });
+      // chrome.runtime.sendMessage(
+      //   {
+      //     type: "all salesforce fields",
+      //     data: all_salesforce_fields
+      //   },
+      //   function (response) {
+      //     console.log(response.message);
+      //   });
+
+      // To color or not to color
+      for (let i = 0; i < field.length; i++) {
+        // Check if the label of this data is one of the mandatory fields
+        if (newresult.test(fieldTitle[i].textContent)) {
+          let value = field[i].textContent;
+          // if it is a select item:
+          // use selected option as value
+          if ($(field[i]).find("option:visible")[0])
+            value = $(field[i]).find("option:visible")[0].textContent;
+          // Replace space by _ to have an easier regex test
+          value = value.replace(/\s/g, "_");
+          // If the data value starts with _, then it is empty
+          let check_value = new RegExp("^_");
+          // If empty, color. If not, uncolor
+          if (check_value.test(value)) {
+            $(field[i]).css("background", "red");
+          } else {
+            $(field[i]).css("background", "none");
+          }
+        }
+      }
+    }
+    else {
+      console.log('Something wrong in send message to script.js !!!')
+    }
+  })
 
 console.log("script.js")
