@@ -1,9 +1,12 @@
 var templateghostforce = `
    <div id='ghostforceComponent'>
-     <!-- <div id="adsIcons" style='display:inline'>
-       <button  style="border-radius:50%" v-for=" (img,key) in ghost_images" :key="key"   @click='ghost($event)' type="button"><img :src="img.src" :title="img.name" width='35' ></button>
-    </div> -->
+     
+
+
+
      <div class='icon'>
+
+       <h1><img src="images/ghost_icons/ghost.png">Ghost force</h1>
        <div :class="['row_icon', { graybtn: ghostforce_active == false }]">
         <a v-for=" (img,key) in ghost_images" :key="key"   @click='ghost(img.name)' href="#" class="tool">
           <span class='tip'>{{img.name}}</span>
@@ -31,13 +34,72 @@ var templateghostforce = `
        </div>
 
       </div>
+
+
+
+
+
       <div class='detail_info' v-if="ghostforce_active">
+
+
+          <h1><img src="images/ghost_icons/nightmare.png">Contact info</h1>
           <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
           <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
           <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+     
+     
+     
+     
+     
       </div>
+
+
+
+      <div class='appointment_info' v-if="ghostforce_active">
+
+
+          <h1><img src="images/ghost_icons/nightmare.png">Appointment info</h1>
+          <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+        
+      </div>
+
+
+
+      <div class='task_info' v-if="ghostforce_active">
+
+
+          <h1><img src="images/ghost_icons/nightmare.png">Task info</h1>
+          <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+        
+      </div>
+
+
+      <div class='case_info' v-if="ghostforce_active">
+
+
+        <h1><img src="images/ghost_icons/nightmare.png">Case comment</h1>
+        <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+
+      </div>
+
+
+
+
+
    </div>
 `;
 
