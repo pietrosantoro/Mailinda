@@ -15,7 +15,7 @@ var templateghostforce = `
            <span class='tip'>Scaled</span>
            <img class='quickbtn' src='../images/ghost_icons/icon-scaled.svg'>
          </a>
-         <a v-if="this.current_program == 'HT' " href="#" class='tool'>
+         <a v-if="this.current_program == 'High Touch' " href="#" class='tool'>
            <span class='tip'>High Touch</span>
            <img class='quickbtn' src='../images/ghost_icons/icon-high-touch.svg'>
          </a>
@@ -80,7 +80,7 @@ var ghostforce = Vue.component("ghostforce", {
   mounted: function () {
     if (this.ghostforce_active) {
       //fetch all program data
-      fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data.json')
+      fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data_updated.json')
         .then(response => response.json())
         .then(data => {
           this.program_level = data;
@@ -88,10 +88,10 @@ var ghostforce = Vue.component("ghostforce", {
 
           let current_obj = this.program_level.programList.find(obj => {
             //console.log(obj)
-            return obj["program_Name"] === this.all_salesforce_fields["Team"]
+            return obj["programName"] === this.all_salesforce_fields["Team"]
           })
           if (current_obj) {
-            this.current_program = current_obj.program_Level
+            this.current_program = current_obj.programLevel
           }
 
 
@@ -142,7 +142,7 @@ var ghostforce = Vue.component("ghostforce", {
         })
         .catch(err => {
           //handle the error
-          console.log(' Cant fetch the JSON file, Im inside the newemail.js')
+          console.log(' Cant fetch the JSON file, Im inside ghostforce.js')
         })
     }
     setTimeout(function () {
