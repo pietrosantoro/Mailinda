@@ -155,7 +155,7 @@ changingSender();
 
 
 // From here we are filling the required fields
-var all_salesforce_fields = {}
+
 
 // returns the part of salesforce page that contains interesting data
 function getActiveFrame() {
@@ -180,7 +180,7 @@ chrome.runtime.onMessage.addListener(
 
     }
     else if (request.txt == "checkTicket") {
-
+      var all_salesforce_fields = {}
       // Get the HTML of the active iFrame
       let iframes = getActiveFrame()
       // We only need the rows

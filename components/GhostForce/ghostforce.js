@@ -125,6 +125,7 @@ var ghostforce = Vue.component("ghostforce", {
         { name: "Level 1", src: "../images/ghost_icons/icon-level-1.png" },
         { name: "Level 2", src: "../images/ghost_icons/icon-level-2.png" }
       ],
+      current_subject: "",
       program_level: "",
       current_program: "",
       all_task: "",
@@ -141,6 +142,7 @@ var ghostforce = Vue.component("ghostforce", {
   },
   mounted: function () {
     if (this.ghostforce_active) {
+      this.current_subject = all_salesforce_fields.Subject;
       //fetch all program data
       fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data_updated.json')
         .then(response => response.json())
@@ -169,6 +171,7 @@ var ghostforce = Vue.component("ghostforce", {
         .then(response => response.json())
         .then(data => {
           this.task_level = data;
+          console.log(this.current_subject)
           //all_task is an array which contains all ticket tasks 
           this.all_task = this.all_salesforce_fields["Tags"]
           console.log(this.all_task)
@@ -208,6 +211,7 @@ var ghostforce = Vue.component("ghostforce", {
         })
     }
     setTimeout(function () {
+
       console.log(this.all_salesforce_fields)
       console.log(this.program_level)
       console.log(this.current_program)
