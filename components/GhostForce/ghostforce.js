@@ -42,7 +42,7 @@ var templateghostforce = `
       <div class='detail_info' v-if="ghostforce_active">
 
 
-          <h1><img src="images/ghost_icons/nightmare.png">Contact info</h1>
+          <h1><img src="images/ghost_icons/phonebook2.png">Contact info</h1>
           <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
@@ -60,7 +60,7 @@ var templateghostforce = `
       <div class='appointment_info' v-if="ghostforce_active">
 
 
-          <h1><img src="images/ghost_icons/nightmare.png">Appointment info</h1>
+          <h1><img src="images/ghost_icons/calendar2.png">Appointment info</h1>
           <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
@@ -74,7 +74,7 @@ var templateghostforce = `
       <div class='task_info' v-if="ghostforce_active">
 
 
-          <h1><img src="images/ghost_icons/nightmare.png">Task info</h1>
+          <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
           <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
@@ -87,7 +87,7 @@ var templateghostforce = `
       <div class='case_info' v-if="ghostforce_active">
 
 
-        <h1><img src="images/ghost_icons/nightmare.png">Case comment</h1>
+        <h1><img src="images/ghost_icons/comment2.png">Case comment</h1>
         <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
           <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
