@@ -6,7 +6,7 @@ var templateghostforce = `
 
      <div class='icon'>
 
-       <h1><img src="images/ghost_icons/ghost.png">Ghost force</h1>
+       <h1><img src="images/ghost_icons/ghost.png">Ghosting</h1>
        <div :class="['row_icon', { graybtn: ghostforce_active == false }]">
         <a v-for=" (img,key) in ghost_images" :key="key"   @click='ghost(img.name)' href="#" class="tool">
           <span class='tip'>{{img.name}}</span>
@@ -14,6 +14,16 @@ var templateghostforce = `
         </a>
        </div>
        <div class="row_icon" v-if="ghostforce_active">
+
+        <a v-if="this.current_subject == 'Tag Implementation' "  href="#" class='tool'>
+           <span class='tip'>Tag Implementation</span>
+           <img class='quickbtn' src='../images/ghost_icons/price-tag.png'>
+         </a>
+         <a v-if="this.current_subject == 'Shopping Campaign' " href="#" class='tool'>
+           <span class='tip'>Shopping Campaign</span>
+           <img class='quickbtn' src='../images/ghost_icons/business.png'>
+         </a>
+       
          <a v-if="this.current_program == 'Scaled' "  href="#" class='tool'>
            <span class='tip'>Scaled</span>
            <img class='quickbtn' src='../images/ghost_icons/icon-scaled.svg'>
@@ -43,11 +53,10 @@ var templateghostforce = `
 
 
           <h1><img src="images/ghost_icons/phonebook2.png">Contact info</h1>
-          <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Advertiser:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Advertiser Name'] }} </span> | <span class='btcp' id='clientmail'> {{ all_salesforce_fields['Advertiser Email'] }} </span> | <span class='btcp' id='clientphone'> {{ all_salesforce_fields['Account Phonenumber'] }} </span><br><br>
+          <!-- <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> {{ all_salesforce_fields['Googler Name'] }} </span> | <span class='btcp' id='gsalesrepmail'> {{ all_salesforce_fields['Googler Email'] }} </span><br><br>
+          <!-- <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
      
      
      
@@ -61,11 +70,11 @@ var templateghostforce = `
 
 
           <h1><img src="images/ghost_icons/calendar2.png">Appointment info</h1>
-          <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
+          <b>Initial Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Appointment Date/Time'] }} </span><br><br>
+          <div v-if="this.all_salesforce_fields['Rescheduled Appointment Date/Time'] != ' ' "><b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> <br><br></div>
+          <!-- <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
           <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
         
       </div>
 
@@ -75,11 +84,10 @@ var templateghostforce = `
 
 
           <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
-          <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+          <div v-for=" task in this.all_task">
+            <b>{{ task["Task_Type"] }}</b>
+            <br><br>
+          </div>
         
       </div>
 
@@ -88,11 +96,7 @@ var templateghostforce = `
 
 
         <h1><img src="images/ghost_icons/comment2.png">Case comment</h1>
-        <b>Advertiser:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br>
+        {{ all_salesforce_fields["Comments"]}}
 
       </div>
 
@@ -142,7 +146,7 @@ var ghostforce = Vue.component("ghostforce", {
   },
   mounted: function () {
     if (this.ghostforce_active) {
-      this.current_subject = all_salesforce_fields.Subject;
+      this.current_subject = all_salesforce_fields.Subject;     // Tag implementation or Shopping Campaign
       //fetch all program data
       fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data_updated.json')
         .then(response => response.json())
@@ -171,19 +175,27 @@ var ghostforce = Vue.component("ghostforce", {
         .then(response => response.json())
         .then(data => {
           this.task_level = data;
-          console.log(this.current_subject)
-          //all_task is an array which contains all ticket tasks 
-          this.all_task = this.all_salesforce_fields["Tags"]
-          console.log(this.all_task)
-          //task_type is an array which contains all ticket tasks type
           var task_type = []
-          this.all_task.forEach(element => {
-            console.log(element.Task_Type)
-            task_type.push(element.Task_Type)
-          });
-          console.log(task_type)
+          var current_obj = []
+          if (this.current_subject == "Shopping Campaign") {
+            this.all_task = this.all_salesforce_fields["Shopping Code Type"]
 
-          let current_obj = []
+            console.log(this.all_task)
+            task_type.push(this.all_task)
+            console.log(task_type)
+          }
+          else if (this.current_subject == "Tag Implementation") {
+            //all_task is an array which contains all ticket tasks 
+            this.all_task = this.all_salesforce_fields["Tags"]
+            console.log(this.all_task)
+            //task_type is an array which contains all ticket tasks type
+
+            this.all_task.forEach(element => {
+              //console.log(element.Task_Type)
+              task_type.push(element.Task_Type)
+            });
+            console.log(task_type)
+          }
           task_type.forEach(element => {
             var temp = this.task_level.taskList.find(obj => {
               console.log(obj)
@@ -192,10 +204,11 @@ var ghostforce = Vue.component("ghostforce", {
             })
             if (temp) {
               current_obj.push(temp.task_LVL)
-              console.log(current_obj)
+              //console.log(current_obj)
             }
           })
           console.log(current_obj)
+
           //current_level is the level of the ticket. If I found a level 2 task, the ticket will be level 2, otherwise level 1
           this.current_level = current_obj.find(obj => {
             return obj == "L2"

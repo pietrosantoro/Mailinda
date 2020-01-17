@@ -183,6 +183,7 @@ chrome.runtime.onMessage.addListener(
       var all_salesforce_fields = {}
       // Get the HTML of the active iFrame
       let iframes = getActiveFrame()
+      console.log(iframes)
       // We only need the rows
       let trs = iframes.find('tr');
       //get the mondatory fields from the JSON GitLab 
@@ -249,15 +250,19 @@ chrome.runtime.onMessage.addListener(
       //check first the implementation type as the url is in different place for shopping cases
       let implementationType = all_salesforce_fields['Subject'];
       let url = "";
+      let adv_name;
       if (implementationType == 'Tag Implementation') {
 
-        url = iframes[0].querySelector('.cellCol2 > a').href
+        url = iframes[0].querySelector(" tr.dataRow.even.last.first > td:nth-child(3) > a").href
         all_salesforce_fields.URL = url
 
       }
       else if (implementationType == 'Shopping Campaign') {
         url = iframes[0].querySelector("#\\30 0N3600000QISDx_ileinner > a").href
+        adv_name = iframes[0].querySelector("#cas3_ileinner > a").innerText
+        console.log(adv_name)
         all_salesforce_fields.URL = url
+        all_salesforce_fields["Advertiser Name"] = adv_name
         console.log("url shopping" + all_salesforce_fields.URL)
       }
 
@@ -267,15 +272,6 @@ chrome.runtime.onMessage.addListener(
         message: "salesforce",
         data: all_salesforce_fields
       });
-      // chrome.runtime.sendMessage(
-      //   {
-      //     type: "all salesforce fields",
-      //     data: all_salesforce_fields
-      //   },
-      //   function (response) {
-      //     console.log(response.message);
-      //   });
-
       // To color or not to color
       for (let i = 0; i < field.length; i++) {
         // Check if the label of this data is one of the mandatory fields
