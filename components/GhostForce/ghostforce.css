@@ -50,10 +50,46 @@
     cursor: pointer;
 }
 
+<<<<<<< HEAD
 .btcp:hover { 
     background-color: rgba(255,255,255,.075);
 }
+=======
+#ghostforceComponent > div .line_info {
+    
+    text-align: left;
+    padding: 5px 0 5px 15px;
+    min-width: 100%;
 
+  }
+>>>>>>> c787c14b380d8af56eed9642e1a50ed910586d64
+
+
+  #ghostforceComponent > div .line_info > img {
+    height: 12px;
+    width: 12px;
+    margin: 0 10px 2px 0;
+    -webkit-box-shadow: 10px -12px 86px -5px rgba(250,250,230,1);
+    -moz-box-shadow: 10px -12px 86px -5px rgba(250,250,230,1);
+    box-shadow: 10px -12px 86px -5px rgba(250,250,230,1);
+  }
+
+
+  
+
+  #ghostforceComponent > div .btcp{
+     padding: 0.1rem;
+    margin: 0.1rem; 
+}
+
+.btcp:hover {
+   
+    border: groove 1px rgba(255,255,255,.075);;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    background-color: rgba(255,255,255,.075);
+} 
+ 
 .icon{
     padding-top: 15px;
 }
