@@ -253,7 +253,12 @@ chrome.runtime.onMessage.addListener(
       let adv_name;
       if (implementationType == 'Tag Implementation') {
 
-        url = iframes[0].querySelector(" tr.dataRow.even.last.first > td:nth-child(3) > a").href
+        try {
+          url = iframes[0].querySelector(" tr.dataRow.even.last.first > td:nth-child(3) > a").href
+        }
+        catch{
+          url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.first > td.dataCell.cellCol2 > a").href
+        }
         all_salesforce_fields.URL = url
 
       }

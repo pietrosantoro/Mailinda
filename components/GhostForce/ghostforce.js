@@ -71,7 +71,7 @@ var templateghostforce = `
 
           <h1><img src="images/ghost_icons/calendar2.png">Appointment info</h1>
           <b>Initial Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Appointment Date/Time'] }} </span><br><br>
-          <div v-if="this.all_salesforce_fields['Rescheduled Appointment Date/Time'] != ' ' "><b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> <br><br></div>
+          <b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> <br><br>
           <!-- <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
           <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
           <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
@@ -121,18 +121,10 @@ var ghostforce = Vue.component("ghostforce", {
         { name: "Merchant Center", src: "../images/ghost_icons/icon-merchant.png" },
         { name: "Gerloose", src: "../images/ghost_icons/icon-gearloose.png" }
       ],
-      program_images: [
-        { name: "Scaled", src: "../images/ghost_icons/icon-scaled.svg" },
-        { name: "High Touch", src: "../images/ghost_icons/icon-high-touch.svg" }
-      ],
-      level_images: [
-        { name: "Level 1", src: "../images/ghost_icons/icon-level-1.png" },
-        { name: "Level 2", src: "../images/ghost_icons/icon-level-2.png" }
-      ],
       current_subject: "",
       program_level: "",
       current_program: "",
-      all_task: "",
+      all_task: [],
       task_level: "",
       current_level: "",
       all_salesforce_fields: all_salesforce_fields
@@ -178,7 +170,9 @@ var ghostforce = Vue.component("ghostforce", {
           var task_type = []
           var current_obj = []
           if (this.current_subject == "Shopping Campaign") {
-            this.all_task = this.all_salesforce_fields["Shopping Code Type"]
+            this.all_task.push({
+              Task_Type: this.all_salesforce_fields["Shopping Code Type"]
+            })
 
             console.log(this.all_task)
             task_type.push(this.all_task)
