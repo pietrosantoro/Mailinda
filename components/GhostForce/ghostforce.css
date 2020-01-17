@@ -50,11 +50,6 @@
     cursor: pointer;
 }
 
-<<<<<<< HEAD
-.btcp:hover { 
-    background-color: rgba(255,255,255,.075);
-}
-=======
 #ghostforceComponent > div .line_info {
     
     text-align: left;
@@ -62,7 +57,6 @@
     min-width: 100%;
 
   }
->>>>>>> c787c14b380d8af56eed9642e1a50ed910586d64
 
 
   #ghostforceComponent > div .line_info > img {
