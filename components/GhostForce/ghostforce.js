@@ -53,50 +53,58 @@ var templateghostforce = `
 
 
           <h1><img src="images/ghost_icons/phonebook2.png">Contact info</h1>
-          <b>Advertiser:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Advertiser Name'] }} </span> | <span class='btcp' id='clientmail'> {{ all_salesforce_fields['Advertiser Email'] }} </span> | <span class='btcp' id='clientphone'> {{ all_salesforce_fields['Account Phonenumber'] }} </span><br><br>
-          <!-- <b>Webmaster:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> {{ all_salesforce_fields['Googler Name'] }} </span> | <span class='btcp' id='gsalesrepmail'> {{ all_salesforce_fields['Googler Email'] }} </span><br><br>
-          <!-- <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
-     
-     
-     
-     
-     
-      </div>
+          <div class="line_info">
+          <img src="images/ghost_icons/dot7.png">
+          <b>Advertiser:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Advertiser Name'] }} </span> | <span class='btcp' id='clientmail'> {{ all_salesforce_fields['Advertiser Email'] }} </span> | <span class='btcp' id='clientphone'> {{ all_salesforce_fields['Account Phonenumber'] }} </span>
+          </div>
+          <!-- <br><br> -->
+          <div  class="line_info">
+          <img src="images/ghost_icons/dot7.png">
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> {{ all_salesforce_fields['Googler Name'] }} </span> | <span class='btcp' id='gsalesrepmail'> {{ all_salesforce_fields['Googler Email'] }} </span>
+          <!-- <br><br> -->
+          </div>
+    
+         </div>
 
 
 
       <div class='appointment_info' v-if="ghostforce_active">
-
-
-          <h1><img src="images/ghost_icons/calendar2.png">Appointment info</h1>
-          <b>Initial Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Appointment Date/Time'] }} </span><br><br>
-          <div v-if="this.all_salesforce_fields['Rescheduled Appointment Date/Time'] != ' ' "><b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> <br><br></div>
-          <!-- <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> test </span> | <span class='btcp' id='gsalesrepmail'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='account_title'> test </span> | <span class='btcp' id='awcid'> test1 </span><br><br>
-          <b>Account:</b>  <span class='btcp' id='clientname'> test </span> | <span class='btcp' id='clientmail'> test1 </span> | <span class='btcp' id='clientphone'> test2 </span><br><br> -->
-        
-      </div>
+        <h1><img src="images/ghost_icons/calendar2.png">Appointment info</h1>    
+        <div class="line_info">
+        <img src="images/ghost_icons/dot1.png">
+        <b>Initial Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Appointment Date/Time'] }} </span>
+        </div>
+        <!-- <br><br> -->
+        <div class="line_info">
+        <img src="images/ghost_icons/dot1.png">
+        <b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> 
+    
+        </div>
+     </div>
 
 
 
       <div class='task_info' v-if="ghostforce_active">
-
-
-          <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
-          <div v-for=" task in this.all_task">
+        <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
+        <div class="line_info">
+        
+        <div v-for=" task in this.all_task">
             <b>{{ task["Task_Type"] }}</b>
-            <br><br>
+            <!-- <br><br> -->
           </div>
+        </div>
+        
         
       </div>
 
 
       <div class='case_info' v-if="ghostforce_active">
-
-
         <h1><img src="images/ghost_icons/comment2.png">Case comment</h1>
-        {{ all_salesforce_fields["Comments"]}}
+        <div class="line_info">
+    
+          {{ all_salesforce_fields["Comments"]}}
+        </div>
+       
 
       </div>
 
