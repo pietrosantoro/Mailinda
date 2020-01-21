@@ -202,7 +202,7 @@ chrome.runtime.onMessage.addListener(
       let allTitles = trs.find("td.labelCol");
       let allfiels = trs.find("td.dataCol");
 
-      for (let i = 0; i < allTitles.length; i++) {
+      for (let i = 0; i < allfiels.length && i < allTitles.length; i++) {
         all_salesforce_fields[allTitles[i].textContent] = allfiels[i].textContent
       }
 
@@ -305,3 +305,9 @@ chrome.runtime.onMessage.addListener(
   })
 
 console.log("script.js")
+
+
+
+
+
+performOutboundCall(getCleanNumber("(+39)3343422359"), "IT");

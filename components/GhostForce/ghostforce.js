@@ -7,8 +7,8 @@ var templateghostforce = `
      <div class='icon'>
 
        <h1><img src="images/ghost_icons/ghost.png">Ghosting</h1>
-       <div :class="['row_icon', { graybtn: ghostforce_active == false }]">
-        <a v-for=" (img,key) in ghost_images" :key="key"   @click='ghost(img.name)' href="#" class="tool">
+       <div :class="['row_icon', { graybtn: ghostforce_active == false}]">
+        <a v-for=" (img,key) in ghost_images" :key="key"   @click='ghost(img.name)' href="#" :class="['tool', {graybtn: all_salesforce_fields['MC-ID'] == ''}] ">
           <span class='tip'>{{img.name}}</span>
           <img class='quickbtn' :src='img.src'>
         </a>
@@ -57,11 +57,11 @@ var templateghostforce = `
           <img src="images/ghost_icons/dot7.png">
           <b>Advertiser:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Advertiser Name'] }} </span> | <span class='btcp' id='clientmail'> {{ all_salesforce_fields['Advertiser Email'] }} </span> | <span class='btcp' id='clientphone'> {{ all_salesforce_fields['Account Phonenumber'] }} </span>
           </div>
-          <!-- <br><br> -->
+          
           <div  class="line_info">
           <img src="images/ghost_icons/dot7.png">
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> {{ all_salesforce_fields['Googler Name'] }} </span> | <span class='btcp' id='gsalesrepmail'> {{ all_salesforce_fields['Googler Email'] }} </span>
-          <!-- <br><br> -->
+          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> {{ all_salesforce_fields['Googler Name'] }} </span> | <span class='btcp' id='gsalesrepmail'> {{ all_salesforce_fields['Googler Email'] }} </span> | <span class='btcp' id='gsalesrepteam'> {{ all_salesforce_fields['Team'] }} </span>
+        
           </div>
     
          </div>
@@ -74,7 +74,7 @@ var templateghostforce = `
         <img src="images/ghost_icons/dot1.png">
         <b>Initial Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Appointment Date/Time'] }} </span>
         </div>
-        <!-- <br><br> -->
+       
         <div class="line_info">
         <img src="images/ghost_icons/dot1.png">
         <b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> 
@@ -88,9 +88,9 @@ var templateghostforce = `
         <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
         <div class="line_info">
         
-        <div v-for=" task in this.all_task">
+        <div v-for=" task in this.all_task" class="task" :class="task['Status']">
             <b>{{ task["Task_Type"] }}</b>
-            <!-- <br><br> -->
+           
           </div>
         </div>
         
@@ -196,12 +196,12 @@ var ghostforce = Vue.component("ghostforce", {
               //console.log(element.Task_Type)
               task_type.push(element.Task_Type)
             });
-            console.log(task_type)
+            //console.log(task_type)
           }
           task_type.forEach(element => {
             var temp = this.task_level.taskList.find(obj => {
-              console.log(obj)
-              console.log(element)
+              // console.log(obj)
+              // console.log(element)
               return obj["task_Name"] === element
             })
             if (temp) {
