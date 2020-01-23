@@ -291,7 +291,7 @@ var ghostforce = Vue.component("ghostforce", {
     ghost(event) {
       if (this.ghostforce_active) {
         console.log(event)
-        if(event == 'Adwors Analytics and Website') {
+        if(event == 'Website  Adwors  Analytics') {
           chrome.tabs.create({
             url: "https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID']
           })
