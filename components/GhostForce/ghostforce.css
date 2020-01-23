@@ -21,7 +21,8 @@
 }
 
 #ghostforceComponent > div > h1 {
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: bold;
     background-color: #666666;
     border-radius: 25px 25px 0 0;
     height: 45px;
@@ -29,8 +30,7 @@
     padding-left: 15px;
     color: white;
     padding: 10px 0 0 15px;
-    color: #FFFFFF;
-    letter-spacing: 2.4px;
+    letter-spacing: 1.4px;
 }
 
 #ghostforceComponent > div > h1 > img {
@@ -49,6 +49,20 @@
     margin: 5px;
     min-width: 100%;
 
+  }
+
+  .call_button{
+    border: groove 1px rgba(255,255,255,.075);
+    background-color: #666666;
+    width: 240px;
+    border-radius: 1.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    margin: 20px 10px 10px 10px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
   }
 
 
@@ -70,20 +84,28 @@
     margin: 10px;
     
 }
+#ghostforceComponent .task > b{
+    font-size: 16px;
+}
+#ghostforceComponent .task #task-comment{
+    text-align: left;
+}
 #ghostforceComponent .Completed{
-    background-color: green;
+    background-color: rgb(81, 140, 14);
 }
 
 #ghostforceComponent .Open{
-    background-color: yellow;
+    background-color: rgb(207, 158, 4);
 }
 #ghostforceComponent .Inactive{
-    background-color: red;
+    background-color: rgb(200, 5, 28);
 }
 
   
 
   #ghostforceComponent > div .btcp{
+    display: inline-block;
+    position: relative;
     padding: 0.1rem;
     margin: 0.1rem;
     border: hidden 1px rgba(255,255,255,.075);
@@ -93,9 +115,12 @@
    
     border: groove 1px rgba(255,255,255,.075);
     border-radius: 0.4rem;
-    cursor: pointer;
+    cursor: copy;
     background-color: rgba(255,255,255,.075);
 } 
+.btcp:hover .tip {
+    visibility: visible;
+}
  
 .icon{
     padding-top: 15px;
@@ -103,7 +128,7 @@
 
 .row_icon{
     border-radius: 1.5rem;
-    padding: 1rem;
+    padding: 1rem 0.2rem 1rem 0.2rem;
     text-align: center;
     margin: 0px auto 0.6rem;
 }
@@ -113,21 +138,25 @@
     padding-left: 1rem;
     padding-right: 1rem;
     /* filter: drop-shadow(3px 3px 6px #888); */
-    cursor: pointer;
+    
 }
 
 .graybtn {
     filter: grayscale(1) drop-shadow(3px 3px 6px #888);
-    cursor: default;
+    
+}
+.graybtn:hover{
+    cursor: not-allowed;
 }
 
 .tool {
     position: relative;
     display: inline-block;
     vertical-align: middle;
+    cursor: pointer;
 }
 
-.tool .tip {
+.tip {
     visibility: hidden;
     width: 120px;
     background-color: #222;

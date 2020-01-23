@@ -203,7 +203,7 @@ chrome.runtime.onMessage.addListener(
       let allfiels = trs.find("td.dataCol");
 
       for (let i = 0; i < allfiels.length && i < allTitles.length; i++) {
-        all_salesforce_fields[allTitles[i].textContent] = allfiels[i].textContent
+        all_salesforce_fields[allTitles[i].textContent] = allfiels[i].textContent.trim()
       }
 
       //replace any special caracater with underscore _
@@ -240,7 +240,7 @@ chrome.runtime.onMessage.addListener(
             if (!(all_salesforce_fields[blockName][rowID] instanceof Object))
               all_salesforce_fields[blockName][rowID] = {};
 
-            all_salesforce_fields[blockName][rowID][colName] = cellText;
+            all_salesforce_fields[blockName][rowID][colName] = cellText.trim();
           }
         }
       });
@@ -310,4 +310,4 @@ console.log("script.js")
 
 
 
-performOutboundCall(getCleanNumber("(+39)3343422359"), "IT");
+//performOutboundCall(getCleanNumber("(+39)3343422359"), "IT");

@@ -8,7 +8,7 @@ var templateghostforce = `
 
        <h1><img src="images/ghost_icons/ghost.png">Ghosting</h1>
        <div :class="['row_icon', { graybtn: ghostforce_active == false}]">
-        <a v-for=" (img,key) in ghost_images" :key="key"   @click='ghost(img.name)' href="#" :class="['tool', {graybtn: all_salesforce_fields['MC-ID'] == ''}] ">
+        <a v-for=" (img,key) in ghost_images" :key="key"   @click='ghost(img.name)' href="#" :class="['tool', {graybtn: ghostforce_active == true && img.name == 'Merchant Center' && !all_salesforce_fields['MC-ID']} ]">
           <span class='tip'>{{img.name}}</span>
           <img class='quickbtn' :src='img.src'>
         </a>
@@ -53,33 +53,81 @@ var templateghostforce = `
 
 
           <h1><img src="images/ghost_icons/phonebook2.png">Contact info</h1>
-          <div class="line_info">
-          <img src="images/ghost_icons/dot7.png">
-          <b>Advertiser:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Advertiser Name'] }} </span> | <span class='btcp' id='clientmail'> {{ all_salesforce_fields['Advertiser Email'] }} </span> | <span class='btcp' id='clientphone'> {{ all_salesforce_fields['Account Phonenumber'] }} </span>
+
+          <div v-for="contact in all_salesforce_fields['Case_Contacts']" class="line_info">
+            <img src="images/ghost_icons/dot7.png">
+            <b>{{contact['Contact_Type']}}: </b>
+            
+            <div class='btcp'>
+              <span class='tip'>Click to copy</span>
+              <div id='clientname' @click="copy_text(contact['Contact'])"> {{ contact['Contact'] }} </div>
+            </div>
+            | 
+            <div class='btcp'>
+              <span class='tip'>Click to copy</span>
+              <div id='clientmail' @click="copy_text(contact['Contact_Email'])"> {{ contact['Contact_Email'] }} </div>
+            </div>
+            | 
+            <div class='btcp'>
+              <span class='tip'>Click to copy</span>
+              <div id='clientphone' @click="copy_text(contact['Contact_Phone'])"> {{ contact['Contact_Phone'] }} </div>
+            </div>
+
+
           </div>
           
           <div  class="line_info">
-          <img src="images/ghost_icons/dot7.png">
-          <b>Sales Rep:</b>  <span class='btcp' id='gsalesrepname'> {{ all_salesforce_fields['Googler Name'] }} </span> | <span class='btcp' id='gsalesrepmail'> {{ all_salesforce_fields['Googler Email'] }} </span> | <span class='btcp' id='gsalesrepteam'> {{ all_salesforce_fields['Team'] }} </span>
+            <img src="images/ghost_icons/dot7.png">
+            <b>Sales Rep:</b>
+            <div class='btcp'>
+              <span class='tip'>Click to copy</span>
+              <div id='gsalesrepname' @click="copy_text(all_salesforce_fields['Googler Name'])"> {{ all_salesforce_fields['Googler Name'] }} </div> 
+            </div>
+            | 
+            <div class='btcp'>
+              <span class='tip'>Click to copy</span>
+              <div id='gsalesrepmail' @click="copy_text(all_salesforce_fields['Googler Email'])"> {{ all_salesforce_fields['Googler Email'] }} </div> 
+            </div>
+            | 
+            <div class='btcp'>
+              <span class='tip'>Click to copy</span>
+              <div id='gsalesrepteam' @click="copy_text(all_salesforce_fields['Team'])"> {{ all_salesforce_fields['Team'] }} </div>
+            </div>
         
           </div>
     
+          <!-- <div v-for="contact in all_salesforce_fields['Case_Contacts']" class="call_button" @click="on_call(contact['Contact_Phone'])">
+            Call {{contact['Contact_Type']}}
+          </div> -->
+
+
+
          </div>
 
 
 
       <div class='appointment_info' v-if="ghostforce_active">
+
         <h1><img src="images/ghost_icons/calendar2.png">Appointment info</h1>    
         <div class="line_info">
-        <img src="images/ghost_icons/dot1.png">
-        <b>Initial Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Appointment Date/Time'] }} </span>
+          <img src="images/ghost_icons/dot1.png">
+          <b>Initial Appointment:</b>
+          <div class='btcp'>
+            <span class='tip'>Click to copy</span>
+            <div id='clientname' @click="copy_text(all_salesforce_fields['Appointment Date/Time'])"> {{ all_salesforce_fields['Appointment Date/Time'] }} </div>
+          </div>
         </div>
        
-        <div class="line_info">
-        <img src="images/ghost_icons/dot1.png">
-        <b>Rescheduled Appointment:</b>  <span class='btcp' id='clientname'> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </span> 
+        <div v-if="all_salesforce_fields['Rescheduled Appointment Date/Time']" class="line_info">
+          <img src="images/ghost_icons/dot1.png">
+          <b>Rescheduled Appointment:</b>
+          <div class='btcp'>
+            <span class='tip'>Click to copy</span>
+            <div id='clientname' @click="copy_text(all_salesforce_fields['Rescheduled Appointment Date/Time'])"> {{ all_salesforce_fields['Rescheduled Appointment Date/Time'] }} </div> 
+          </div>
     
         </div>
+
      </div>
 
 
@@ -88,9 +136,9 @@ var templateghostforce = `
         <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
         <div class="line_info">
         
-        <div v-for=" task in this.all_task" class="task" :class="task['Status']">
+        <div v-for="task in this.all_task" class="task" :class="task['Status']">
             <b>{{ task["Task_Type"] }}</b>
-           
+           <div id="task-comment"v-if="task['Special_instructions']">{{ task['Special_instructions'] }}</div>
           </div>
         </div>
         
@@ -122,6 +170,7 @@ var ghostforce = Vue.component("ghostforce", {
       bgpage: bgpage,
       ghostforce_active: ghostforce_active,
       ghost_images: [
+        { name: "Website  Adwors  Analytics", src: "../images/ghost_icons/icon-open-three.png" },
         { name: "Adwors", src: "../images/ghost_icons/icon-google-ads.png" },
         { name: "Analytics", src: "../images/ghost_icons/icon-analytics.png" },
         { name: "Website", src: "../images/ghost_icons/icon-browser.svg" },
@@ -240,27 +289,89 @@ var ghostforce = Vue.component("ghostforce", {
   },
   methods: {
     ghost(event) {
-      console.log(all_salesforce_fields)
-      console.log(event)
-      if (event == 'Adwors') {
-        window.open("https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID'])
+      if (this.ghostforce_active) {
+        console.log(event)
+        if(event == 'Adwors Analytics and Website') {
+          chrome.tabs.create({
+            url: "https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID']
+          })
+          chrome.tabs.create({
+            url: "https://analytics-ics.corp.google.com/home?q=" + all_salesforce_fields['Customer ID']
+          })
+          chrome.tabs.create({
+            url: all_salesforce_fields['URL']
+          })
+        
+        }
+        else if (event == 'Adwors') {
+          if(all_salesforce_fields['Customer ID'])
+            window.open("https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID'])
+        }
+        else if (event == 'Analytics') {
+          if(all_salesforce_fields['Customer ID'])
+            window.open("https://analytics-ics.corp.google.com/home?q=" + all_salesforce_fields['Customer ID'])
+        }
+        else if (event == 'Website') {
+          if(all_salesforce_fields['URL'])
+            window.open(all_salesforce_fields['URL'])
+        }
+        else if (event == 'Tag Manager') {
+          if( all_salesforce_fields['Customer ID'])
+          window.open("https://tagmanager-ics.corp.google.com/?q=" + all_salesforce_fields['Customer ID'])
+        }
+        else if (event == 'Merchant Center') {
+          if(all_salesforce_fields['MC-ID'])
+            window.open("https://mcn-ics.corp.google.com/mc?a=" + all_salesforce_fields['MC-ID'])
+        }
+        else if (event == 'Gerloose') {
+          if(all_salesforce_fields['Customer ID'])
+           window.open("https://gearloose2.corp.google.com/#/search/merchants?q=awid:" + all_salesforce_fields['Customer ID'])
+        }
       }
-      else if (event == 'Analytics') {
-        window.open("https://analytics-ics.corp.google.com/home?q=" + all_salesforce_fields['Customer ID'])
-      }
-      else if (event == 'Website') {
-        window.open(all_salesforce_fields['URL'])
-      }
-      else if (event == 'Tag Manager') {
-        window.open("https://tagmanager-ics.corp.google.com/?q=" + all_salesforce_fields['Customer ID'])
-      }
-      else if (event == 'Merchant Center') {
-        window.open("https://mcn-ics.corp.google.com/mc?a=" + all_salesforce_fields['MC-ID'])
-      }
-      else if (event == 'Gerloose') {
-        window.open("https://gearloose2.corp.google.com/#/search/merchants?q=awid:" + all_salesforce_fields['Customer ID'])
+    },
+    on_call(number){
+      console.log(number)
+     
+      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+              var activeTab = tabs[0];
+              chrome.tabs.sendMessage(activeTab.id, {
+                txt: "call_number",
+                number: number
+              },
+                function (response) {
+                  
+                });
+            });
+    },
+    copy_text(text){
+    if (!navigator.clipboard) {
+      var textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position="fixed";  //avoid scrolling to bottom
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+
+      try {
+        var successful = document.execCommand('copy');
+        var msg = successful ? 'successful' : 'unsuccessful';
+        console.log('Fallback: Copying text command was ' + msg);
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
       }
 
+      document.body.removeChild(textArea);
+
+      return;
+    }
+    navigator.clipboard.writeText(text).then(function() {
+      console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });
+
+
+      
     },
     test() {
       console.log(this.current_program)
