@@ -45,10 +45,9 @@
     },
     {
       "matches": [
-        "\u003Call_urls>"
+        "https://smbsalesimplementation--c.na81.visual.force.com/apex/Click2Dial"
       ],
       "js": [
-        "lib/jquery-3.4.1.min.js",
         "CallDial.js"
       ]
     }

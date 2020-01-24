@@ -96,9 +96,9 @@ var templateghostforce = `
         
           </div>
     
-          <!-- <div v-for="contact in all_salesforce_fields['Case_Contacts']" class="call_button" @click="on_call(contact['Contact_Phone'])">
+          <div v-for="contact in all_salesforce_fields['Case_Contacts']" class="call_button" @click="on_call(contact['Contact_Phone'])">
             Call {{contact['Contact_Type']}}
-          </div> -->
+          </div>
 
 
 
@@ -331,17 +331,20 @@ var ghostforce = Vue.component("ghostforce", {
     },
     on_call(number){
       console.log(number)
-     
-      chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
-              var activeTab = tabs[0];
-              chrome.tabs.sendMessage(activeTab.id, {
-                txt: "call_number",
-                number: number
-              },
-                function (response) {
-                  
-                });
-            });
+      chrome.storage.sync.set({
+        number: number,
+
+      }, function() {
+          console.log('Value is set to ' + number);
+      });
+      chrome.windows.create({
+            url: "https://smbsalesimplementation--c.na81.visual.force.com/apex/Click2Dial",
+            left: 300,
+            top: 300,
+            width: 400,
+            height: 400,
+            focused: true
+          })
     },
     copy_text(text){
     if (!navigator.clipboard) {

@@ -313,8 +313,12 @@ function checkOnCall() {
           }
         );
       }
+      else{
+        console.log("remove notification")
+        chrome.notifications.clear('onCall')
+      }
     });
   }
 }
 checkOnCall();
-setInterval(checkOnCall, 60000)
+setInterval(checkOnCall, 30000)
