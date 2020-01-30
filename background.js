@@ -220,22 +220,27 @@ setInterval(request_email, 60000)
 
 
 //based on next hour and case report generate an object with the case id and if you are on call
-var fireAlert = (Data, date) => {
-  var dateChecker = date;
+var fireAlert = (Data, today) => {
+  var dateChecker = today;
   var myOutput = {
     caseId: "",
     CaseNumber: "",
     oncall: true
   };
 
+  
+
   Data.forEach(function (element) {
-    console.log(element)
+    console.log(today)
+    console.log(element["Appointment Date/Time"])
     //if the appoinment has been rescheduled
+    console.log(today.includes(element["Appointment Date/Time"]))
     if (element["Rescheduled Appointment Date/Time"].length > 2) {
-      console.log("dentro reschedule")
+      
+      console.log("inside reschedule")
       //if the rescheduled date is within the next hour
-      if (element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
-        console.log("dentro reschedule e data checker")
+      if (dateChecker.includes(element["Rescheduled Appointment Date/Time"])) {
+        console.log("inside reschedule e data checker")
         //if the case status is still not oncall
         if (element.Status != "On Call") {
           myOutput.caseId = element["Case ID"];
@@ -245,8 +250,8 @@ var fireAlert = (Data, date) => {
       }
       //if the appoinment has not been rescheduled
       //if  the appoinment date matches the checker
-    } else if (element["Appointment Date/Time"].includes(dateChecker)) {
-      console.log("dentro non reschedule")
+    } else if (dateChecker.includes(element["Appointment Date/Time"])) {
+      console.log("inside non reschedule")
       //if the case status is still not oncall
       if (element.Status != "On Call") {
         myOutput.caseId = element["Case ID"];
@@ -263,6 +268,7 @@ var fireAlert = (Data, date) => {
 function checkOnCall() {
   //retriving date object
   var date = new Date();
+  console.log(date)
   //start changing date format into am pm
   var hours = date.getHours();
   var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -278,6 +284,15 @@ function checkOnCall() {
   }
 
   console.log(strTime)
+
+
+  var dd = String(date.getDate()).padStart(2, '0');
+  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+  var yyyy = date.getFullYear();
+
+  var today = mm + '/' + dd + '/' + yyyy;
+  today = today + ' ' + strTime
+  console.log(today);
   //if the curent minute is more then 55
   if (date.getMinutes() >= 55) {
     //1- requesting all cases via http request to brendan report
@@ -295,7 +310,7 @@ function checkOnCall() {
       mycaseReport.pop();//4
       console.log("dopo di pop")
       console.log(mycaseReport)
-      currentHourCase = fireAlert(mycaseReport, strTime); //5
+      currentHourCase = fireAlert(mycaseReport, today); //5
       if (!currentHourCase.oncall) {
         chrome.notifications.create(
           'onCall', {

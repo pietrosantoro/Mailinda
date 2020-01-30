@@ -3,7 +3,7 @@ var templateghostforce = `
      
 
 
-
+<!-- Ghost icon   -->
      <div class='icon'>
 
        <h1><img src="images/ghost_icons/ghost.png">Ghosting</h1>
@@ -13,7 +13,9 @@ var templateghostforce = `
           <img class='quickbtn' :src='img.src'>
         </a>
        </div>
+
        <div class="row_icon" v-if="ghostforce_active">
+
 
         <a v-if="this.current_subject == 'Tag Implementation' "  href="#" class='tool'>
            <span class='tip'>Tag Implementation</span>
@@ -41,12 +43,32 @@ var templateghostforce = `
            <span class='tip'>Level 2</span>
            <img class='quickbtn' src='../images/ghost_icons/icon-level-2.png'>
          </a>
+
        </div>
+
 
       </div>
 
+<!-- End Ghost icon   -->
 
+<!-- Task info   -->
 
+      <div class='task_info' v-if="ghostforce_active">
+        <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
+        <div class="line_info">
+        
+        <div v-for="task in this.all_task" class="task" :class="task['Status']">
+            <b>{{ task["Task_Type"] }}</b>
+           <div id="task-comment"v-if="task['Special_instructions']">{{ task['Special_instructions'] }}</div>
+          </div>
+        </div>
+        
+        
+      </div>
+
+<!-- End Task info   -->
+
+<!-- Contact info   -->
 
 
       <div class='detail_info' v-if="ghostforce_active">
@@ -103,8 +125,10 @@ var templateghostforce = `
 
 
          </div>
+<!-- End Contact info   -->
 
 
+<!-- Appointment info   -->
 
       <div class='appointment_info' v-if="ghostforce_active">
 
@@ -130,21 +154,11 @@ var templateghostforce = `
 
      </div>
 
+<!-- End Appointment info   -->
 
 
-      <div class='task_info' v-if="ghostforce_active">
-        <h1><img src="images/ghost_icons/completed-task.png">Task info</h1>
-        <div class="line_info">
-        
-        <div v-for="task in this.all_task" class="task" :class="task['Status']">
-            <b>{{ task["Task_Type"] }}</b>
-           <div id="task-comment"v-if="task['Special_instructions']">{{ task['Special_instructions'] }}</div>
-          </div>
-        </div>
-        
-        
-      </div>
 
+<!-- Case comment info   -->
 
       <div class='case_info' v-if="ghostforce_active">
         <h1><img src="images/ghost_icons/comment2.png">Case comment</h1>
@@ -156,7 +170,7 @@ var templateghostforce = `
 
       </div>
 
-
+<!-- End Case comment info   -->
 
 
 
@@ -194,6 +208,7 @@ var ghostforce = Vue.component("ghostforce", {
     console.log('Ghost Force  deactivated')
   },
   mounted: function () {
+console.log(chrome.tabs.index)
     if (this.ghostforce_active) {
       this.current_subject = all_salesforce_fields.Subject;     // Tag implementation or Shopping Campaign
       //fetch all program data
@@ -228,7 +243,8 @@ var ghostforce = Vue.component("ghostforce", {
           var current_obj = []
           if (this.current_subject == "Shopping Campaign") {
             this.all_task.push({
-              Task_Type: this.all_salesforce_fields["Shopping Code Type"]
+              Task_Type: this.all_salesforce_fields["Shopping Code Type"],
+              Special_instructions: this.all_salesforce_fields['Special Instructions/Troubleshooting']
             })
 
             console.log(this.all_task)
@@ -292,6 +308,7 @@ var ghostforce = Vue.component("ghostforce", {
       if (this.ghostforce_active) {
         console.log(event)
         if(event == 'Website  Adwors  Analytics') {
+          
           chrome.tabs.create({
             url: "https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID']
           })

@@ -254,14 +254,27 @@ chrome.runtime.onMessage.addListener(
       if (implementationType == 'Tag Implementation') {
 
         try {
-          url = iframes[0].querySelector(" tr.dataRow.even.last.first > td:nth-child(3) > a").href
-        }
+          url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td:nth-child(3) > a").href
+          }
         catch{
+          try{
           url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.first > td.dataCell.cellCol2 > a").href
+          }
+          catch(err){
+            try{
+              url=document.querySelector("table > tbody > tr.dataRow.even.first > td:nth-child(3) > a").href
+            }
+            catch{
+              url=''
+            }
+          }
         }
+        
         all_salesforce_fields.URL = url
 
       }
+
+      
       else if (implementationType == 'Shopping Campaign') {
         url = iframes[0].querySelector("#\\30 0N3600000QISDx_ileinner > a").href
         adv_name = iframes[0].querySelector("#cas3_ileinner > a").innerText
