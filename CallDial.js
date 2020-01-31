@@ -11,11 +11,6 @@ setTimeout(function(){
     //alert("ok")
     var script   = document.createElement("script");
         script.type  = "text/javascript";
-        script.text  = "performOutboundCall(getCleanNumber('" + number + "'));"             
+        script.text  = "performOutboundCall(getCleanNumber('" + number + "')); setTimeout(function(){ window.close()},4000)"             
         document.body.appendChild(script);
 },2000)
-
-
-
-
- 

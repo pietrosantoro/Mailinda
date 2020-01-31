@@ -309,15 +309,23 @@ console.log(chrome.tabs.index)
         console.log(event)
         if(event == 'Website  Adwors  Analytics') {
           
-          chrome.tabs.create({
-            url: "https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID']
-          })
-          chrome.tabs.create({
-            url: "https://analytics-ics.corp.google.com/home?q=" + all_salesforce_fields['Customer ID']
-          })
-          chrome.tabs.create({
-            url: all_salesforce_fields['URL']
-          })
+       chrome.windows.getCurrent(function (currentWindow) {
+        chrome.tabs.query({ active: true, windowId: currentWindow.id }, function (activeTabs) {
+        activeTabs.map(function (tab) {
+        var index = tab.index + 1;
+        console.log('current '+index)
+        chrome.tabs.create({
+        url: "https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID'], 'index': index
+        })
+        chrome.tabs.create({
+        url: "https://analytics-ics.corp.google.com/home?q=" + all_salesforce_fields['Customer ID'], 'index': index
+        })
+        chrome.tabs.create({
+        url: all_salesforce_fields['URL'], 'index': index
+        })
+        });
+        });
+        });
         
         }
         else if (event == 'Adwors') {
