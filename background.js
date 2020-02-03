@@ -239,7 +239,7 @@ var fireAlert = (Data, today) => {
       
       console.log("inside reschedule")
       //if the rescheduled date is within the next hour
-      if (dateChecker.includes(element["Rescheduled Appointment Date/Time"])) {
+      if (element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
         console.log("inside reschedule e data checker")
         //if the case status is still not oncall
         if (element.Status != "On Call") {
@@ -250,7 +250,7 @@ var fireAlert = (Data, today) => {
       }
       //if the appoinment has not been rescheduled
       //if  the appoinment date matches the checker
-    } else if (dateChecker.includes(element["Appointment Date/Time"])) {
+    } else if (element["Appointment Date/Time"].includes(dateChecker)) {
       console.log("inside non reschedule")
       //if the case status is still not oncall
       if (element.Status != "On Call") {
@@ -294,7 +294,7 @@ function checkOnCall() {
   today = today + ' ' + strTime
   console.log(today);
   //if the curent minute is more then 55
-  if (date.getMinutes() >= 55) {
+  if (date.getMinutes() >= 5) {
     //1- requesting all cases via http request to brendan report
     //2- parse string response into HTML
     //3- return a json of the table 
@@ -310,7 +310,7 @@ function checkOnCall() {
       mycaseReport.pop();//4
       console.log("dopo di pop")
       console.log(mycaseReport)
-      currentHourCase = fireAlert(mycaseReport, today); //5
+      currentHourCase = fireAlert(mycaseReport, strTime); //5
       if (!currentHourCase.oncall) {
         chrome.notifications.create(
           'onCall', {
