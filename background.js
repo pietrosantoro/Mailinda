@@ -294,7 +294,7 @@ function checkOnCall() {
   today = today + ' ' + strTime
   console.log(today);
   //if the curent minute is more then 55
-  if (date.getMinutes() >= 5) {
+  if (date.getMinutes() >= 55) {
     //1- requesting all cases via http request to brendan report
     //2- parse string response into HTML
     //3- return a json of the table 
