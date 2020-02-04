@@ -286,13 +286,20 @@ function checkOnCall() {
   console.log(strTime)
 
 
-  var dd = String(date.getDate()).padStart(2, '0');
-  var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
-  var yyyy = date.getFullYear();
+ var today = new Date();
+  var dd = String(today.getDate()).padStart(2, '0');
+  var mm = String(today.getMonth() + 1).padStart(2, '0');
+  var yyyy = today.getFullYear();
+  if(dd.startsWith("0")){
+    dd=dd.replace('0','')
+  }
 
-  var today = mm + '/' + dd + '/' + yyyy;
-  today = today + ' ' + strTime
-  console.log(today);
+  if(mm.startsWith("0")){
+    mm=mm.replace('0','')
+  }
+  today = mm + '/' + dd + '/' + yyyy
+  var full_date = today + ' ' + strTime
+  console.log(full_date);
   //if the curent minute is more then 55
   if (date.getMinutes() >= 55) {
     //1- requesting all cases via http request to brendan report
@@ -310,7 +317,7 @@ function checkOnCall() {
       mycaseReport.pop();//4
       console.log("dopo di pop")
       console.log(mycaseReport)
-      currentHourCase = fireAlert(mycaseReport, strTime); //5
+      currentHourCase = fireAlert(mycaseReport, full_date); //5
       if (!currentHourCase.oncall) {
         chrome.notifications.create(
           'onCall', {
