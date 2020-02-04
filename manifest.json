@@ -1,6 +1,6 @@
 {
   "name": "Mailinda",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi/DoEq1+tkaNNkgZFSVdlRGpXU37n3GuF+PnXkQ8m9jLteO7ENuGzT2DQiiWAsDiitUs2qvM52NP/CgWBWez3DErmOcuzBv2dWfI93QTIGNCkRUk3UUbDoh8oGxKpsBHmM51YxFBFXSHBytJ0lDpepOgFJfPrcTMtktRq5/bgYzwV1z5ZoMfOruOKw6eXA5GyeJ6Hfv2FpX1y9VCRN1zSeUIfjAYPF9qfc94uHG7wP+9crXMhyE9JtNfqKCgheMRHToEtMKddcZ8uTfkJ8myUmtUK8mx2DESeSr+Y5Gl40NaQWq0cNPxVsy4W7MXq2JyJ/9TMprOq5lLJX/QyEMRAwIDAQAB",
   "description": "",
   "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'",
