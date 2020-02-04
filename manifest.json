@@ -45,6 +45,15 @@
     },
     {
       "matches": [
+        "https://smbsalesimplementation.my.salesforce.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "changingSender.js"
+      ]
+    },
+    {
+      "matches": [
         "https://smbsalesimplementation--c.na81.visual.force.com/apex/Click2Dial"
       ],
       "js": [
