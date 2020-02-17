@@ -1,7 +1,7 @@
 // //marketParameter is setted in Mailinda on every access to the ticket based on the market 
 function setMarketParameter() {
   let market = document.getElementById("00N3600000QISBE_ileinner")
-  console.log(market)
+  //console.log(market)
   if (market) {
     //console.log(market.innerText)
     /* send a message to background script to set marketParameter */
@@ -15,7 +15,7 @@ function setMarketParameter() {
       });
   }
   else {
-    console.log("no market detected")
+   // console.log("no market detected")
 
   }
 }
@@ -53,3 +53,28 @@ const changingSender = () => {
 
 setMarketParameter();
 changingSender();
+
+
+
+/* highligh the row for attribution model */
+
+let element=document.querySelector("#\\30 0N3600000TPtiv_ilecell")
+
+    if(element){
+    var text = document.querySelector("#\\30 0N3600000TPtiv_ileinner").innerText.trim()
+    if(text){
+        var colors = ["red",""];
+        var currentIndex = 0;
+
+        setInterval(function() {
+        document.querySelector("#\\30 0N3600000TPtiv_ilecell").style.cssText = "background-color: " + colors[currentIndex];
+        currentIndex++;
+        if (currentIndex == undefined || currentIndex >= colors.length) {
+            currentIndex = 0;
+        }
+        }, 1000);
+    }
+    
+
+
+}
