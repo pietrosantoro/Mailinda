@@ -242,7 +242,7 @@ var fireAlert = (Data, today) => {
       if (element["Rescheduled Appointment Date/Time"].includes(dateChecker)) {
         console.log("inside reschedule e data checker")
         //if the case status is still not oncall
-        if ((element.Status = "In progress") || (element.Status = "In Queue")) {
+        if ((element.Status == "In progress") || (element.Status == "In Queue")) {
           myOutput.caseId = element["Case ID"];
           myOutput.caseNumber = element["Case Number"];
           myOutput.oncall = false;
@@ -253,7 +253,7 @@ var fireAlert = (Data, today) => {
     } else if (element["Appointment Date/Time"].includes(dateChecker)) {
       console.log("inside non reschedule")
       //if the case status is still not oncall
-      if ((element.Status = "In progress") || (element.Status = "In Queue")) {
+      if ((element.Status == "In progress") || (element.Status == "In Queue")) {
         myOutput.caseId = element["Case ID"];
         myOutput.caseNumber = element["Case Number"];
         myOutput.oncall = false;
