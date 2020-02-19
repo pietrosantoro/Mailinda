@@ -1,3 +1,4 @@
+var test1;
 var templateEmailTemplate = `
 <div id="emailtemplatecomponent">
   <div class="container-fluid">
@@ -27,7 +28,7 @@ var templateEmailTemplate = `
           </tr>
         </tbody>
       </table> -->
-      <div>{{ {{test1}}}}</div>
+      
       <div v-for="(email,index) in this.template_global">
         <h2>{{email.subject}}</h2>
         <div v-html="email.body"></div>
@@ -43,7 +44,6 @@ var emailtemplate = Vue.component("emailtemplate", {
     return {
       count: 0,
       test: "test interpolation",
-      test1: "{{test}}",
       template_global:"",
       junior_sme_daily: "",
       junior_sme_global: "",
@@ -86,7 +86,7 @@ var emailtemplate = Vue.component("emailtemplate", {
         // console.log(data)
         // console.log(data.juniorsme[this.current_day])
         this.template_global = data.email_template
-        console.log(this.template_global)
+        console.log(test1)
         //this.all_location = Object.keys(data)
         //this.current_location = location
         //console.log(data[this.current_location])
