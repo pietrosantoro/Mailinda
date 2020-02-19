@@ -1,2 +1,16 @@
+#emailtemplatecomponent{
+    padding-top: 15px;
+}
 
+#emailtemplatecomponent tr {
+    display: grid;
+    grid-template-columns: 1.3fr 2fr 2fr;
+    text-align: center;
+    
+}
 
+#emailtemplatecomponent .country{
+    height: 35px;
+    width: 35px;
+    margin-left: 20px;
+}
