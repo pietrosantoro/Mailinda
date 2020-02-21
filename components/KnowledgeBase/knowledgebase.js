@@ -6,7 +6,7 @@ let templateknowledgebase = `
       <div class=inputSearch>
         <p>What's the task you're looking for ?</p>
         <!-- search input here, vue event onkeyUp targeting the function names searchTask-->
-        <input type="text" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" v-on:keyup="searchTask">
+        <input type="text" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" @keyup="searchTask(); displayTask()">
       </div><br>
       <div class="row row-centered">
         <!-- loop through the tasks on the json file and populate the button and call the function chooseTask on clicking on this button-->
@@ -21,7 +21,7 @@ let templateknowledgebase = `
     <div class=inputSearch>
     <p>Which CMS you want to implemented your task ?</p>
     <!-- search input here, vue event onkeyUp targeting the function names searchCms-->
-    <input type="text" id="myInput2"  placeholder=" search for CMS here.." title="Type in a name"  v-on:keyup="searchCms">
+    <input type="text" id="myInput2"  placeholder=" search for CMS here.." title="Type in a name"  @keyup="searchCms(); displayCms()">
     </div><br>
     <!-- loop through the cmss on the json file and populate the button and call the function chooseCms on clicking on this button-->
     <div class="row row-centered">  
@@ -43,7 +43,7 @@ let knowledgebase = Vue.component("knowledgebase", {
       cms: "",
       //result is the json file from gitlab
       result: {},
-      taskKeys: ["Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping", "Ads Conversion Tracking", "Analytics Event Tracking", "Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce"],
+      taskKeys: ["Ads Conversion Tracking", "Analytics Event Tracking", "Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce", "Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping"],
       cmsKeys: ["Magento", "Wordpress", "Prestashop", "Shopify"],
       instructions:'',
       code:{},
@@ -51,6 +51,17 @@ let knowledgebase = Vue.component("knowledgebase", {
     };
   },
   methods: {
+    displayTask: function (){
+    let divTaskButton = document.getElementsByClassName("col-centered-task");
+    let inputTask = document.getElementById("myInput");
+    if(inputTask.value.length == 0)
+    {
+      for(i = 6; i < this.taskKeys.length; i++){
+        console.log(i);
+        divTaskButton[i].style.display="none";
+      }
+    }
+  },
     //chooseTask: to select the task chosen 
     chooseTask: function (taskChosen) {
       //taskChosen is the event that is gotten from the click on the button task
@@ -65,11 +76,6 @@ let knowledgebase = Vue.component("knowledgebase", {
       //display only 3 last cms
       let divCmsButton = document.getElementsByClassName("col-centered-cms");
       console.log('choose your cms');
-      for(i = 0; i < 1; i++){
-        console.log(divCmsButton[i]);
-        divCmsButton[i].style.display="none";
-    }
-
     },
     //chooseCms: to select the CMS chosen
     chooseCms: function (cmsChosen) {
@@ -86,23 +92,25 @@ let knowledgebase = Vue.component("knowledgebase", {
 
         
     },
-    searchTask: function () {
+    searchTask: function() {
+
       let inputTask, filter, taskButton, tasks;
       //get the input from the user
       inputTask = document.getElementById("myInput");
+      
       //make the text uppercase
       filter = inputTask.value.toUpperCase();
-      
       //get all the buttons
       taskButton = document.getElementsByClassName("col-centered-task");
       tasks = this.taskKeys;
-
+      this.displayTask();
       //cycle through all the buttons to display the match and hide the others
       for (i = 0; i < taskButton.length; i++) {
         //if there is a match 
         if (tasks[i].toUpperCase().indexOf(filter) > -1) {
           //display the match
           taskButton[i].style.display = "";
+          console.log(taskButton[i]);
         } else {
           //hide the mismatch
           taskButton[i].style.display = "none";
@@ -135,14 +143,9 @@ let knowledgebase = Vue.component("knowledgebase", {
     console.log('Knowledge Base deactivated')
   },
   mounted: function () {
-    //display 6 tasks
-    let divTaskButton = document.getElementsByClassName("col-centered-task");
-    console.log('Knowledge Base mounted')
-    for(i = 0; i < 5; i++){
-        console.log(divTaskButton[i]);
-        divTaskButton[i].style.display="none";
-
-    }
+    console.log('Knowledge Base mounted');
+    this.displayTask();
+    
   },
   destroyed: function () {
     console.log('Knowledge Base destroyed')
