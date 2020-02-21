@@ -1,0 +1,45 @@
+#taskDiv{
+    text-align: center;
+}
+
+#cmsDiv{
+    text-align: center;
+}
+
+#myInput, #myInput2{
+    border-radius: 3px;
+    background-color: white;
+    border: none;
+    font-size: 15px;
+}
+#buttonTask{
+    margin-top: 5px;
+}
+
+#buttonCms{
+    margin-top: 5px;
+    margin-left: 20px;
+}
+#myInput:focus, #myInput2:focus{
+    background-color: #ecf0f1;
+    border-color: white;
+}
+
+.inputSearch{
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+}
+.row-centered {
+
+    text-align:center;
+}
+.col-centered-task, .col-centered-cms{
+
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
