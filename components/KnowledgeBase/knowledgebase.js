@@ -58,6 +58,7 @@ let knowledgebase = Vue.component("knowledgebase", {
     {
       for(i = 6; i < this.taskKeys.length; i++){
         console.log(i);
+        console.log(i);
         divTaskButton[i].style.display="none";
       }
     }
