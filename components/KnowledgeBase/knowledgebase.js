@@ -6,7 +6,8 @@ let templateknowledgebase = `
       <div class=inputSearch>
         <p>What's the task you're looking for ?</p>
         <!-- search input here, vue event onkeyUp targeting the function names searchTask-->
-        <input type="text" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" @keyup="searchTask(); displayTask()">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input type="text" class="form-control-sm ml-3 w-50" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" @keyup="searchTask(); displayTask()">
       </div><br>
       <div class="row row-centered">
         <!-- loop through the tasks on the json file and populate the button and call the function chooseTask on clicking on this button-->
@@ -18,10 +19,12 @@ let templateknowledgebase = `
   </div>  
 
   <div id="cmsDiv" style="display:none;" >    
-    <div class=inputSearch>
+    <div class="inputSearch">
+    <button type="button" class="btn btn-outline-light backButton" @click="backButton()"><i class="fa fa-angle-left"></i> Back</button>
     <p>Which CMS you want to implemented your task ?</p>
     <!-- search input here, vue event onkeyUp targeting the function names searchCms-->
-    <input type="text" id="myInput2"  placeholder=" search for CMS here..." title="Type in a name"  @keyup="searchCms(); displayTask()">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <input type="text" class="form-control-sm ml-3 w-50" id="myInput2"  placeholder=" search for CMS here..." title="Type in a name"  @keyup="searchCms(); displayTask()">
     </div><br>
     <!-- loop through the cmss on the json file and populate the button and call the function chooseCms on clicking on this button-->
     <div class="row row-centered">  
@@ -44,13 +47,18 @@ let knowledgebase = Vue.component("knowledgebase", {
       //result is the json file from gitlab
       result: {},
       taskKeys: ["Ads Conversion Tracking","Analytics Event Tracking","Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce", "Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping"],
-      cmsKeys: ["Wordpress", "Prestashop","Shopify","Magento"],
+      cmsKeys: ["Wordpress", "Prestashop","Shopify","Magento", "Shopware"],
       instructions:'',
       code:{},
       href:""
     };
   },
   methods: {
+    backButton: function(){
+      document.getElementById('taskDiv').style.display = "block";
+      document.getElementById('cmsDiv').style.display = "none";
+
+    },
     displayTask: function (){
     let divTaskButton, divCmsButton, inputTask, inputCms;
     divTaskButton = document.getElementsByClassName("col-centered-task");
