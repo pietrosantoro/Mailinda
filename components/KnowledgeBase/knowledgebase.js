@@ -21,7 +21,7 @@ let templateknowledgebase = `
     <div class=inputSearch>
     <p>Which CMS you want to implemented your task ?</p>
     <!-- search input here, vue event onkeyUp targeting the function names searchCms-->
-    <input type="text" id="myInput2"  placeholder=" search for CMS here.." title="Type in a name"  @keyup="searchCms(); displayCms()">
+    <input type="text" id="myInput2"  placeholder=" search for CMS here..." title="Type in a name"  @keyup="searchCms(); displayTask()">
     </div><br>
     <!-- loop through the cmss on the json file and populate the button and call the function chooseCms on clicking on this button-->
     <div class="row row-centered">  
@@ -43,8 +43,8 @@ let knowledgebase = Vue.component("knowledgebase", {
       cms: "",
       //result is the json file from gitlab
       result: {},
-      taskKeys: ["Ads Conversion Tracking", "Analytics Event Tracking", "Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce", "Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping"],
-      cmsKeys: ["Magento", "Wordpress", "Prestashop", "Shopify"],
+      taskKeys: ["Ads Conversion Tracking","Analytics Event Tracking","Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce", "Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping"],
+      cmsKeys: ["Wordpress", "Prestashop","Shopify","Magento"],
       instructions:'',
       code:{},
       href:""
@@ -52,14 +52,20 @@ let knowledgebase = Vue.component("knowledgebase", {
   },
   methods: {
     displayTask: function (){
-    let divTaskButton = document.getElementsByClassName("col-centered-task");
-    let inputTask = document.getElementById("myInput");
-    if(inputTask.value.length == 0)
-    {
+    let divTaskButton, divCmsButton, inputTask, inputCms;
+    divTaskButton = document.getElementsByClassName("col-centered-task");
+    divCmsButton = document.getElementsByClassName("col-centered-cms");
+    inputTask = document.getElementById("myInput");
+    inputCms = document.getElementById("myInput2");
+    if(inputTask.value.length == 0){
       for(i = 6; i < this.taskKeys.length; i++){
         console.log(i);
-        console.log(i);
-        divTaskButton[i].style.display="none";
+        divTaskButton[i].style.display = "none";
+      }
+    }
+    if(inputCms.value.length == 0){
+      for(i = 3; i < this.cmsKeys.length; i++){
+        divCmsButton[i].style.display = "none";
       }
     }
   },
@@ -94,17 +100,14 @@ let knowledgebase = Vue.component("knowledgebase", {
         
     },
     searchTask: function() {
-
       let inputTask, filter, taskButton, tasks;
       //get the input from the user
       inputTask = document.getElementById("myInput");
-      
       //make the text uppercase
       filter = inputTask.value.toUpperCase();
       //get all the buttons
       taskButton = document.getElementsByClassName("col-centered-task");
       tasks = this.taskKeys;
-      this.displayTask();
       //cycle through all the buttons to display the match and hide the others
       for (i = 0; i < taskButton.length; i++) {
         //if there is a match 
@@ -120,18 +123,18 @@ let knowledgebase = Vue.component("knowledgebase", {
     },
     //this function does the same as the above one but we need another way of doing only one
     searchCms: function () {
-      let inputCms, filter, taskButton, cms;
+      let inputCms, filter, cmsButton, cms;
       inputCms = document.getElementById("myInput2");
       filter = inputCms.value.toUpperCase();
-      taskButton = document.getElementsByClassName("col-centered-cms");
+      cmsButton = document.getElementsByClassName("col-centered-cms");
       cms = this.cmsKeys;
 
-      for (i = 0; i < taskButton.length; i++) {
+      for (i = 0; i < cmsButton.length; i++) {
         if (cms[i].toUpperCase().indexOf(filter) > -1) {
-
-          taskButton[i].style.display = "";
+          cmsButton[i].style.display = "";
+          console.log(cmsButton[i]);
         } else {
-          taskButton[i].style.display = "none";
+          cmsButton[i].style.display = "none";
         }
       }
 
