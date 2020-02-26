@@ -2,34 +2,34 @@ let templateknowledgebase = `
 <div class="container" style="margin-top:10px ">
 
   <div style="background-color:#252a2e; color:white"  aria-labelledby="dropdownMenuButton" >
-    <div id="taskDiv" style="display:block;">
+    <div id="taskDiv" v-show="seeDiv">
       <div class=inputSearch>
         <p>What's the task you're looking for ?</p>
         <!-- search input here, vue event onkeyUp targeting the function names searchTask-->
         <i class="fas fa-search" aria-hidden="true"></i>
-        <input type="text" class="form-control-sm ml-3 w-50" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" @keyup="searchTask(); displayTask()">
+        <input type="text" class="form-control-sm ml-3 w-50" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" @keyup="searchTask(); displayButton()">
       </div><br>
       <div class="row row-centered">
         <!-- loop through the tasks on the json file and populate the button and call the function chooseTask on clicking on this button-->
         <div class="col-sm-4 col-centered-task" id="taskSearch" v-for="(data,key) in taskKeys" :key="key">
-          <button type="button" name="task" id="buttonTask" class="btn btn-outline-light" v-on:click="chooseTask($event)">{{data}} </button>     
+          <button type="button" name="task" id="buttonTask" class="btn btn-outline-light" v-on:click="chooseTask($event); seeDiv=!seeDiv">{{data}}</button>     
         </div>
       </div>
     </div>               
   </div>  
 
-  <div id="cmsDiv" style="display:none;" >    
+  <div id="cmsDiv" v-show="!seeDiv">    
     <div class="inputSearch">
-    <button type="button" class="btn btn-outline-light backButton" @click="backButton()"><i class="fa fa-angle-left"></i> Back</button>
+    <button type="button" class="btn btn-outline-light backButton" @click="seeDiv = !seeDiv"><i class="fa fa-angle-left"></i> Back</button>
     <p>Which CMS you want to implemented your task ?</p>
     <!-- search input here, vue event onkeyUp targeting the function names searchCms-->
     <i class="fas fa-search" aria-hidden="true"></i>
-    <input type="text" class="form-control-sm ml-3 w-50" id="myInput2"  placeholder=" search for CMS here..." title="Type in a name"  @keyup="searchCms(); displayTask()">
+    <input type="text" class="form-control-sm ml-3 w-50" id="myInput2"  placeholder=" search for CMS here..." title="Type in a name"  @keyup="searchCms(); displayButton()">
     </div><br>
     <!-- loop through the cmss on the json file and populate the button and call the function chooseCms on clicking on this button-->
     <div class="row row-centered">  
     <div class="col-sm-4 col-centered-cms" id="cmsSearch" v-for=" (data,key) in cmsKeys" :key="key">
-        <button type="button" name="cms" id="buttonCms" class="btn btn-outline-light" v-on:click="chooseCms($event)">{{data}} </button>     
+        <button type="button" name="cms" id="buttonCms" class="btn btn-outline-light" v-on:click="chooseCms($event); seeDiv=!seeDiv">{{data}} </button>     
       </div>
       </div> 
   </div>
@@ -42,6 +42,7 @@ let knowledgebase = Vue.component("knowledgebase", {
   template: templateknowledgebase,
   data() {
     return {
+      seeDiv: true,
       task: "",
       cms: "",
       //result is the json file from gitlab
@@ -54,12 +55,7 @@ let knowledgebase = Vue.component("knowledgebase", {
     };
   },
   methods: {
-    backButton: function(){
-      document.getElementById('taskDiv').style.display = "block";
-      document.getElementById('cmsDiv').style.display = "none";
-
-    },
-    displayTask: function (){
+    displayButton: function (){
     let divTaskButton, divCmsButton, inputTask, inputCms;
     divTaskButton = document.getElementsByClassName("col-centered-task");
     divCmsButton = document.getElementsByClassName("col-centered-cms");
@@ -83,30 +79,17 @@ let knowledgebase = Vue.component("knowledgebase", {
       this.task = taskChosen.target.innerText.split(' ').join('-').toLowerCase()
       //get the keys of the second layer of the json object which are the cms names
       this.cmsKeys
-      //hide the tasks
-      document.getElementById('taskDiv').style.display = 'none';
-     // display the cms
-      document.getElementById('cmsDiv').style.display = 'block';
-
-      //display only 3 last cms
-      let divCmsButton = document.getElementsByClassName("col-centered-cms");
       console.log('choose your cms');
     },
     //chooseCms: to select the CMS chosen
     chooseCms: function (cmsChosen) {
       //cmsChosen is the event that is gotten from the click on the button CMS      
       this.cms = cmsChosen.target.innerText.toLowerCase()
-      //hide the cms div
-      document.getElementById('cmsDiv').style.display = 'none';
-
       //use the task and cms selected before and open new tab
-      //this.code="<a href="+this.result[this.task][this.cms].code+ "target='_blank'>Click for code</a>"
       this.href="http://kb.stsandbox.vddigi.com/docs/cms/"+this.cms+"/"+this.task+"/"
-      window.open("http://kb.stsandbox.vddigi.com/docs/cms/"+this.cms+"/"+this.task+"/")
-      //document.getElementById('table').style.display = 'block';
-
-        
+      window.open("http://kb.stsandbox.vddigi.com/docs/cms/"+this.cms+"/"+this.task+"/")      
     },
+    //search bar function
     searchTask: function() {
       let inputTask, filter, taskButton, tasks;
       //get the input from the user
@@ -117,9 +100,8 @@ let knowledgebase = Vue.component("knowledgebase", {
       taskButton = document.getElementsByClassName("col-centered-task");
       tasks = this.taskKeys;
       //cycle through all the buttons to display the match and hide the others
-      for (i = 0; i < taskButton.length; i++) {
-        //if there is a match 
-        if (tasks[i].toUpperCase().indexOf(filter) > -1) {
+      for (let i = 0; i < taskButton.length; i++) {
+       if (tasks[i].toUpperCase().indexOf(filter) > -1) {
           //display the match
           taskButton[i].style.display = "";
           console.log(taskButton[i]);
@@ -156,7 +138,7 @@ let knowledgebase = Vue.component("knowledgebase", {
   },
   mounted: function () {
     console.log('Knowledge Base mounted');
-    this.displayTask();
+    this.displayButton();
     
   },
   destroyed: function () {
