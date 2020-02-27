@@ -208,7 +208,6 @@ var ghostforce = Vue.component("ghostforce", {
     console.log('Ghost Force  deactivated')
   },
   mounted: function () {
-console.log(chrome.tabs.index)
     if (this.ghostforce_active) {
       this.current_subject = all_salesforce_fields.Subject;     // Tag implementation or Shopping Campaign
       //fetch all program data

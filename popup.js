@@ -45,7 +45,7 @@ new Vue({
       //every time the popup is clicked, we checked the first component to load. If we are inside a salesforce ticket page, first component will be ghostforce
       if (check_first_component) {
         function check() {
-          console.log("dentro check")
+          //console.log("dentro check")
           return new Promise(resolve => {
             chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
               var activeTab = tabs[0];
@@ -58,7 +58,7 @@ new Vue({
                     var new_tab = "New Email"
                     ghostforce_active = false;
                     resolve(new_tab)
-                    console.log(new_tab)
+                   // console.log(new_tab)
                   }
                   else if (response.message == "inside case") {
                     //click on extension from salesforce ticket, so we load ghostforce as first component and we ask to gitlab for mandatory fields
@@ -91,7 +91,7 @@ new Vue({
                     var new_tab = "New Email"
                     ghostforce_active = false;
                     resolve(new_tab)
-                    console.log(new_tab)
+                    //console.log(new_tab)
                   }
                 });
             });
@@ -99,7 +99,7 @@ new Vue({
         }
         var result = check();
         this.currentTab = result.then(async function (data) {
-          console.log(data)
+         // console.log(data)
           return data.replace(" ", "").toLowerCase();
         })
         check_first_component = false;
