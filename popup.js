@@ -111,6 +111,9 @@ new Vue({
 
 
     },
+    emailfetch: function(){
+      console.log("email fetched")
+    }
   }
 });
 

@@ -44,7 +44,7 @@ var emailtemplate = Vue.component("emailtemplate", {
     return {
       count: 0,
       test: "test interpolation",
-      template_global:"",
+      template_global: test1,
       junior_sme_daily: "",
       junior_sme_global: "",
       hangout_link: "",
@@ -85,7 +85,8 @@ var emailtemplate = Vue.component("emailtemplate", {
       .then(data => {
         // console.log(data)
         // console.log(data.juniorsme[this.current_day])
-        this.template_global = data.email_template
+       // this.template_global = data.email_template
+        test1 = data.email_template
         console.log(test1)
         //this.all_location = Object.keys(data)
         //this.current_location = location
