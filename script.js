@@ -275,6 +275,37 @@ chrome.runtime.onMessage.addListener(
     }
   })
 
+/* Bad lead starts */
+// Listen to the message from ghostforce.js when one of the the bad leads button is clicked
+
+chrome.runtime.onMessage.addListener(
+  function (request) {
+  
+     if (request.txt === "bad_lead") {
+      let iframes = getActiveFrame();
+      
+          //create a double click on the Vendor Chat Comments	text area
+       
+          let clickEvent = document.createEvent('MouseEvents');
+          clickEvent.initEvent('dblclick', true, true);
+          iframes[0].querySelector("#\\30 0N3600000QISE6_ileinner").dispatchEvent(clickEvent)
+  
+          // wait half second until the double click is done, then put the value of the click to the text area field
+           setTimeout(() => {
+            iframes[0].querySelector("#\\30 0N3600000QISE6").value+='\n' + request.data
+           // done()
+          }, 500); 
+          
+          // Click the buttton 'ok' to save chnages
+          function done(){
+           iframes[0].querySelector("#InlineEditDialog_buttons > input:nth-child(1)").click()
+          }
+  
+    }
+  
+  })
+
+  /* Bad lead finish */
 console.log("script.js")
 
 
