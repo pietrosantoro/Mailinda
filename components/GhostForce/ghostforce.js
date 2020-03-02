@@ -64,10 +64,16 @@ var templateghostforce = `
         </div>
         <!-- Bad leads section   -->
 
-        <button   type="button" class="btn btn-info" data-toggle="collapse" data-target="#lead">Bad Lead??  Click me then click on one</button>
-
-            
-        <p v-for="badLead in bad_leads" id="lead" class="collapse"> <a style="color:white" href="#" @click='lead($event)'>{{badLead}}</a></p>
+        <button type="button" class="call_button call_button_modifier" data-toggle="collapse" data-target="#lead">
+          <b>Bad Leads Report</b>
+          <i class="fas fa-angle-down"></i>
+        </button>
+        <br>
+        <div id="lead" class="collapse">
+          <p v-for="badLead in bad_leads" @click='lead($event,badLead)' class="call_button"><span class='tip'>Click to fill</span>{{badLead}}</p>
+          
+        </div>
+        
 
 
 <!-- End of bad leads section   -->
@@ -247,7 +253,9 @@ var ghostforce = Vue.component("ghostforce", {
       fetch('http://35.228.175.186/process_data/general-data/raw/master/bad_leads.json')
       .then(response => response.json())
       .then(data => {
-        this.bad_leads = data;      })
+        this.bad_leads = data
+        console.log(this.bad_leads)
+      })
       .catch(err => {
         //handle the error        
         console.log(err+' Cant fetch the bad-leads file, Im inside the ghostforce.js')
@@ -421,23 +429,24 @@ var ghostforce = Vue.component("ghostforce", {
       
     },
      // Get the call from the bad leads button when clicked, and pass the click event 
-     lead(clickEvent){  
+     lead(clickEvent,badlead){  
 
       // prevent default behavior
-   clickEvent.preventDefault()
-    let msg = {
+      clickEvent.preventDefault()
+      var comment = 'BAD Lead - ' + badlead
+        let msg = {
 
-      // Get the inner text of the event click
-      data: clickEvent.toElement.innerText,
+          // Get the inner text of the event click
+          data: comment,
 
-      //pass text message to script.js
-      txt: "bad_lead"
-    }
-     // Send the message object to script.js
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, msg);
-    });
-  },
+          //pass text message to script.js
+          txt: "bad_lead"
+        }
+        // Send the message object to script.js
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, msg);
+        });
+    },
     test() {
       console.log(this.current_program)
     }
