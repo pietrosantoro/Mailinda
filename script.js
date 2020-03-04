@@ -193,43 +193,40 @@ chrome.runtime.onMessage.addListener(
 
       //check first the implementation type as the url is in different place for shopping cases
       let implementationType = all_salesforce_fields['Subject'];
-      let url = "";
+      let url = ''
       let adv_name;
       
       if (implementationType == 'Tag Implementation') {
-        // var all_link = iframes[0].querySelectorAll('[href^="http"] ');
-        //       all_link.forEach(element => {
-        //         if(!element.href.includes("smbsalesimplementation"))
-        //           url = element.href
-        //       })
-
-        try {
-          url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td:nth-child(4) > a").href
-          }
-        catch{
-          try{
-          url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td.dataCell.cellCol3 > a").href
-          }
+        all_salesforce_fields.URL = all_salesforce_fields.Tags[0].URL
+        //if the URL is cutted we try to take the href
+        if(all_salesforce_fields.URL.includes("...")){
+          try {
+            url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td:nth-child(4) > a").href
+            }
           catch{
             try{
-            iframes[0].querySelectorAll(" table > tbody > tr.dataRow.even.first > td.dataCell.cellCol3 > a").forEach(element => {
-              if(!element.href.includes("javascript")){
-                url = element.href
-              }
-            });
-            }
-          catch(err){
-            try{
-              url=document.querySelector("table > tbody > tr.dataRow.even.first > td:nth-child(4) > a").href
+            url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td.dataCell.cellCol3 > a").href
             }
             catch{
-              url=''
+              try{
+                iframes[0].querySelectorAll(" table > tbody > tr.dataRow.even.first > td.dataCell.cellCol3 > a").forEach(element => {
+                  if(!element.href.includes("javascript")){
+                    url = element.href
+                  }
+                });
+              }
+              catch(err){
+                try{
+                  url=document.querySelector("table > tbody > tr.dataRow.even.first > td:nth-child(4) > a").href
+                }
+                catch{
+                 url=''
+                }
+              }
             }
           }
-        }
-      }
-        all_salesforce_fields.URL = url
-
+          all_salesforce_fields.URL = url
+        }   
       }
 
       
