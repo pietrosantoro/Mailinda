@@ -37,7 +37,7 @@ new Vue({
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'Ghost Force', 'GTM injector'],    //tab present in menu
+    tabs: ['New Email', 'Ghost Force', 'GTM injector', 'Knowledge Base'],    //tab present in menu
     ghostforce_active,
     all_salesforce_fields
 

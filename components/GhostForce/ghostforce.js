@@ -198,8 +198,8 @@ var ghostforce = Vue.component("ghostforce", {
       bgpage: bgpage,
       ghostforce_active: ghostforce_active,
       ghost_images: [
-        { name: "Website  Adwors  Analytics", src: "../images/ghost_icons/icon-open-three.png" },
-        { name: "Adwors", src: "../images/ghost_icons/icon-google-ads.png" },
+        { name: "Website  Adwords  Analytics", src: "../images/ghost_icons/icon-open-three.png" },
+        { name: "Adwords", src: "../images/ghost_icons/icon-google-ads.png" },
         { name: "Analytics", src: "../images/ghost_icons/icon-analytics.png" },
         { name: "Website", src: "../images/ghost_icons/icon-browser.svg" },
         { name: "Tag Manager", src: "../images/ghost_icons/icon-tagmanager.png" },
@@ -334,7 +334,7 @@ var ghostforce = Vue.component("ghostforce", {
     ghost(event) {
       if (this.ghostforce_active) {
         console.log(event)
-        if(event == 'Website  Adwors  Analytics') {
+        if(event == 'Website  Adwords  Analytics') {
           
        chrome.windows.getCurrent(function (currentWindow) {
           chrome.tabs.query({ active: true, windowId: currentWindow.id }, function (activeTabs) {
@@ -355,7 +355,7 @@ var ghostforce = Vue.component("ghostforce", {
         });
         
         }
-        else if (event == 'Adwors') {
+        else if (event == 'Adwords') {
           if(all_salesforce_fields['Customer ID'])
             window.open("https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID'])
         }
