@@ -4,7 +4,7 @@ Official readme for the Mailinda extension.
 
 # Working on the source
 
-  - ```git clone http://35.228.175.186/Team-Projects/mailinda.git```
+  - ```git clone http://35.242.128.211/mailinda-group/mailinda.git```
   - ```git config --global user.name "Your Name and Surname"```
   - ```git config --global user.email "Your google email"```
 
