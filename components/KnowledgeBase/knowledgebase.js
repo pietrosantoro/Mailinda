@@ -1,150 +1,147 @@
 let templateknowledgebase = `
-<div class="container" style="margin-top:10px ">
-
-  <div style="background-color:#252a2e; color:white"  aria-labelledby="dropdownMenuButton" >
-    <div id="taskDiv" v-show="seeDiv">
-      <div class=inputSearch>
-        <p>What's the task you're looking for ?</p>
-        <!-- search input here, vue event onkeyUp targeting the function names searchTask-->
-        <i class="fas fa-search" aria-hidden="true"></i>
-        <input type="text" class="form-control-sm ml-3 w-50" id="myInput" ref="search" placeholder=" search for task here..." title="Type in a name" @keyup="searchTask(); displayButton()">
-      </div><br>
-      <div class="row row-centered">
-        <!-- loop through the tasks on the json file and populate the button and call the function chooseTask on clicking on this button-->
-        <div class="col-sm-4 col-centered-task" id="taskSearch" v-for="(data,key) in taskKeys" :key="key">
-          <button type="button" name="task" id="buttonTask" class="btn btn-outline-light" v-on:click="chooseTask($event); seeDiv=!seeDiv">{{data}}</button>     
+<div class="container">
+    <div class="mainDiv">
+        <div class="inputSearch">
+            <p> What are you looking for ?</p>
         </div>
-      </div>
-    </div>               
-  </div>  
 
-  <div id="cmsDiv" v-show="!seeDiv">    
-    <div class="inputSearch">
-    <button type="button" class="btn btn-outline-light backButton" @click="seeDiv = !seeDiv"><i class="fa fa-angle-left"></i> Back</button>
-    <p>Which CMS you want to implemented your task ?</p>
-    <!-- search input here, vue event onkeyUp targeting the function names searchCms-->
-    <i class="fas fa-search" aria-hidden="true"></i>
-    <input type="text" class="form-control-sm ml-3 w-50" id="myInput2"  placeholder=" search for CMS here..." title="Type in a name"  @keyup="searchCms(); displayButton()">
-    </div><br>
-    <!-- loop through the cmss on the json file and populate the button and call the function chooseCms on clicking on this button-->
-    <div class="row row-centered">  
-    <div class="col-sm-4 col-centered-cms" id="cmsSearch" v-for=" (data,key) in cmsKeys" :key="key">
-        <button type="button" name="cms" id="buttonCms" class="btn btn-outline-light" v-on:click="chooseCms($event); seeDiv=!seeDiv">{{data}} </button>     
-      </div>
-      </div> 
-  </div>
-
-</div>
+        <div class="row">
+            <div class="row-centered column">
+                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                    v-on:click="chooseSubject">CMS</button>
+                <div class="dropdown-menu">
+                    <div id="taskSearch" class=" dropdown-item dropdown dropright" v-for="(data,key) in cmsKeys"
+                        :key="key">
+                        <button type="button" name="task" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+                            v-on:mouseover="mouseOver">{{data}}</button>
+                        <div class="dropdown-content dropdownTask">
+                            <input type="search" class="form-control" id="myInput" v-model="search"
+                                placeholder="Search" />
+                            <div id="taskSearch" v-for="(data,key) in cmsFiltered" :key="key">
+                                <button type="button" name="task" class="dropdown-item"
+                                    v-on:click="chooseTask">{{data}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-centered column">
+                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                    v-on:click="chooseSubject">Analytics</button>
+                <div class="dropdown-menu dropdownAnalytics">
+                <input type="search" class="form-control" v-model="search"
+                placeholder="Search"/>
+                    <div id="taskSearch" class="dropdown-item" v-for="(data,key) in analyticsFiltered" :key="key">
+                        <button type="button" name="task" id="" class="dropdown-item" data-toggle="dropdown"
+                            v-on:click="chooseTask">{{data}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-centered column">
+                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                    v-on:click="chooseSubject">Adwords</button>
+                <div class="dropdown-menu dropdownAnalytics">
+                    <input type="search" class="form-control" v-model="search"
+                        placeholder="Search" />
+                    <div id="taskSearch" class="dropdown-item" v-for="(data,key) in adwordsFiltered" :key="key">
+                        <button type="button" name="task" id="" class="dropdown-item" data-toggle="dropdown"
+                            v-on:click="chooseTask">{{data}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-centered column">
+                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
+                    v-on:click="chooseSubject">Shopping</button>
+                <div class="dropdown-menu dropdownAnalytics">
+                    <input type="search" class="form-control" v-model="search"
+                        placeholder="Search" />
+                    <div id="taskSearch" class="dropdown-item" v-for="(data,key) in shoppingFiltered" :key="key">
+                        <button type="button" name="task" id="" class="dropdown-item" data-toggle="dropdown"
+                            v-on:click="chooseTask">{{data}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 `;
 
 let knowledgebase = Vue.component("knowledgebase", {
-  template: templateknowledgebase,
-  data() {
-    return {
-      seeDiv: true,
-      task: "",
-      cms: "",
-      //result is the json file from gitlab
-      result: {},
-      taskKeys: ["Ads Conversion Tracking","Analytics Event Tracking","Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce", "Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping"],
-      cmsKeys: ["Wordpress", "Prestashop","Shopify","Magento", "Shopware"],
-      instructions:'',
-      code:{},
-      href:""
-    };
-  },
-  methods: {
-    displayButton: function (){
-    let divTaskButton, divCmsButton, inputTask, inputCms;
-    divTaskButton = document.getElementsByClassName("col-centered-task");
-    divCmsButton = document.getElementsByClassName("col-centered-cms");
-    inputTask = document.getElementById("myInput");
-    inputCms = document.getElementById("myInput2");
-    if(inputTask.value.length == 0){
-      for(i = 6; i < this.taskKeys.length; i++){
-        console.log(i);
-        divTaskButton[i].style.display = "none";
-      }
-    }
-    if(inputCms.value.length == 0){
-      for(i = 3; i < this.cmsKeys.length; i++){
-        divCmsButton[i].style.display = "none";
-      }
-    }
-  },
-    //chooseTask: to select the task chosen 
-    chooseTask: function (taskChosen) {
-      //taskChosen is the event that is gotten from the click on the button task
-      this.task = taskChosen.target.innerText.split(' ').join('-').toLowerCase()
-      //get the keys of the second layer of the json object which are the cms names
-      this.cmsKeys
-      console.log('choose your cms');
+    template: templateknowledgebase,
+    data() {
+        return {
+            seeDiv: true,
+            subject: "",
+            task: "",
+            cms: "",
+            //result is the json file from gitlab
+            result: {},
+            shoppingKeys: ["Gearloose", "Merchant Center Setup", "Shopping Feed Setup", "Shopping Feed Optimization", "Merchant Center Features", "Handy Go Links", "Offline Shopping GSS"],
+            taskKeys: ["Ads Conversion Tracking", "Analytics Event Tracking", "Standard Remarketing", "Dynamic Remarketing", "Standard Ecommerce", "Enhanced Ecommerce", "Analytics", "Google Tag Manager", "Cross Domain Tracking", "Website Call Conversion", "Shopping"],
+            cmsKeys: ["Wordpress", "Prestashop", "Shopify", "Magento", "Shopware"],
+            adwordsKeys: ["Conversion Tracking", "Standard Remarketing", "Dynamic Remarketing Retail", "Dynamic Remarketing non Retail", "Site Wide Tracking ITP", "Website Call Conversion", "Offline Conversion Tracking"],
+            analyticsKeys: ["Goal Tracking","Cross Domain Tracking", "Standard Ecommerce", "Enhanced Ecommerce", "Standard Remarketing", "Dynamic Remarketing Retail", "Dynamic Remarketing non Retail", "Filters", "Audience lists"],           
+            search: '',
+            code: {},
+            href: ""
+        };
     },
-    //chooseCms: to select the CMS chosen
-    chooseCms: function (cmsChosen) {
-      //cmsChosen is the event that is gotten from the click on the button CMS      
-      this.cms = cmsChosen.target.innerText.toLowerCase()
-      //use the task and cms selected before and open new tab
-      this.href="http://kb.stsandbox.vddigi.com/docs/cms/"+this.cms+"/"+this.task+"/"
-      window.open("http://kb.stsandbox.vddigi.com/docs/cms/"+this.cms+"/"+this.task+"/")      
-    },
-    //search bar function
-    searchTask: function() {
-      let inputTask, filter, taskButton, tasks;
-      //get the input from the user
-      inputTask = document.getElementById("myInput");
-      //make the text uppercase
-      filter = inputTask.value.toUpperCase();
-      //get all the buttons
-      taskButton = document.getElementsByClassName("col-centered-task");
-      tasks = this.taskKeys;
-      //cycle through all the buttons to display the match and hide the others
-      for (let i = 0; i < taskButton.length; i++) {
-       if (tasks[i].toUpperCase().indexOf(filter) > -1) {
-          //display the match
-          taskButton[i].style.display = "";
-          console.log(taskButton[i]);
-        } else {
-          //hide the mismatch
-          taskButton[i].style.display = "none";
+    computed: {
+        cmsFiltered: function(){
+            return this.taskKeys.filter((data) => {
+                return data.toLowerCase().match(this.search.toLowerCase())
+            });
+        },
+        analyticsFiltered: function(){
+            return this.analyticsKeys.filter((data) => {
+                return data.toLowerCase().match(this.search.toLowerCase())
+            });
+        },
+        adwordsFiltered: function(){
+            return this.adwordsKeys.filter((data) => {
+                return data.toLowerCase().match(this.search.toLowerCase())
+            });
+        },
+        shoppingFiltered: function(){
+            return this.shoppingKeys.filter((data) => {
+                return data.toLowerCase().match(this.search.toLowerCase())
+            });
         }
-      }
     },
-    //this function does the same as the above one but we need another way of doing only one
-    searchCms: function () {
-      let inputCms, filter, cmsButton, cms;
-      inputCms = document.getElementById("myInput2");
-      filter = inputCms.value.toUpperCase();
-      cmsButton = document.getElementsByClassName("col-centered-cms");
-      cms = this.cmsKeys;
+    methods: {
+        //to select the cms by mouseover 
+        chooseSubject: function(subjectChosen){
+            this.subject = subjectChosen.target.innerText.split(' ').join('-').toLowerCase() + "/";
+            console.log(this.subject);
 
-      for (i = 0; i < cmsButton.length; i++) {
-        if (cms[i].toUpperCase().indexOf(filter) > -1) {
-          cmsButton[i].style.display = "";
-          console.log(cmsButton[i]);
-        } else {
-          cmsButton[i].style.display = "none";
-        }
-      }
+        },
+        mouseOver: function (cmsChosen) {
+            this.cms = cmsChosen.target.innerText.split(' ').join('-').toLowerCase() + "/";
+            console.log(this.cms);
+        },
+        //after choose cms, open new tab to the knowledge base with the task chosen 
+        chooseTask: function (taskChosen) {
+            this.task = taskChosen.target.innerText.split(' ').join('-').toLowerCase();
+            this.href = "http://kb.stsandbox.vddigi.com/docs/" + this.subject + this.cms + this.task;
+            console.log(this.href);
+            window.open("http://kb.stsandbox.vddigi.com/docs/" + this.subject + this.cms + this.task);
 
-    }
-  },
-  activated: function () {
-    console.log('Knowledge Base activated')
-  },
-  deactivated: function () {
-    console.log('Knowledge Base deactivated')
-  },
-  mounted: function () {
-    console.log('Knowledge Base mounted');
-    this.displayButton();
-    
-  },
-  destroyed: function () {
-    console.log('Knowledge Base destroyed')
-  },
-  props: {
+        },   
+    },
+    activated: function () {
+        console.log('Knowledge Base activated')
+    },
+    deactivated: function () {
+        console.log('Knowledge Base deactivated')
+    },
+    mounted: function () {
+        console.log('Knowledge Base mounted');
+        
+    },
+    destroyed: function () {
+        console.log('Knowledge Base destroyed')
+    },
+    props: {
 
-  },
+    },
 });
