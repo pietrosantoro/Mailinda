@@ -220,7 +220,7 @@ var ghostforce = Vue.component("ghostforce", {
     if (this.ghostforce_active) {
       this.current_subject = all_salesforce_fields.Subject;     // Tag implementation or Shopping Campaign
       //fetch all program data
-      fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data_updated.json')
+      fetch(gitlabUrl + gitlabDataRepo + 'program_data_updated.json')
         .then(response => response.json())
         .then(data => {
           this.program_level = data;
@@ -244,7 +244,7 @@ var ghostforce = Vue.component("ghostforce", {
         })
              //fetch Bad Leads and set the bad_leads data object to the array coming from gitLab bellow
          
-      fetch('http://35.228.175.186/process_data/general-data/raw/master/bad_leads.json')
+      fetch(gitlabUrl + gitlabDataRepo + 'bad_leads.json')
       .then(response => response.json())
       .then(data => {
         this.bad_leads = data;      })
@@ -254,7 +254,7 @@ var ghostforce = Vue.component("ghostforce", {
       })
 
       //fetch all task
-      fetch('http://35.228.175.186/process_data/general-data/raw/master/task_data.json')
+      fetch(gitlabUrl + gitlabDataRepo + 'task_data.json')
         .then(response => response.json())
         .then(data => {
           this.task_level = data;

@@ -17,6 +17,9 @@ var baseURL = bgpage.baseURL;
 var newEmailCounter = bgpage.newEmailCounter;
 var logInSalesforce = bgpage.logInSalesforce;
 
+var gitlabUrl = 'http://35.242.128.211/'
+var gitlabDataRepo = 'data-process/general-data/-/raw/master/'
+
 var check_first_component = true
 var ghostforce_active = false;
 
@@ -62,7 +65,7 @@ new Vue({
                   }
                   else if (response.message == "inside case") {
                     //click on extension from salesforce ticket, so we load ghostforce as first component and we ask to gitlab for mandatory fields
-                    fetch('http://35.228.175.186/process_data/general-data/raw/master/process.json')
+                    fetch(gitlabUrl + gitlabDataRepo + 'process.json')
                       .then(response => response.json())
                       .then(data => {
                         //call the function that sets the background color

@@ -72,7 +72,7 @@ var juniorsme = Vue.component("juniorsme", {
     // console.log(current_date)
     // console.log(this.current_day)
     // console.log(this.current_hours)
-    fetch('http://35.228.175.186/process_data/general-data/raw/master/g_junior_sme.json')
+    fetch(gitlabUrl + gitlabDataRepo + 'g_junior_sme.json')
       .then(response => response.json())
       .then(data => {
         // console.log(data)
