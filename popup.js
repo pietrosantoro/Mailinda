@@ -17,6 +17,9 @@ var baseURL = bgpage.baseURL;
 var newEmailCounter = bgpage.newEmailCounter;
 var logInSalesforce = bgpage.logInSalesforce;
 
+var gitlabUrl = 'http://35.242.128.211/'
+var gitlabDataRepo = 'data-process/general-data/-/raw/master/'
+
 var check_first_component = true
 var ghostforce_active = false;
 
@@ -34,7 +37,7 @@ new Vue({
   data: {
     bgpage,
     currentTab: 'New Email',
-    tabs: ['New Email', 'Ghost Force', 'GTM injector'],    //tab present in menu
+    tabs: ['New Email', 'Ghost Force', 'GTM injector', 'Knowledge Base'],    //tab present in menu
     ghostforce_active,
     all_salesforce_fields
 
@@ -45,7 +48,7 @@ new Vue({
       //every time the popup is clicked, we checked the first component to load. If we are inside a salesforce ticket page, first component will be ghostforce
       if (check_first_component) {
         function check() {
-          console.log("dentro check")
+          //console.log("dentro check")
           return new Promise(resolve => {
             chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
               var activeTab = tabs[0];
@@ -58,11 +61,11 @@ new Vue({
                     var new_tab = "New Email"
                     ghostforce_active = false;
                     resolve(new_tab)
-                    console.log(new_tab)
+                   // console.log(new_tab)
                   }
                   else if (response.message == "inside case") {
                     //click on extension from salesforce ticket, so we load ghostforce as first component and we ask to gitlab for mandatory fields
-                    fetch('http://35.228.175.186/process_data/general-data/raw/master/process.json')
+                    fetch(gitlabUrl + gitlabDataRepo + 'process.json')
                       .then(response => response.json())
                       .then(data => {
                         //call the function that sets the background color
@@ -91,7 +94,7 @@ new Vue({
                     var new_tab = "New Email"
                     ghostforce_active = false;
                     resolve(new_tab)
-                    console.log(new_tab)
+                    //console.log(new_tab)
                   }
                 });
             });
@@ -99,7 +102,7 @@ new Vue({
         }
         var result = check();
         this.currentTab = result.then(async function (data) {
-          console.log(data)
+         // console.log(data)
           return data.replace(" ", "").toLowerCase();
         })
         check_first_component = false;

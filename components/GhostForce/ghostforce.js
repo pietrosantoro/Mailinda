@@ -62,7 +62,21 @@ var templateghostforce = `
            <div id="task-comment"v-if="task['Special_instructions']">{{ task['Special_instructions'] }}</div>
           </div>
         </div>
+        <!-- Bad leads section   -->
+
+        <button type="button" class="call_button call_button_modifier" data-toggle="collapse" data-target="#lead">
+          <b>Bad Leads Report</b>
+          <i class="fas fa-angle-down"></i>
+        </button>
+        <br>
+        <div id="lead" class="collapse">
+          <p v-for="badLead in bad_leads" @click='lead($event,badLead)' class="call_button"><span class='tip'>Click to fill</span>{{badLead}}</p>
+          
+        </div>
         
+
+
+<!-- End of bad leads section   -->
         
       </div>
 
@@ -184,8 +198,8 @@ var ghostforce = Vue.component("ghostforce", {
       bgpage: bgpage,
       ghostforce_active: ghostforce_active,
       ghost_images: [
-        { name: "Website  Adwors  Analytics", src: "../images/ghost_icons/icon-open-three.png" },
-        { name: "Adwors", src: "../images/ghost_icons/icon-google-ads.png" },
+        { name: "Website  Adwords  Analytics", src: "../images/ghost_icons/icon-open-three.png" },
+        { name: "Adwords", src: "../images/ghost_icons/icon-google-ads.png" },
         { name: "Analytics", src: "../images/ghost_icons/icon-analytics.png" },
         { name: "Website", src: "../images/ghost_icons/icon-browser.svg" },
         { name: "Tag Manager", src: "../images/ghost_icons/icon-tagmanager.png" },
@@ -195,6 +209,7 @@ var ghostforce = Vue.component("ghostforce", {
       current_subject: "",
       program_level: "",
       current_program: "",
+      bad_leads:[],
       all_task: [],
       task_level: "",
       current_level: "",
@@ -208,11 +223,10 @@ var ghostforce = Vue.component("ghostforce", {
     console.log('Ghost Force  deactivated')
   },
   mounted: function () {
-console.log(chrome.tabs.index)
     if (this.ghostforce_active) {
       this.current_subject = all_salesforce_fields.Subject;     // Tag implementation or Shopping Campaign
       //fetch all program data
-      fetch('http://35.228.175.186/process_data/general-data/raw/master/program_data_updated.json')
+      fetch(gitlabUrl + gitlabDataRepo + 'program_data_updated.json')
         .then(response => response.json())
         .then(data => {
           this.program_level = data;
@@ -234,8 +248,21 @@ console.log(chrome.tabs.index)
           //handle the error
           console.log(' Cant fetch the JSON file, Im inside the newemail.js')
         })
+             //fetch Bad Leads and set the bad_leads data object to the array coming from gitLab bellow
+         
+      fetch(gitlabUrl + gitlabDataRepo + 'bad_leads.json')
+      .then(response => response.json())
+      .then(data => {
+        this.bad_leads = data
+        console.log(this.bad_leads)
+      })
+      .catch(err => {
+        //handle the error        
+        console.log(err+' Cant fetch the bad-leads file, Im inside the ghostforce.js')
+      })
+
       //fetch all task
-      fetch('http://35.228.175.186/process_data/general-data/raw/master/task_data.json')
+      fetch(gitlabUrl + gitlabDataRepo + 'task_data.json')
         .then(response => response.json())
         .then(data => {
           this.task_level = data;
@@ -307,7 +334,7 @@ console.log(chrome.tabs.index)
     ghost(event) {
       if (this.ghostforce_active) {
         console.log(event)
-        if(event == 'Website  Adwors  Analytics') {
+        if(event == 'Website  Adwords  Analytics') {
           
        chrome.windows.getCurrent(function (currentWindow) {
           chrome.tabs.query({ active: true, windowId: currentWindow.id }, function (activeTabs) {
@@ -328,7 +355,7 @@ console.log(chrome.tabs.index)
         });
         
         }
-        else if (event == 'Adwors') {
+        else if (event == 'Adwords') {
           if(all_salesforce_fields['Customer ID'])
             window.open("https://adwords.corp.google.com/aw/go?external_cid=" + all_salesforce_fields['Customer ID'])
         }
@@ -400,6 +427,25 @@ console.log(chrome.tabs.index)
 
 
       
+    },
+     // Get the call from the bad leads button when clicked, and pass the click event 
+     lead(clickEvent,badlead){  
+
+      // prevent default behavior
+      clickEvent.preventDefault()
+      var comment = 'BAD Lead - ' + badlead
+        let msg = {
+
+          // Get the inner text of the event click
+          data: comment,
+
+          //pass text message to script.js
+          txt: "bad_lead"
+        }
+        // Send the message object to script.js
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          chrome.tabs.sendMessage(tabs[0].id, msg);
+        });
     },
     test() {
       console.log(this.current_program)

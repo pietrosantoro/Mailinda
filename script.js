@@ -193,39 +193,40 @@ chrome.runtime.onMessage.addListener(
 
       //check first the implementation type as the url is in different place for shopping cases
       let implementationType = all_salesforce_fields['Subject'];
-      let url = "";
+      let url = ''
       let adv_name;
       
       if (implementationType == 'Tag Implementation') {
-        var all_link = iframes[0].querySelectorAll('[href^="http"] ');
-              all_link.forEach(element => {
-                if(!element.href.includes("smbsalesimplementation"))
-                  url = element.href
-              })
-
-      //   try {
-      //     url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td:nth-child(4) > a").href
-      //     }
-      //   catch{
-      //     try{
-      //     url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td.dataCell.cellCol3 > a").href
-      //     }
-      //     catch{
-      //       try{
-      //       url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.first > td.dataCell.cellCol3 > a").href
-      //       }
-      //     catch(err){
-      //       try{
-      //         url=document.querySelector("table > tbody > tr.dataRow.even.first > td:nth-child(4) > a").href
-      //       }
-      //       catch{
-      //         url=''
-      //       }
-      //     }
-      //   }
-      // }
-        all_salesforce_fields.URL = url
-
+        all_salesforce_fields.URL = all_salesforce_fields.Tags[0].URL
+        //if the URL is cutted we try to take the href
+        if(all_salesforce_fields.URL.includes("...")){
+          try {
+            url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td:nth-child(4) > a").href
+            }
+          catch{
+            try{
+            url = iframes[0].querySelector(" table > tbody > tr.dataRow.even.last.first > td.dataCell.cellCol3 > a").href
+            }
+            catch{
+              try{
+                iframes[0].querySelectorAll(" table > tbody > tr.dataRow.even.first > td.dataCell.cellCol3 > a").forEach(element => {
+                  if(!element.href.includes("javascript")){
+                    url = element.href
+                  }
+                });
+              }
+              catch(err){
+                try{
+                  url=document.querySelector("table > tbody > tr.dataRow.even.first > td:nth-child(4) > a").href
+                }
+                catch{
+                 url=''
+                }
+              }
+            }
+          }
+          all_salesforce_fields.URL = url
+        }   
       }
 
       
@@ -271,6 +272,37 @@ chrome.runtime.onMessage.addListener(
     }
   })
 
+/* Bad lead starts */
+// Listen to the message from ghostforce.js when one of the the bad leads button is clicked
+
+chrome.runtime.onMessage.addListener(
+  function (request) {
+  
+     if (request.txt === "bad_lead") {
+      let iframes = getActiveFrame();
+      
+          //create a double click on the Vendor Chat Comments	text area
+       
+          let clickEvent = document.createEvent('MouseEvents');
+          clickEvent.initEvent('dblclick', true, true);
+          iframes[0].querySelector("#\\30 0N3600000QISE6_ileinner").dispatchEvent(clickEvent)
+  
+          // wait half second until the double click is done, then put the value of the click to the text area field
+           setTimeout(() => {
+            iframes[0].querySelector("#\\30 0N3600000QISE6").value+='\n' + request.data
+           // done()
+          }, 500); 
+          
+          // Click the buttton 'ok' to save chnages
+          function done(){
+           iframes[0].querySelector("#InlineEditDialog_buttons > input:nth-child(1)").click()
+          }
+  
+    }
+  
+  })
+
+  /* Bad lead finish */
 console.log("script.js")
 
 
