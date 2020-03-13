@@ -91,6 +91,24 @@
         visibility: visible;
     }
 
+    .text_button{
+    border: groove 1px rgba(255,255,255,.075);
+    background-color: #b9b3b3;
+    width: 240px;
+    border-radius: 1.5rem;
+    padding: 0.5rem;
+    text-align: center;
+    margin: 20px 10px 10px 10px;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    }
+
+
+    .text_button::placeholder{
+        color: rgb(121, 116, 116);
+    }
+
   #ghostforceComponent > div .line_info > img {
     height: 12px;
     width: 12px;
