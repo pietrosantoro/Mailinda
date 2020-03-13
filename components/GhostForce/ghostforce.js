@@ -139,7 +139,7 @@ var templateghostforce = `
 
            <!-- customer button to call   -->
        
-            <input class="text_button"type="text" placeholder="Enter the phone number here" v-model='phoneNumber' autofocus>
+            <input class="text_button"type="text" placeholder="Enter the phone number here" v-model='phoneNumber'>
 
             <div v-if="phoneNumber"class="call_button" @click="on_call(phoneNumber)">
             Call {{phoneNumber}}
