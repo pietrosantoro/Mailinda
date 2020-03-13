@@ -137,6 +137,15 @@ var templateghostforce = `
           </div>
 
 
+           <!-- customer button to call   -->
+       
+            <input type="text" placeholder="Enter the phone number here" v-model='phoneNumber' autofocus>
+
+            <div class="call_button" @click="on_call(phoneNumber)">
+            Call
+          </div>
+
+         <!-- customer button to call   finished -->
 
          </div>
 <!-- End Contact info   -->
@@ -208,6 +217,7 @@ var ghostforce = Vue.component("ghostforce", {
       ],
       current_subject: "",
       program_level: "",
+      phoneNumber:'',
       current_program: "",
       bad_leads:[],
       all_task: [],
@@ -382,7 +392,7 @@ var ghostforce = Vue.component("ghostforce", {
       }
     },
     on_call(number){
-      console.log(number)
+     console.log(number)
       chrome.storage.sync.set({
         number: number,
 
