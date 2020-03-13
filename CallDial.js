@@ -14,3 +14,5 @@ setTimeout(function(){
         script.text  = "performOutboundCall(getCleanNumber('" + number + "')); setTimeout(function(){ window.close()},4000)"             
         document.body.appendChild(script);
 },2000)
+
+

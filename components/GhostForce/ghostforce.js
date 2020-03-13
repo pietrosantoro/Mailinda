@@ -135,8 +135,17 @@ var templateghostforce = `
           <div v-for="contact in all_salesforce_fields['Case_Contacts']" class="call_button" @click="on_call(contact['Contact_Phone'])">
             Call {{contact['Contact_Type']}}
           </div>
+          <br>
 
+           <!-- customer button to call   -->
+       
+            <input class="text_button"type="text" placeholder="Enter the phone number here" v-model='phoneNumber' autofocus>
 
+            <div v-if="phoneNumber"class="call_button" @click="on_call(phoneNumber)">
+            Call {{phoneNumber}}
+          </div>
+
+         <!-- customer button to call   finished -->
 
          </div>
 <!-- End Contact info   -->
@@ -208,6 +217,7 @@ var ghostforce = Vue.component("ghostforce", {
       ],
       current_subject: "",
       program_level: "",
+      phoneNumber:'',
       current_program: "",
       bad_leads:[],
       all_task: [],
@@ -383,6 +393,7 @@ var ghostforce = Vue.component("ghostforce", {
     },
     on_call(number){
       console.log(number)
+      chrome.storage.sync.clear()   //clear the chrome storage before set the value
       chrome.storage.sync.set({
         number: number,
 

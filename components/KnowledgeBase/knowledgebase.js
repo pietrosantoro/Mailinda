@@ -5,11 +5,11 @@ let templateknowledgebase = `
             <p> What are you looking for ?</p>
         </div>
         <div class="row">
-            <div class="row-centered column">
+            <div class="row-centered dropdownCmsDiv column">
                 <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
-                    v-on:click="chooseSubject">CMS</button>
-                <div class="dropdown-menu">
-                    <div id="taskSearch" class=" dropdown-item dropdown dropright" v-for="(data,key) in cmsKeys"
+                    v-on:mouseover="mouseOver">CMS</button>
+                <div class="dropdown-content-cmsDiv">
+                    <div id="taskSearch" class="dropdown-item dropdown dropright" v-for="(data,key) in cmsKeys"
                         :key="key" v-on:click="stopPropagation">
                         <button type="button" name="task" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
                             v-on:mouseover="mouseOver">{{data}}</button>
@@ -22,36 +22,36 @@ let templateknowledgebase = `
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>             
             </div>
-            <div class="row-centered column">
+            <div class="row-centered dropdown column">
                 <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
-                    v-on:click="chooseSubject">Analytics</button>
-                <div class="dropdown-menu dropdownAnalytics">
+                    v-on:mouseover="mouseOver">Analytics</button>
+                <div class="dropdown-content dropdownAnalytics">
                     <input type="search" class="form-control" v-model="search" placeholder="Search" />
-                    <div id="taskSearch" class="dropdown-item" v-for="(data,key) in analyticsFiltered" :key="key">
+                    <div id="taskSearch" v-for="(data,key) in analyticsFiltered" :key="key">
                         <button type="button" name="task" id="" class="dropdown-item" data-toggle="dropdown"
                             v-on:click="chooseTask">{{data}}</button>
                     </div>
                 </div>
             </div>
-            <div class="row-centered column">
+            <div class="row-centered dropdown column">
                 <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
-                    v-on:click="chooseSubject">Adwords</button>
-                <div class="dropdown-menu dropdownAnalytics">
+                    v-on:mouseover="mouseOver">Adwords</button>
+                <div class="dropdown-content dropdownAnalytics">
                     <input type="search" class="form-control" v-model="search" placeholder="Search" />
-                    <div id="taskSearch" class="dropdown-item" v-for="(data,key) in adwordsFiltered" :key="key">
+                    <div id="taskSearch" v-for="(data,key) in adwordsFiltered" :key="key">
                         <button type="button" name="task" id="" class="dropdown-item" data-toggle="dropdown"
                             v-on:click="chooseTask">{{data}}</button>
                     </div>
                 </div>
             </div>
-            <div class="row-centered column">
+            <div class="row-centered dropdown column">
                 <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown"
-                    v-on:click="chooseSubject">Shopping</button>
-                <div class="dropdown-menu dropdownAnalytics">
+                    v-on:mouseover="mouseOver">Shopping</button>
+                <div class="dropdown-content dropdownShopping">
                     <input type="search" class="form-control" v-model="search" placeholder="Search" />
-                    <div id="taskSearch" class="dropdown-item" v-for="(data,key) in shoppingFiltered" :key="key">
+                    <div id="taskSearch" v-for="(data,key) in shoppingFiltered" :key="key">
                         <button type="button" name="task" id="" class="dropdown-item" data-toggle="dropdown"
                             v-on:click="chooseTask">{{data}}</button>
                     </div>
