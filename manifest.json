@@ -1,51 +1,89 @@
 {
-    "name": "Mailinda",
-    "version": "1.0.3",
-    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi/DoEq1+tkaNNkgZFSVdlRGpXU37n3GuF+PnXkQ8m9jLteO7ENuGzT2DQiiWAsDiitUs2qvM52NP/CgWBWez3DErmOcuzBv2dWfI93QTIGNCkRUk3UUbDoh8oGxKpsBHmM51YxFBFXSHBytJ0lDpepOgFJfPrcTMtktRq5/bgYzwV1z5ZoMfOruOKw6eXA5GyeJ6Hfv2FpX1y9VCRN1zSeUIfjAYPF9qfc94uHG7wP+9crXMhyE9JtNfqKCgheMRHToEtMKddcZ8uTfkJ8myUmtUK8mx2DESeSr+Y5Gl40NaQWq0cNPxVsy4W7MXq2JyJ/9TMprOq5lLJX/QyEMRAwIDAQAB",
-    "description": "test",
-    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-    "permissions": [
-      "notifications",
-      "background",
-      "declarativeContent",
-      "storage",
-      "tabs",
-      "https://*.force.com/*",
-      "https://*.salesforce.com/*",
-      "https://smbsalesimplementation.my.salesforce.com/*",
-      "unlimited_storage",
-      "management",
-      "webNavigation",
-      "webRequest", "webRequestBlocking",
-      "<all_urls>"
-    ],
-    "optional_permissions": ["contentSettings"],
-    "content_scripts" : [
-      {
-      "matches" : ["https://smbsalesimplementation.my.salesforce.com/*"],
-      "all_frames": true,
-      "js" : ["lib/jquery-3.4.1.min.js","script.js"]
-      }
-    ],
-    "background": {
-        "scripts": ["lib/jquery-3.4.1.min.js","lib/jquery.tabletojson.js","background.js"],
-        "persistent": true
-      },
-    "browser_action": {
-        "default_popup": "popup.html",
-        "default_icon": {
-            "16": "images/mail_icon.png",
-            "32": "images/mail_icon.png",
-            "48": "images/mail_icon.png",
-            "128": "images/mail_icon.png"
-          }
+  "name": "Mailinda",
+  "version": "3.0.7",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi/DoEq1+tkaNNkgZFSVdlRGpXU37n3GuF+PnXkQ8m9jLteO7ENuGzT2DQiiWAsDiitUs2qvM52NP/CgWBWez3DErmOcuzBv2dWfI93QTIGNCkRUk3UUbDoh8oGxKpsBHmM51YxFBFXSHBytJ0lDpepOgFJfPrcTMtktRq5/bgYzwV1z5ZoMfOruOKw6eXA5GyeJ6Hfv2FpX1y9VCRN1zSeUIfjAYPF9qfc94uHG7wP+9crXMhyE9JtNfqKCgheMRHToEtMKddcZ8uTfkJ8myUmtUK8mx2DESeSr+Y5Gl40NaQWq0cNPxVsy4W7MXq2JyJ/9TMprOq5lLJX/QyEMRAwIDAQAB",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'  https://www.google-analytics.com https://www.googletagmanager.com; object-src 'self'",
+  "description": "read new email and salesforce ticket information",
+  "permissions": [
+    "notifications",
+    "background",
+    "declarativeContent",
+    "storage",
+    "tabs",
+    "unlimited_storage",
+    "management",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "clipboardRead",
+    "<all_urls>"
+  ],
+  "optional_permissions": [
+    "contentSettings"
+  ],
+  "content_scripts": [
+    {
+      "exclude_matches": [
+        "https://tagmanager.google.com/*"
+      ],
+      "js": [
+        "tagManager.js"
+      ],
+      "matches": [
+        "\u003Call_urls>"
+      ],
+      "run_at": "document_start"
     },
-    "icons": {
-        "16": "images/mail_icon.png",
-        "32": "images/mail_icon.png",
-        "48": "images/mail_icon.png",
-        "128": "images/mail_icon.png"
-      },
-    "manifest_version": 2,
-    "author": "Tag Team"
-  }
+    {
+      "matches": [
+        "https://smbsalesimplementation.my.salesforce.com/*"
+      ],
+      "js": [
+        "lib/jquery-3.4.1.min.js",
+        "script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://smbsalesimplementation.my.salesforce.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "changingSender.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://smbsalesimplementation--c.na81.visual.force.com/apex/Click2Dial"
+      ],
+      "js": [
+        "CallDial.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "lib/jquery-3.4.1.min.js",
+      "lib/jquery.tabletojson.js",
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/mail_icon.png",
+      "32": "images/mail_icon.png",
+      "48": "images/mail_icon.png",
+      "128": "images/mail_icon.png"
+    }
+  },
+  "icons": {
+    "16": "images/mail_icon.png",
+    "32": "images/mail_icon.png",
+    "48": "images/mail_icon.png",
+    "128": "images/mail_icon.png"
+  },
+  "manifest_version": 2,
+  "author": "Tag Team"
+}

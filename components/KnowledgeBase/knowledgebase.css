@@ -1,0 +1,159 @@
+.container{
+    margin-top: 10px;
+}
+.mainDiv{
+    background-color:#252a2e; 
+    color:white;
+}
+
+#myInput{
+    margin: 10px;
+}
+
+#taskSearch{
+    margin-top: 5px;
+    padding-left: 0px !important;
+}
+
+
+.inputSearch{
+    color: white;
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.row-centered {
+    text-align:center;
+}
+
+.column {
+    margin-left: -20px;
+    margin-right: 20px;
+    width: 25%;
+} 
+
+.dropdown-content, .dropdown-content-cmsDiv {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdownTask:hover .dropdown-content-task{
+    display: block;
+}
+
+.dropdownTask{
+    height: 240px; 
+    overflow: scroll;
+    transform: translate3d(120px, -230px, 320px)!important;
+}
+
+.dropdownAnalytics{
+  height: 260px;
+  overflow: scroll;
+  float: left;
+  min-width: 10rem;
+  padding: .5rem 0;
+  margin: .125rem 0 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: .25rem;
+}
+
+.dropdownCmsDiv:hover .dropdown-content-cmsDiv{
+    display: block;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+}
+
+.dropdown:hover .dropdownShopping {
+    display: block;
+    right: -45px;
+    height: 260px;
+    overflow: scroll;
+    float: left;
+    min-width: 10rem;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    font-size: 1rem;
+    color: #212529;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+  }
+
+
+input {
+	outline: none;
+}
+input[type=search] {
+	-webkit-appearance: textfield;
+	box-sizing: content-box;
+	font-family: inherit;
+	font-size: 100%;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+	display: none; 
+}
+
+
+input[type=search] {
+	background: #ededed url(https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png) no-repeat 9px center;
+	border: solid 1px #ccc;
+	padding: 9px 10px 9px 32px;
+    width: 90px;
+    height: 15px;
+    margin: 2px 0px 0px 10px;
+	
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+input[type=search]:focus {
+	width: 150px;
+	background-color: #fff;
+	border-color: #66CC75;
+	
+	-webkit-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	-moz-box-shadow: 0 0 5px rgba(109,207,246,.5);
+	box-shadow: 0 0 5px rgba(109,207,246,.5);
+}
+
+
+input:-moz-placeholder {
+	color: #999;
+}
+input::-webkit-input-placeholder {
+	color: #999;
+}

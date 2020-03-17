@@ -1,0 +1,16 @@
+#juniorsmecomponent{
+    padding-top: 15px;
+}
+
+#juniorsmecomponent tr {
+    display: grid;
+    grid-template-columns: 1.3fr 2fr 2fr;
+    text-align: center;
+    
+}
+
+#juniorsmecomponent .country{
+    height: 35px;
+    width: 35px;
+    margin-left: 20px;
+}
