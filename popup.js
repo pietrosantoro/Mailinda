@@ -18,7 +18,49 @@ let newEmail = bgpage.newEmail
 let collapsedCases = bgpage.collapsedCases
 let baseURL = bgpage.baseURL
 let newEmailCounter = bgpage.newEmailCounter
-let logInSalesforce = bgpage.logInSalesforce
+let logInSalesforce = true
+
+collapsedCases = [
+  {
+  "Case Number" : 1,
+  "Status" : "ok",
+  "New Emails" : 1,
+  "email" : [
+    {
+    "number" : 1
+    },
+    {
+      "number" : 2
+    }
+  ]
+},
+{
+  "Case Number" : 2,
+  "Status" : "ok",
+  "New Emails": 2,
+  "email" : [
+    {
+    "number" : 1
+    },
+    {
+      "number" : 2
+    }
+  ]
+},
+{
+  "Case Number" : 3,
+  "Status" : "ok",
+  "New Emails": 2,
+  "email" : [
+    {
+    "number" : 1
+    },
+    {
+      "number" : 2
+    }
+  ]
+}
+]
 
 
 new Vue({
@@ -31,8 +73,6 @@ new Vue({
   methods:{
     clickCase(caseUrl,index){
       var completeUrl = baseURL + caseUrl;
-
-      newEmailCounter -= collapsedCases[index]["New Emails"];
       if(newEmailCounter != 0)
         chrome.browserAction.setBadgeText({text: String(newEmailCounter)});
       else
